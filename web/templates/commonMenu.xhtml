@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+</h:head>
+<body>
+	<ui:composition>
+		<div class="singlebar">
+			<div class="navbar">
+				<ul>
+					<h:graphicImage library="defaultTheme"
+						name="images/up_prf_logo_300.png" alt="UP Logo" width="40" />
+					<li><a href="index.xhtml">Předměty</a></li>
+					<c:if
+						test="#{security.hasRole('STUDENT') ||  
+	                			  security.hasRole('TEACHER') || 
+	                			  security.hasRole('GARANT')}">
+						<li><a href="schedule.xhtml">Rozvrh</a></li>
+					</c:if>
+					
+					<!-- spravce -->
+					<c:if
+						test="#{security.hasRole('ADMIN')}">
+						<li>
+							<a>Správa aplikace</a> <span class="caret"></span>
+							<div>
+								<ul>
+									<li><a href="admUsers.xhtml">Správa uživatelů</a></li>
+									<li><a href="admDept.xhtml">Správa kateder</a></li>
+								</ul>
+							</div>
+						</li>
+					</c:if>
+				</ul>
+			</div>
+			<div class="navbar">
+				<ul>
+					<c:if test="#{currentSession.currentUser == null}">
+						<li>
+							<h:link value="Přihlásit" outcome="login.xhtml">
+						        <f:param name="backurl" value="#{view.viewId}"/>
+						    </h:link>
+						</li>
+					</c:if>
+					<c:if test="#{currentSession.currentUser != null}">
+						<li><h:form><h:commandLink value="Odhlásit"
+								action="#{logout.logout()}" /></h:form></li>
+					</c:if>
+				</ul>
+			</div>
+		</div>
+	</ui:composition>
+</body>
+</html>

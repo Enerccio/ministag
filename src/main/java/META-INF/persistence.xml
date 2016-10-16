@@ -1,0 +1,32 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0">
+
+	<persistence-unit name="ministag" transaction-type="RESOURCE_LOCAL">
+		<description>
+            Persistence unit for ministag
+        </description>
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+
+		<class>cz.upol.inf.vanusanik.ministag.model.entities.User</class>
+		<class>cz.upol.inf.vanusanik.ministag.model.entities.Department</class>
+		<class>cz.upol.inf.vanusanik.ministag.model.entities.TaughClass</class>
+		<class>cz.upol.inf.vanusanik.ministag.model.entities.RequiredBlock</class>
+		<class>cz.upol.inf.vanusanik.ministag.model.entities.Timetable</class>
+
+		<properties>
+			<property name="hibernate.dialect" 
+					  value="com.enigmabridge.hibernate.dialect.SQLiteDialect"/>
+			<property name="hibernate.hbm2ddl.auto" value="update"/>
+			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.format_sql" value="false"/>
+			
+			<property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
+			<property name="javax.persistence.jdbc.url" 
+					  value="jdbc:sqlite:/var/local/ministag.db"/>
+		</properties>
+
+	</persistence-unit>
+
+</persistence>
