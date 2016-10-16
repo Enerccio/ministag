@@ -40,6 +40,44 @@ public class TaughClass extends BasicEntity {
 	
 	@Column(columnDefinition = "LONGTEXT")
 	private String syllabus;
+	
+	private int creditCount;
+	
+	private boolean hasExam;
+	
+	private EndingType endingType;
+
+	public List<RequiredBlock> getBlocks() {
+		return blocks;
+	}
+
+	public void setBlocks(List<RequiredBlock> blocks) {
+		this.blocks = blocks;
+	}
+
+	public int getCreditCount() {
+		return creditCount;
+	}
+
+	public void setCreditCount(int creditCount) {
+		this.creditCount = creditCount;
+	}
+
+	public boolean isHasExam() {
+		return hasExam;
+	}
+
+	public void setHasExam(boolean hasExam) {
+		this.hasExam = hasExam;
+	}
+
+	public EndingType getEndingType() {
+		return endingType;
+	}
+
+	public void setEndingType(EndingType endingType) {
+		this.endingType = endingType;
+	}
 
 	public Long getId() {
 		return id;
