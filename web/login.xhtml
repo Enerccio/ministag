@@ -29,7 +29,7 @@
 			                    <h:inputSecret id="password" value="#{login.password}"/>
 			                </h:panelGrid> 
 			                
-			                <h:commandButton value="Přihlásit se" action="#{login.login(loginTarget.url)}"/>
+			                <h:commandButton value="Přihlásit se" action="#{login.doLogin(loginTarget.url)}"/>
 			            </h:form>
 			            
 			            <c:if test="#{login.loginFailure}">

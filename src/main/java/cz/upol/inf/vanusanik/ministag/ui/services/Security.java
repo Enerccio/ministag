@@ -111,7 +111,7 @@ public class Security {
 		 * @param target page to return to
 		 * @return redirect
 		 */
-		public String login(String target) {
+		public String doLogin(String target) {
 			return security.doLogin(target, this);
 		}
 	}
