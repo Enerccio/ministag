@@ -30,11 +30,11 @@ public class AboveZeroValidator implements Validator {
 		}
 		
 		if (n == null) {
-			throw new ValidatorException(new FacesMessage("Nesprávný formát čísla!", ""));
+			throw new ValidatorException(new FacesMessage("Nesprávný formát čísla!", "Nesprávný formát čísla!"));
 		}
 		
-		if (n.doubleValue() == 0) {
-			throw new ValidatorException(new FacesMessage("Hodnota musí být větší než nula!", ""));
+		if (n.doubleValue() <= 0) {
+			throw new ValidatorException(new FacesMessage("Hodnota musí být větší než nula!", "Hodnota musí být větší než nula!"));
 		}
 	}
 
