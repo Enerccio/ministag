@@ -1,18 +1,3 @@
-div.login {
-	position: absolute;
-	left: 50%;
-  	top: 50%;
-  	-webkit-transform: translate(-50%, -50%);
-  	transform: translate(-50%, -50%);
-}
-
-div.loginDialog {
-	background-color: #ffe4b5;
-	padding: 10px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-}
-
 #loginError {
 	color: #ff0000;
 	font-weight: bold;

@@ -12,6 +12,7 @@ import cz.upol.inf.vanusanik.ministag.model.entities.AppSettings;
 import cz.upol.inf.vanusanik.ministag.model.entities.Roles;
 import cz.upol.inf.vanusanik.ministag.model.service.MinistagRepository;
 import cz.upol.inf.vanusanik.ministag.ui.tools.Action;
+import cz.upol.inf.vanusanik.ministag.ui.tools.Utils;
 
 @Named("admApp")
 @RequestScoped
@@ -69,7 +70,7 @@ public class AdmAppRequest {
 				as.setNumWeeks(getNumWeeks());
 				as.setStartOfYear(c);
 				repository.save(as);
-				return "";
+				return Utils.redirect("Nastavení aplikace ulženo", "/admApp.xhtml");
 			}
 		}, Roles.ADMIN);
 	}

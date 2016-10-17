@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+    </h:head>
+    <f:metadata>
+	    <f:viewParam name="redirectTo" value="#{redirect.uriFragment}"/>
+	    <f:viewParam name="msg" value="#{redirect.message}"/>
+	</f:metadata>
+    <body>
+        <ui:composition template="./templates/masterTemplate.xhtml">
+
+            <ui:define name="top">
+                <ui:include src="./templates/commonMenu.xhtml "/>
+            </ui:define>
+
+            <ui:define name="content">
+            	<div class="dialogContainer">
+            		<div class="dialog">
+            			<div class="redirectMessage">#{redirect.message}</div>
+		                <div>
+		                	<h:form>
+		                		Za okamžik budete presměrován. Pokus by jste nebyl, použijte tento 
+		                		<h:commandLink  styleClass="redlink" value="link" action="#{redirect.redirect()}"/>.
+		                	</h:form>
+		                </div>
+            		</div>
+            	</div>
+                
+                <script>
+                  $(document).ready(function() {
+					  setTimeout(function() {
+						  $(".redlink").click();
+					  }, 1000);
+				  });
+				</script>
+            </ui:define>
+
+        </ui:composition>
+    </body>
+</html>

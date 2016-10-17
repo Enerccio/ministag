@@ -1,6 +1,5 @@
 package cz.upol.inf.vanusanik.ministag.ui.services;
 
-import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -10,13 +9,11 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
-
 import cz.upol.inf.vanusanik.ministag.model.entities.Roles;
 import cz.upol.inf.vanusanik.ministag.model.entities.User;
 import cz.upol.inf.vanusanik.ministag.model.service.MinistagRepository;
 import cz.upol.inf.vanusanik.ministag.ui.tools.Action;
+import cz.upol.inf.vanusanik.ministag.ui.tools.Utils;
 
 @Named("security")
 @ApplicationScoped
@@ -39,7 +36,7 @@ public class Security {
 				u.setSalt(UUID.randomUUID().toString());
 				u.setLogin("admin");
 				u.setRole(Roles.ADMIN);
-				u.setPassword(asHex(hash("#admin", u.getSalt())));
+				u.setPassword(Utils.asHex(Utils.hash("#admin", u.getSalt())));
 				repository.save(u);
 			} catch (Exception e) {
 				
@@ -174,39 +171,12 @@ public class Security {
 			loginRequest.setLoginFailure(true);
 			return loginRedirect + "&backurl=" + loginTarget.getUrl();
 		}
-		if (!Arrays.equals(toHex(u.getPassword()), hash(loginRequest.getPassword(), u.getSalt()))) {
+		if (!Arrays.equals(Utils.toHex(u.getPassword()), Utils.hash(loginRequest.getPassword(), u.getSalt()))) {
 			loginRequest.setLoginFailure(true);
 			return loginRedirect + "&backurl=" + loginTarget.getUrl();
 		}
 		session.setCurrentUser(u);	
-		return appendRedirect(loginTarget.getUrl());
-	}
-	
-	/**
-	 * Appends ?faces-redirect=true or &faces-redirect=true to redirect, based on the uri
-	 * @param url
-	 * @return
-	 */
-	private String appendRedirect(String url) {
-		if (url == null || url.equals(""))
-			return url;
-		return url.contains("?") ? url + "&faces-redirect=true" : url + "?faces-redirect=true";
-	}
-
-	/**
-	 * Performs salted hash check
-	 * @param password
-	 * @return
-	 */
-	private byte[] hash(String password, String salt) {
-		try {
-			MessageDigest md = MessageDigest.getInstance("SHA-256");
-			md.update(salt.getBytes("utf-8"));
-			return md.digest(password.getBytes("utf-8"));
-		} catch (Exception e) {
-			// TODO logger
-			return null;
-		}
+		return Utils.appendRedirect(loginTarget.getUrl());
 	}
 	
 	/**
@@ -249,9 +219,9 @@ public class Security {
 		}
 		String uri = action.run();
 		if (uri == null) {
-			return appendRedirect(loginTarget.getUrl());
+			return Utils.appendRedirect(loginTarget.getUrl());
 		} else {
-			return appendRedirect(uri);
+			return Utils.appendRedirect(uri);
 		}
 	}
 
@@ -269,18 +239,5 @@ public class Security {
 
 	public void setLoginRedirect(String loginRedirect) {
 		this.loginRedirect = loginRedirect;
-	}
-	
-	private static String asHex(byte[] hash) {
-		return Hex.encodeHexString(hash);
-	}
-	
-	private static byte[] toHex(String hex) {
-		try {
-			return Hex.decodeHex(hex.toCharArray());
-		} catch (DecoderException e) {
-			// TODO Logger
-			return null;
-		}
 	}
 }
