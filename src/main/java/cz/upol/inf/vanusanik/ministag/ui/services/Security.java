@@ -179,9 +179,20 @@ public class Security {
 			return loginRedirect + "&backurl=" + loginTarget.getUrl();
 		}
 		session.setCurrentUser(u);	
-		return loginTarget.getUrl();
+		return appendRedirect(loginTarget.getUrl());
 	}
 	
+	/**
+	 * Appends ?faces-redirect=true or &faces-redirect=true to redirect, based on the uri
+	 * @param url
+	 * @return
+	 */
+	private String appendRedirect(String url) {
+		if (url == null || url.equals(""))
+			return url;
+		return url.contains("?") ? url + "&faces-redirect=true" : url + "?faces-redirect=true";
+	}
+
 	/**
 	 * Performs salted hash check
 	 * @param password
@@ -238,9 +249,9 @@ public class Security {
 		}
 		String uri = action.run();
 		if (uri == null) {
-			return loginTarget.getUrl();
+			return appendRedirect(loginTarget.getUrl());
 		} else {
-			return uri;
+			return appendRedirect(uri);
 		}
 	}
 

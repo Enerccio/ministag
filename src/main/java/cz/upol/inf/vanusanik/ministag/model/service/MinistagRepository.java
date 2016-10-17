@@ -1,5 +1,7 @@
 package cz.upol.inf.vanusanik.ministag.model.service;
 
+import java.util.Calendar;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.persistence.EntityManager;
@@ -70,18 +72,22 @@ public class MinistagRepository {
 			
 			@Override
 			Object doInTransaction() throws Exception {
-				if (em.createQuery("SELECT count(apps) FROM AppSettings", Long.class)
+				if (em.createQuery("SELECT count(apps) FROM AppSettings apps", Long.class)
 						.getSingleResult() == 0) {
 					synchronized (em) {
-						if (em.createQuery("SELECT count(apps) FROM AppSettings", Long.class)
+						if (em.createQuery("SELECT count(apps) FROM AppSettings apps", Long.class)
 								.getSingleResult() == 0) {
 							AppSettings as = new AppSettings();
-							// TODO: defaults for app settings
+							
+							Calendar c = Calendar.getInstance();
+							c.set(2016, 8, 19, 0, 0);
+							as.setStartOfYear(c);
+							as.setNumWeeks(13);							
 							save(as);
 						}
 					}
 				}
-				return em.createQuery("SELECT apps FROM AppSettings", AppSettings.class)
+				return em.createQuery("SELECT apps FROM AppSettings apps", AppSettings.class)
 						.setMaxResults(1).getResultList().iterator().next();
 			}
 		});
@@ -103,9 +109,12 @@ abstract class InTransaction {
 	
 	Object inTransaction() {
 		try {
-			em.getTransaction().begin();
+			boolean activeTransaction = em.getTransaction().isActive();
+			if (!activeTransaction)
+				em.getTransaction().begin();
 			Object v = doInTransaction();
-			em.getTransaction().commit();
+			if (!activeTransaction)
+				em.getTransaction().commit();
 			return v;
 		} catch (RuntimeException e) {
 			em.getTransaction().setRollbackOnly();

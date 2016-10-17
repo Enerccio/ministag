@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <body>    
+        <ui:composition template="./templates/masterTemplate.xhtml">
+
+            <ui:define name="top">
+                <ui:include src="./templates/commonMenu.xhtml "/>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+	                <h:panelGrid columns="2">
+	                    <h:outputLabel for="yearStart">Datum začátku školního roku</h:outputLabel>
+	                    <h:inputText id="yearStart" value="#{admApp.startYear}"
+	                    	styleClass="datepicker" 
+	                    	readonly= "#{facesContext.renderResponse}">
+	                    	<f:convertDateTime pattern="dd.MM.yyyy"/> 
+	                    </h:inputText>
+	                    <h:outputLabel for="numweeks">Počet týdnů výuky:</h:outputLabel>
+	                    <h:inputText id="numweeks" value="#{admApp.numWeeks}" 
+	                    	converterMessage="Jemon čísla jsou povoleny">
+	                    		<f:validator validatorId="GUARDAboveZero" />
+	                    		<f:passThroughAttribute name="type" value="number"/>
+	                    		<f:passThroughAttribute name="step" value="1"/>
+	                    </h:inputText>
+	                </h:panelGrid> 
+	                
+	                <h:commandButton value="Uložit nastavení" action="#{admApp.save()}"/>
+	                <h:message for="numweeks" style="color:red" />
+	            </h:form>
+            </ui:define>
+
+        </ui:composition>
+    </body>
+</html>
