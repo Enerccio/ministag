@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+    </h:head>
+    <body>
+        <ui:composition template="./templates/masterTemplate.xhtml">
+
+            <ui:define name="top">
+                <ui:include src="./templates/commonMenu.xhtml "/>
+            </ui:define>
+
+            <ui:define name="content">
+          		<div class="dialogContainer">
+            		<div class="dialog">
+		            	<h:form>
+			                <h:panelGrid columns="2">
+			                    <h:outputLabel for="loginName">Přihlašovací jméno:</h:outputLabel>
+			                    <h:inputText id="loginName" 
+			                    	value="#{addEditUser.editUser}" 
+			                    	disabled="#{currentlyEditedUser.currentUser != null}">
+			                    	<f:validator binding="#{GUARDLoginName}" />
+			                    </h:inputText>
+			                    	
+			                    <h:outputLabel for="password">Heslo:</h:outputLabel>
+			                    <h:inputSecret id="password" value="#{addEditUser.password}" 
+			                    		binding="#{passwordComponent}">
+			                    	<f:validator binding="#{GUARDPasswordCriteria}" />
+			                    </h:inputSecret> 
+			                    
+			                    <h:outputLabel for="password2">Heslo kontrola:</h:outputLabel>
+			                    <h:inputSecret id="password2" value="#{addEditUser.password2}">
+			                    	<f:validator binding="#{GAURDPasswordEquals}" />
+			                    	<f:attribute name="passwordComponentBinding" value="#{passwordComponent}" />
+			                    </h:inputSecret>
+			                    
+			                    <h:outputLabel for="roles">Role:</h:outputLabel>
+			                    <h:selectOneMenu value="#{addEditUser.userRole}" id="roles" 
+			                    		disabled="#{addEditUser.cannotEditRole()}">
+							        <f:selectItems value="#{addEditUser.roles}" var="role"
+							                       itemLabel="#{role}" itemValue="#{role}" />
+							    </h:selectOneMenu>
+			                </h:panelGrid> 
+			                
+			            	<h:messages style="color:red;" showDetail="true"/>
+			                <h:commandButton  value="Uložit" action="#{addEditUser.submit()}"/>
+			            </h:form>
+			       </div>
+		       </div>   	
+            </ui:define>
+
+        </ui:composition>
+    </body>
+</html>

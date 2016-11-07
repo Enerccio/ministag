@@ -12,3 +12,8 @@ div.dialog {
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 }
+
+#dialogError {
+	color: #ff0000;
+	font-weight: bold;
+}

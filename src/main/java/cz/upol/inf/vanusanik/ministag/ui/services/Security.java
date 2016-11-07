@@ -1,17 +1,22 @@
 package cz.upol.inf.vanusanik.ministag.ui.services;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import cz.upol.inf.vanusanik.ministag.model.entities.Roles;
 import cz.upol.inf.vanusanik.ministag.model.entities.User;
 import cz.upol.inf.vanusanik.ministag.model.service.MinistagRepository;
+import cz.upol.inf.vanusanik.ministag.ui.services.Security.AddEditUserRequest.CurrentlyEditedUser;
 import cz.upol.inf.vanusanik.ministag.ui.tools.Action;
 import cz.upol.inf.vanusanik.ministag.ui.tools.Utils;
 
@@ -133,13 +138,149 @@ public class Security {
 		
 	}
 	
-	@Named("addUser")
+	@Named("addEditUser")
 	@RequestScoped
 	/**
 	 * Request handler for user management
 	 */
-	public static class AddUserRequest {	
+	public static class AddEditUserRequest {	
 		
+		@Named("currentlyEditedUser")
+		@SessionScoped
+		public static class CurrentlyEditedUser implements Serializable {
+			
+			private static final long serialVersionUID = 5504155210761645432L;
+			private String currentUser;
+
+			public String getCurrentUser() {
+				return currentUser;
+			}
+
+			public void setCurrentUser(String currentUser) {
+				this.currentUser = currentUser;
+			}
+			
+		}
+		
+		@Inject private MinistagRepository repository;
+		@Inject private ActiveSession as;
+		@Inject private CurrentlyEditedUser ceu;
+		
+		private User user;
+		private String editUser;
+		private String password;
+		private String password2;
+		private Roles userRole;
+		
+		@PostConstruct
+		public void init() {
+			if (ceu.getCurrentUser() != null && !"".equals(ceu.getCurrentUser())) {
+				this.editUser = ceu.getCurrentUser();
+				this.user = repository.find(ceu.getCurrentUser(), User.class);
+				this.userRole = user.getRole();
+			}
+		}
+		
+		public List<Roles> getRoles() {
+			return new ArrayList<Roles>(Arrays.asList(Roles.values()));
+		}
+		
+		public String submit() {
+			if (ceu.getCurrentUser() != null) {
+				User u = repository.find(ceu.getCurrentUser(), User.class);
+				
+				if (password.length() != 0) {
+					u.setSalt(UUID.randomUUID().toString());
+					u.setPassword(Utils.asHex(Utils.hash(password, u.getSalt())));
+				}
+				if (!cannotEditRole()) {
+					u.setRole(userRole);
+				}
+				
+				repository.save(u);
+			} else {
+				User u = new User();
+				
+				u.setLogin(editUser);
+				u.setSalt(UUID.randomUUID().toString());
+				u.setPassword(Utils.asHex(Utils.hash(password, u.getSalt())));
+				u.setRole(userRole);
+				
+				repository.save(u);
+			}
+			return Utils.appendRedirect("admUsers.xhtml");
+		}
+		
+		/**
+		 * Checks whether role is editable.
+		 * 
+		 * Role is not editable when user is editing himself (to not remove ADMIN tag)
+		 * @return
+		 */
+		public boolean cannotEditRole() {
+			if (ceu.getCurrentUser() == null)
+				return false;
+			return as.getCurrentUser().getLogin().equals(ceu.getCurrentUser());
+		}
+
+		public String getPassword() {
+			return password;
+		}
+
+		public void setPassword(String password) {
+			this.password = password;
+		}
+
+		public String getPassword2() {
+			return password2;
+		}
+
+		public void setPassword2(String password2) {
+			this.password2 = password2;
+		}
+
+		public String getEditUser() {
+			return editUser;
+		}
+
+		public void setEditUser(String editUser) {
+			this.editUser = editUser;
+		}
+
+		public Roles getUserRole() {
+			return userRole;
+		}
+
+		public void setUserRole(Roles userRole) {
+			this.userRole = userRole;
+		}
+	}
+	
+	@RequestScoped
+	@Named(value = "userList")
+	public static class UserList {
+		
+		@Inject private MinistagRepository repository;
+		@Inject private ActiveSession as;
+		@Inject private CurrentlyEditedUser ceu;
+		
+		public List<User> getUsers() {
+			return repository.getUsers();
+		}
+
+		public String edit(String id) {
+			if (id.equals(""))
+				id = null;
+			ceu.setCurrentUser(id);
+			return Utils.appendRedirect("admUser.xhtml");
+		}
+		
+		public String remove(String id) {
+			if (as.getCurrentUser().getLogin().equals(id))
+				return "";
+			repository.remove(repository.find(id, User.class));
+			return "";
+		}
 	}
 	
 	@Inject

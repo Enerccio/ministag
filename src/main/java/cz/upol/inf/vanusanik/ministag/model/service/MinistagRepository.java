@@ -1,6 +1,7 @@
 package cz.upol.inf.vanusanik.ministag.model.service;
 
 import java.util.Calendar;
+import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -10,6 +11,7 @@ import javax.persistence.Persistence;
 
 import cz.upol.inf.vanusanik.ministag.model.entities.AppSettings;
 import cz.upol.inf.vanusanik.ministag.model.entities.BasicEntity;
+import cz.upol.inf.vanusanik.ministag.model.entities.User;
 
 @ManagedBean(name = "ministag")
 @ApplicationScoped
@@ -96,6 +98,16 @@ public class MinistagRepository {
 	@SuppressWarnings("unchecked")
 	private <T> T inTransaction(InTransaction inTransaction) {
 		return (T) inTransaction.inTransaction();
+	}
+
+	public List<User> getUsers() {
+		return inTransaction(new InTransaction(em) {
+			
+			@Override
+			Object doInTransaction() throws Exception {
+				return em.createQuery("SELECT u FROM User u ORDER BY u.login").getResultList();
+			}
+		});
 	}
 }
 

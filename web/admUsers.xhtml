@@ -2,7 +2,8 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
     </h:head>
     <body>
@@ -13,7 +14,25 @@
             </ui:define>
 
             <ui:define name="content">
-             	
+             	<div>
+             		<h:form>
+             			<h:commandButton action="#{userList.edit(null)}" value="Přidat uživatele" />
+             		</h:form>
+             	</div>
+             	<h:form>
+             		<h:dataTable value="#{userList.users}" var="user">
+                		<h:column>
+                			<f:facet name="header">Login</f:facet>
+                			#{user.login}
+                		</h:column>
+                		<h:column>
+                			<f:facet name="header">Role</f:facet>
+                			#{user.role}
+                		</h:column>
+                		<h:column><h:commandButton action="#{userList.edit(user.login)}" value="Upravit" /></h:column>
+                		<h:column><h:commandButton action="#{userList.remove(user.login)}" value="Smazat" /></h:column>
+                	</h:dataTable>
+             	</h:form>
             </ui:define>
 
         </ui:composition>

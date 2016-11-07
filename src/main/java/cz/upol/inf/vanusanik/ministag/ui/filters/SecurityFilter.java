@@ -21,8 +21,7 @@ import cz.upol.inf.vanusanik.ministag.ui.services.ActiveSession;
 
 public class SecurityFilter implements Filter {
 	
-	@Inject
-	private ActiveSession as;
+	@Inject	private ActiveSession as;
 	
 	private Map<String, Roles> paths = new LinkedHashMap<String, Roles>();
 	
@@ -32,6 +31,7 @@ public class SecurityFilter implements Filter {
 		
 		paths.put("/admApp.xhtml", Roles.ADMIN);
 		paths.put("/admDept.xhtml", Roles.ADMIN);
+		paths.put("/admUser.xhtml", Roles.ADMIN);
 		paths.put("/admUsers.xhtml", Roles.ADMIN);
 	}
 	
