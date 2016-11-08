@@ -25,7 +25,7 @@ public class RequiredBlock extends BasicEntity {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="class_id")
-	private TaughClass taughtClass;
+	private Course taughtClass;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="block")
 	private List<Timetable> timetableChoices = new ArrayList<Timetable>();
@@ -38,11 +38,11 @@ public class RequiredBlock extends BasicEntity {
 		this.id = id;
 	}
 
-	public TaughClass getTaughtClass() {
+	public Course getTaughtClass() {
 		return taughtClass;
 	}
 
-	public void setTaughtClass(TaughClass taughtClass) {
+	public void setTaughtClass(Course taughtClass) {
 		this.taughtClass = taughtClass;
 	}
 

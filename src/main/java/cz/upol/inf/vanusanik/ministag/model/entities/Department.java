@@ -37,6 +37,9 @@ public class Department extends BasicEntity {
 	    inverseJoinColumns=@JoinColumn(name="user_id", referencedColumnName="ID"))
 	private List<User> teachers = new ArrayList<User>();
 	
+	@Column(length = 64)
+	private String name;
+	
 	@Override
 	public String getPrimaryKey() {
 		return "shortName";
@@ -56,8 +59,40 @@ public class Department extends BasicEntity {
 		return shortName;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public List<User> getGarants() {
+		return garants;
+	}
+
+	public void setGarants(List<User> garants) {
+		this.garants = garants;
+	}
+
+	public List<User> getTeachers() {
+		return teachers;
+	}
+
+	public void setTeachers(List<User> teachers) {
+		this.teachers = teachers;
+	}
+
 	public void setShortName(String shortName) {
 		this.shortName = shortName;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}	
 	
 }

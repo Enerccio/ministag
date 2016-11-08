@@ -25,6 +25,12 @@
 			                    	disabled="#{currentlyEditedUser.currentUser != null}">
 			                    	<f:validator binding="#{GUARDLoginName}" />
 			                    </h:inputText>
+			                    
+			                    <h:outputLabel for="displayName">Jméno:</h:outputLabel>
+			                    <h:inputText id="displayName" 
+			                    	value="#{addEditUser.displayName}">
+			                    	<f:validator validatorId="GUARDNotEmpty" />
+			                    </h:inputText> 
 			                    	
 			                    <h:outputLabel for="password">Heslo:</h:outputLabel>
 			                    <h:inputSecret id="password" value="#{addEditUser.password}" 

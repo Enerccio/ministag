@@ -15,8 +15,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "class")
-public class TaughClass extends BasicEntity {
+@Table(name = "course")
+public class Course extends BasicEntity {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

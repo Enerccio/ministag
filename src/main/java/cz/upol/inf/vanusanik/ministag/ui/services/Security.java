@@ -168,6 +168,7 @@ public class Security {
 		
 		private User user;
 		private String editUser;
+		private String displayName;
 		private String password;
 		private String password2;
 		private Roles userRole;
@@ -178,6 +179,7 @@ public class Security {
 				this.editUser = ceu.getCurrentUser();
 				this.user = repository.find(ceu.getCurrentUser(), User.class);
 				this.userRole = user.getRole();
+				this.displayName = user.getName();
 			}
 		}
 		
@@ -196,6 +198,7 @@ public class Security {
 				if (!cannotEditRole()) {
 					u.setRole(userRole);
 				}
+				u.setName(displayName);
 				
 				repository.save(u);
 			} else {
@@ -205,6 +208,7 @@ public class Security {
 				u.setSalt(UUID.randomUUID().toString());
 				u.setPassword(Utils.asHex(Utils.hash(password, u.getSalt())));
 				u.setRole(userRole);
+				u.setName(displayName);
 				
 				repository.save(u);
 			}
@@ -253,6 +257,14 @@ public class Security {
 
 		public void setUserRole(Roles userRole) {
 			this.userRole = userRole;
+		}
+
+		public String getDisplayName() {
+			return displayName;
+		}
+
+		public void setDisplayName(String displayName) {
+			this.displayName = displayName;
 		}
 	}
 	

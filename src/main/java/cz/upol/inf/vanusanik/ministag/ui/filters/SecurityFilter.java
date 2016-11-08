@@ -31,6 +31,7 @@ public class SecurityFilter implements Filter {
 		
 		paths.put("/admApp.xhtml", Roles.ADMIN);
 		paths.put("/admDept.xhtml", Roles.ADMIN);
+		paths.put("/admEditDept.xhtml", Roles.ADMIN);
 		paths.put("/admUser.xhtml", Roles.ADMIN);
 		paths.put("/admUsers.xhtml", Roles.ADMIN);
 	}

@@ -11,7 +11,7 @@
 
 		<class>cz.upol.inf.vanusanik.ministag.model.entities.User</class>
 		<class>cz.upol.inf.vanusanik.ministag.model.entities.Department</class>
-		<class>cz.upol.inf.vanusanik.ministag.model.entities.TaughClass</class>
+		<class>cz.upol.inf.vanusanik.ministag.model.entities.Course</class>
 		<class>cz.upol.inf.vanusanik.ministag.model.entities.RequiredBlock</class>
 		<class>cz.upol.inf.vanusanik.ministag.model.entities.Timetable</class>
 

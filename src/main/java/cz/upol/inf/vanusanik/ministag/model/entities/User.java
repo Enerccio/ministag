@@ -16,6 +16,9 @@ public class User extends BasicEntity {
 	@Column(length = 64)
 	private String password;
 	
+	@Column(length = 64)
+	private String name;
+	
 	@Column(nullable = false)
 	private Roles role;
 	
@@ -66,6 +69,14 @@ public class User extends BasicEntity {
 
 	public void setSalt(String salt) {
 		this.salt = salt;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}	
 	
 }

@@ -11,6 +11,7 @@ import javax.persistence.Persistence;
 
 import cz.upol.inf.vanusanik.ministag.model.entities.AppSettings;
 import cz.upol.inf.vanusanik.ministag.model.entities.BasicEntity;
+import cz.upol.inf.vanusanik.ministag.model.entities.Department;
 import cz.upol.inf.vanusanik.ministag.model.entities.User;
 
 @ManagedBean(name = "ministag")
@@ -107,6 +108,17 @@ public class MinistagRepository {
 			Object doInTransaction() throws Exception {
 				return em.createQuery("SELECT u FROM User u ORDER BY u.login").getResultList();
 			}
+		});
+	}
+
+	public List<Department> getDepartments() {
+		return inTransaction(new InTransaction(em){
+
+			@Override
+			Object doInTransaction() throws Exception {
+				return em.createQuery("SELECT d FROM Department d ORDER BY d.shortName", Department.class).getResultList();
+			}
+			
 		});
 	}
 }
