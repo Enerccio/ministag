@@ -18,3 +18,11 @@ div.mainBody {
   overflow: hidden;
   height: 90%;
 }
+
+span.nobr { 
+	white-space: nowrap; 
+}
+
+#displayTable {
+    vertical-align: top;
+}

@@ -20,38 +20,40 @@
              		</h:form>
              	</div>
              	<h:form>
-             		<h:dataTable value="#{departmentList.departments}" var="dept">
-                		<h:column>
-                			<f:facet name="header">Zkratka</f:facet>
-                			#{dept.shortName}
-                		</h:column>
-                		<h:column>
-                			<f:facet name="header">Název katedry</f:facet>
-                			#{dept.name}
-                		</h:column>
-                		<h:column>
-                			<f:facet name="header">Popis</f:facet>
-                			#{dept.description}
-                		</h:column>
-                		<h:column>
-                			<f:facet name="header">Garanti</f:facet>
-               				<h:dataTable value="#{dept.garants}" var="user">
-               					<h:column>
-               						#{user.login}
-               					</h:column>
-               				</h:dataTable>		
-                		</h:column>
-                		<h:column>
-                			<f:facet name="header">Učitelé</f:facet>
-                			<h:dataTable value="#{dept.teachers}" var="user">
-               					<h:column>
-               						#{user.login}
-               					</h:column>
-               				</h:dataTable>
-                		</h:column>
-                		<h:column><h:commandButton action="#{departmentList.edit(dept.shortName)}" value="Upravit" /></h:column>
-                		<h:column><h:commandButton action="#{departmentList.remove(dept.shortName)}" value="Smazat" /></h:column>
-                	</h:dataTable>
+             		<div id="displayTable">
+	             		<h:dataTable value="#{departmentList.departments}" var="dept">
+	                		<h:column>
+	                			<f:facet name="header">Zkratka</f:facet>
+	                			#{dept.shortName}
+	                		</h:column>
+	                		<h:column>
+	                			<f:facet name="header">Název katedry</f:facet>
+	                			<span class="nobr">#{dept.name}</span>
+	                		</h:column>
+	                		<h:column>
+	                			<f:facet name="header">Popis</f:facet>
+	                			<p align="justify">#{dept.description}</p>
+	                		</h:column>
+	                		<h:column>
+	                			<f:facet name="header">Garanti</f:facet>
+	               				<h:dataTable value="#{dept.garants}" var="user">
+	               					<h:column>
+	               						<span class="nobr">#{user.name}</span>
+	               					</h:column>
+	               				</h:dataTable>
+	                		</h:column>
+	                		<h:column>
+	                			<f:facet name="header">Učitelé</f:facet>
+	                			<h:dataTable value="#{dept.teachers}" var="user">
+	               					<h:column>
+	               						<span class="nobr">#{user.name}</span>
+	               					</h:column>
+	               				</h:dataTable>
+	                		</h:column>
+	                		<h:column><h:commandButton action="#{departmentList.edit(dept.shortName)}" value="Upravit" /></h:column>
+	                		<h:column><h:commandButton action="#{departmentList.remove(dept.shortName)}" value="Smazat" /></h:column>
+	                	</h:dataTable>
+	                </div>
              	</h:form>
             </ui:define>
 

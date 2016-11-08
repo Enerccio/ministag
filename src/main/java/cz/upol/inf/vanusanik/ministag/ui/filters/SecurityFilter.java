@@ -1,8 +1,8 @@
 package cz.upol.inf.vanusanik.ministag.ui.filters;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import javax.inject.Inject;
@@ -23,17 +23,28 @@ public class SecurityFilter implements Filter {
 	
 	@Inject	private ActiveSession as;
 	
-	private Map<String, Roles> paths = new LinkedHashMap<String, Roles>();
+	private Set<String> pathLog = new HashSet<String>();
+	private Set<String> pathAdm = new HashSet<String>();
+	private Set<String> pathGar = new HashSet<String>();
+	private Set<String> pathTea = new HashSet<String>();
+	private Set<String> pathStu = new HashSet<String>();
+	private Set<String> allPaths = new HashSet<String>();
 	
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
 		// null means no role needed but still logged in check is required
 		
-		paths.put("/admApp.xhtml", Roles.ADMIN);
-		paths.put("/admDept.xhtml", Roles.ADMIN);
-		paths.put("/admEditDept.xhtml", Roles.ADMIN);
-		paths.put("/admUser.xhtml", Roles.ADMIN);
-		paths.put("/admUsers.xhtml", Roles.ADMIN);
+		pathAdm.add("/admApp.xhtml");
+		pathAdm.add("/admDept.xhtml");
+		pathAdm.add("/admEditDept.xhtml");
+		pathAdm.add("/admUser.xhtml");
+		pathAdm.add("/admUsers.xhtml");
+		
+		allPaths.addAll(pathAdm);
+		allPaths.addAll(pathGar);
+		allPaths.addAll(pathTea);
+		allPaths.addAll(pathStu);
+		allPaths.addAll(pathLog);
 	}
 	
 	@Override
@@ -55,18 +66,36 @@ public class SecurityFilter implements Filter {
 		
 		User u = as.getCurrentUser();
 		
-		for (String p : paths.keySet()) {
+		for (String p : allPaths) {
 			if (path.startsWith(p)) {
 				if (u == null) {
 					redirect(httpRequest, httpResponse, path);
 					return;
 				}
-				Roles rCheck = paths.get(p);
-				if (rCheck != null && u.getRole() != null) {
-					if (rCheck != u.getRole()) {
-						redirect(httpRequest, httpResponse, path);
-						return;	
-					}
+				
+				Roles r = u.getRole();
+				boolean check = false;
+				
+				switch(r) {
+				case ADMIN:
+					check = pathAdm.contains(p);
+					break;
+				case GARANT:
+					check = pathGar.contains(p);
+					break;
+				case STUDENT:
+					check = pathStu.contains(p);
+					break;
+				case TEACHER:
+					check = pathTea.contains(p);
+					break;
+				default:
+					break;				
+				}
+				
+				if (!check) {
+					redirect(httpRequest, httpResponse, path);
+					return;
 				}
 			}
 		}

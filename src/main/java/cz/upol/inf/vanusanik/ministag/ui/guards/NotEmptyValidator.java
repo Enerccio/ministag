@@ -13,7 +13,7 @@ public class NotEmptyValidator implements Validator {
 	@Override
 	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 		if (value.toString().equals(""))
-			throw new ValidatorException(new FacesMessage("Jméno nesmí být nevyplněno", ""));
+			throw new ValidatorException(new FacesMessage("Hodnota musí být vyplněná", ""));
 	}
 
 }

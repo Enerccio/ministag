@@ -15,7 +15,42 @@
             </ui:define>
 
             <ui:define name="content">
-          		  	
+          		<h:form>
+	                <h:panelGrid columns="2">
+	                    <h:outputLabel for="abbr">Zkratka katedry:</h:outputLabel>
+	                    <h:inputText id="abbr" 
+	                    	value="#{editDepartment.abbr}" >
+	                    	<f:validator validatorId="GUARDNotEmpty" />
+	                    	<f:validator binding="#{GUARDDeptAbbr}" />
+	                    </h:inputText>
+	                    
+	                    <h:outputLabel for="abbr">Název katedry:</h:outputLabel>
+	                    <h:inputText id="name" 
+	                    	value="#{editDepartment.name}" >
+	                    	<f:validator validatorId="GUARDNotEmpty" />
+	                    </h:inputText>
+	                    
+	                    <h:outputLabel for="desc">Popis katedry:</h:outputLabel>
+	                    <h:inputTextarea id="desc" 
+	                    	value="#{editDepartment.desc}" rows="8">
+	                    </h:inputTextarea>
+	                    
+	                    <h:outputLabel for="garants">Garanti:</h:outputLabel>
+	                    <h:selectManyListbox value="#{editDepartment.garants}" id="garants">
+				   			<f:selectItems value="#{editDepartment.allGarants}" var="u"
+				   				itemLabel="#{u.name} ( #{u.login} )" itemValue="#{u.login}" />
+				   		</h:selectManyListbox>
+				   		
+				   		<h:outputLabel for="teachers">Učitelé:</h:outputLabel>
+	                    <h:selectManyListbox value="#{editDepartment.teachers}" id="teachers">
+				   			<f:selectItems value="#{editDepartment.allTeachers}" var="u"
+				   				itemLabel="#{u.name} ( #{u.login} )" itemValue="#{u.login}" />
+				   		</h:selectManyListbox>
+	                </h:panelGrid>
+	                
+	                <h:messages style="color:red;" showDetail="true"/>
+			        <h:commandButton  value="Uložit" action="#{editDepartment.submit()}"/>
+	            </h:form>
             </ui:define>
 
         </ui:composition>
