@@ -23,6 +23,11 @@ public class User extends BasicEntity {
 	private Roles role;
 	
 	private String salt;
+	
+	@Override
+	public String displayShort() {
+		return name;
+	}
 
 	@Override
 	public String getPrimaryKey() {

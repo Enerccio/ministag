@@ -8,5 +8,7 @@ public abstract class BasicEntity {
 	public abstract String getPrimaryKey();
 	public abstract Object getPrimaryKeyValue();
 	public abstract String getMappedName();
+	
+	public abstract String displayShort();
 
 }

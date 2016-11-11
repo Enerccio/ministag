@@ -46,6 +46,11 @@ public class Course extends BasicEntity {
 	private boolean hasExam;
 	
 	private EndingType endingType;
+	
+	@Override
+	public String displayShort() {
+		return shortName;
+	}
 
 	public List<RequiredBlock> getBlocks() {
 		return blocks;

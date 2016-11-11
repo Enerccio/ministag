@@ -41,6 +41,11 @@ public class Department extends BasicEntity {
 	private String name;
 	
 	@Override
+	public String displayShort() {
+		return shortName;
+	}
+	
+	@Override
 	public String getPrimaryKey() {
 		return "shortName";
 	}

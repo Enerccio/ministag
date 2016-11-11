@@ -154,4 +154,8 @@ public class Timetable extends BasicEntity {
 		return "Timetable";
 	}
 	
+	@Override
+	public String displayShort() {
+		return "";
+	}
 }

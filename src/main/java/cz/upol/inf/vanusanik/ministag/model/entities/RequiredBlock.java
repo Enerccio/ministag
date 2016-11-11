@@ -61,6 +61,9 @@ public class RequiredBlock extends BasicEntity {
 		return "RequiredBlock";
 	}
 	
-	
+	@Override
+	public String displayShort() {
+		return "";
+	}
 	
 }

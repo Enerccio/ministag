@@ -58,5 +58,10 @@ public class AppSettings extends BasicEntity {
 	public String getMappedName() {
 		return "AppSettings";
 	}
+
+	@Override
+	public String displayShort() {
+		return "";
+	}
 	
 }
