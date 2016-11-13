@@ -26,6 +26,18 @@ public class Utils {
 		return "";
 	}
 	
+	public String endingType2DisplayLonger(EndingType e) {
+		switch (e) {
+		case COLLOQUIUM:
+			return "Kollokvium";
+		case CREDIT:
+			return "Zápočet";
+		default:
+			break;		
+		}
+		return "";
+	}
+	
 
 	/**
 	 * Returns byte array as hex string

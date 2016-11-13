@@ -14,17 +14,17 @@
 		<div class="innerbox">#{te.shortName}</div>
 		<div class="innerbox">#{te.description}</div>
 		<div class="innerbox">Garanti:
-			<ui:repeat value="#{te.garants}" var="g">
+			<ui:repeat value="#{te.garants}" var="g" varStatus="statusG" >
 				<h:commandLink value="#{g.displayShort()}"
-						action="#{index.select(g)}" varStatus="statusG" />
-				<c:if test="#{statusG.last != true}">,&#160;</c:if>
+						action="#{index.select(g)}"/>
+				<ui:fragment rendered="#{statusG.last != true}">,&#160;</ui:fragment>
 			</ui:repeat>
 		</div>
 		<div class="innerbox">Učitelé:
 			<ui:repeat value="#{te.teachers}" var="t" varStatus="statusU" >
 				<h:commandLink value="#{t.displayShort()}"
 						action="#{index.select(t)}" />
-				<c:if test="#{statusU.last != true}">,&#160;</c:if>
+				<ui:fragment rendered="#{statusU.last != true}">,&#160;</ui:fragment>
 			</ui:repeat>
 		</div>
 		<div class="innerbox">
@@ -51,7 +51,7 @@
 	          			<ui:repeat value="#{c.teachers}" var="t">
 							<h:commandLink value="#{t.displayShort()}"
 									action="#{index.select(t)}" varStatus="statusT2" />
-							<c:if test="#{statusT2.last != true}">,&#160;</c:if>
+							<ui:fragment rendered="#{statusT2.last != true}">,&#160;</ui:fragment>
 						</ui:repeat>
 	          		</h:column>
 	          		<h:column>
@@ -69,7 +69,7 @@
 	          		</h:column>
 	          		<h:column>
 	          			<f:facet name="header">Typ ukončení</f:facet>
-	          			#{utils.endingType2Display(c.endingType)}<c:if test="#{c.hasExam}">+Zk</c:if>
+	          			#{utils.endingType2Display(c.endingType)}<ui:fragment rendered="#{c.hasExam eq true}">+Zk</ui:fragment>
 	          		</h:column>
 		        </h:dataTable>
 			</div>

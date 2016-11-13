@@ -156,7 +156,7 @@ public class Course extends BasicEntity {
 
 	@Override
 	public String getMappedName() {
-		return "TaughClass";
+		return "Course";
 	}
 	
 	

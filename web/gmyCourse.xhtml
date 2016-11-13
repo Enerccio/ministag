@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+    </h:head>
+    <body>
+        <ui:composition template="./templates/masterTemplate.xhtml">
+        
+        	<ui:define name="meta">
+        		<c:if test="${garantChosenDept.currentDepartment == null}">
+        			<meta http-equiv="refresh" content="0;url=gmyDept.xhtml" />
+        		</c:if>
+        	</ui:define>
+
+            <ui:define name="top">
+                <ui:include src="./templates/commonMenu.xhtml "/>
+            </ui:define>
+
+            <ui:define name="content">
+          		<h:form>
+	                <h:panelGrid columns="2">
+	                    <h:outputLabel for="abbr">Zkratka předmětu:</h:outputLabel>
+	                    <h:inputText id="abbr" 
+	                    	value="#{garantCourseEdit.abbr}" >
+	                    	<f:validator validatorId="GUARDNotEmpty" />
+	                    </h:inputText>
+	                    
+	                    <h:outputLabel for="name">Název předmětu:</h:outputLabel>
+	                    <h:inputText id="name" 
+	                    	value="#{garantCourseEdit.name}" >
+	                    	<f:validator validatorId="GUARDNotEmpty" />
+	                    </h:inputText>
+	                    
+	                    <h:outputLabel for="garants">Garant:</h:outputLabel>
+	                    <h:outputLabel id="garants">#{garantCourseEdit.garant.name}</h:outputLabel>
+	                    
+	                    <h:outputLabel for="desc">Popis předmětu:</h:outputLabel>
+	                    <h:inputTextarea id="desc" 
+	                    	value="#{garantCourseEdit.description}" rows="8">
+	                    </h:inputTextarea>
+	                    
+	                    <h:outputLabel for="syllabus">Syllabus:</h:outputLabel>
+	                    <h:inputTextarea id="syllabus" 
+	                    	value="#{garantCourseEdit.syllabus}" rows="8">
+	                    </h:inputTextarea>
+	                    
+	                    <h:outputLabel for="cc">Počet kreditů:</h:outputLabel>
+	                    <h:inputText id="cc" 
+	                    	value="#{garantCourseEdit.creditCount}" >
+	                    </h:inputText>
+				   		
+				   		<h:outputLabel for="ending">Typ ukončení:</h:outputLabel>
+				   		<h:selectOneMenu value="#{garantCourseEdit.endingType}" id="ending">
+					        <f:selectItems value="#{garantCourseEdit.endings}" var="ending"
+					                       itemLabel="#{utils.endingType2DisplayLonger(ending)}" 
+					                       itemValue="#{ending}" />
+					    </h:selectOneMenu>
+					    
+					    <h:outputLabel for="zk">Zkouška:</h:outputLabel>
+					    <h:selectBooleanCheckbox id="zk" value="#{garantCourseEdit.exam}" />
+	                </h:panelGrid>
+	                
+	                <h:messages style="color:red;" showDetail="true"/>
+			        <h:commandButton  value="Uložit" action="#{garantCourseEdit.submit()}"/>
+	            </h:form>
+            </ui:define>
+
+        </ui:composition>
+    </body>
+</html>

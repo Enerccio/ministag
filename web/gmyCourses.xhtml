@@ -3,19 +3,75 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
     <h:head>
     </h:head>
     <body>
         <ui:composition template="./templates/masterTemplate.xhtml">
+        
+        	<ui:define name="meta">
+        		<c:if test="${garantChosenDept.currentDepartment == null}">
+        			<meta http-equiv="refresh" content="0;url=gmyDept.xhtml" />
+        		</c:if>
+        	</ui:define>
 
             <ui:define name="top">
                 <ui:include src="./templates/commonMenu.xhtml "/>
             </ui:define>
 
             <ui:define name="content">
+            	<div>
+             		<h:form>
+             			<h:commandButton action="#{garant.editCourse(null)}" value="Přidat předmět" />
+             		</h:form>
+             	</div>
              	<h:form>
-             		bla
+             		<c:if test="${garantChosenDept.currentDepartment != null}">
+	             		<h:dataTable value="#{garantChosenDept.currentDepartment.courses}" var="c">
+			          		<h:column>
+			          			<f:facet name="header">Zkratka</f:facet>
+			          			<h:commandLink value="#{c.displayShort()}"
+									action="#{garant.editCourse(c)}" />
+			          		</h:column>
+			          		<h:column>
+			          			<f:facet name="header">Jméno předmětu</f:facet>
+			          			#{c.name}
+			          		</h:column>
+			          		<h:column>
+			          			<f:facet name="header">Garant</f:facet>
+			          			#{c.garant.name}
+			          		</h:column>
+			          		<h:column>
+			          			<f:facet name="header">Učitelé</f:facet>
+			          			<ui:repeat value="#{c.teachers}" var="t">
+									#{t.displayShort()}
+									<ui:fragment rendered="#{statusT2.last != true}">,&#160;</ui:fragment>
+								</ui:repeat>
+			          		</h:column>
+			          		<h:column>
+			          			<f:facet name="header">Vyučovací bloky</f:facet>
+			          			<ui:repeat value="#{c.blocks}" var="b">
+			          				<div>
+										<h:commandLink value="#{b.displayShort()}"
+											action="#{garant.editBlock(c, b)}" />
+									</div>
+								</ui:repeat>
+								<div>
+									<h:commandLink value="Přidat blok"
+											action="#{garant.editBlock(c, null)}" />
+								</div>
+			          		</h:column>
+			          		<h:column>
+			          			<f:facet name="header">Počet kreditů</f:facet>
+			          			#{c.creditCount}
+			          		</h:column>
+			          		<h:column>
+			          			<f:facet name="header">Typ ukončení</f:facet>
+			          			#{utils.endingType2Display(c.endingType)}<ui:fragment rendered="#{c.hasExam eq true}">+Zk</ui:fragment>
+			          		</h:column>
+			        	</h:dataTable>
+			        </c:if>
              	</h:form>
             </ui:define>
 

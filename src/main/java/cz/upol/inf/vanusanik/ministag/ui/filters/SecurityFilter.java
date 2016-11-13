@@ -41,6 +41,8 @@ public class SecurityFilter implements Filter {
 		
 		pathGar.add("/gmyDept.xhtml");
 		pathGar.add("/gmyCourses.xhtml");
+		pathGar.add("/gmyCourse.xhtml");
+		pathGar.add("/gBlocks.xhtml");
 		
 		allPaths.addAll(pathAdm);
 		allPaths.addAll(pathGar);
