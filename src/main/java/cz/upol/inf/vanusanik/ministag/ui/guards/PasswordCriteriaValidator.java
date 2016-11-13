@@ -9,7 +9,7 @@ import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import cz.upol.inf.vanusanik.ministag.ui.services.Security.AddEditUserRequest.CurrentlyEditedUser;
+import cz.upol.inf.vanusanik.ministag.ui.services.SecurityController.AddEditUserRequest.CurrentlyEditedUser;
 
 @Named("GUARDPasswordCriteria")
 @ApplicationScoped

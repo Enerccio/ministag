@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cz.upol.inf.vanusanik.ministag.model.entities.Roles;
 import cz.upol.inf.vanusanik.ministag.model.entities.User;
-import cz.upol.inf.vanusanik.ministag.ui.services.ActiveSession;
+import cz.upol.inf.vanusanik.ministag.ui.services.SecurityController.ActiveSession;
 
 public class SecurityFilter implements Filter {
 	
@@ -32,13 +32,15 @@ public class SecurityFilter implements Filter {
 	
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
-		// null means no role needed but still logged in check is required
 		
 		pathAdm.add("/admApp.xhtml");
 		pathAdm.add("/admDept.xhtml");
 		pathAdm.add("/admEditDept.xhtml");
 		pathAdm.add("/admUser.xhtml");
 		pathAdm.add("/admUsers.xhtml");
+		
+		pathGar.add("/gmyDept.xhtml");
+		pathGar.add("/gmyCourses.xhtml");
 		
 		allPaths.addAll(pathAdm);
 		allPaths.addAll(pathGar);

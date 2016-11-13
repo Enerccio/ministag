@@ -38,13 +38,6 @@ public class DepartmentController {
 		
 	}
 	
-	@Named("activeCourse")
-	@SessionScoped
-	public static class ActiveCourse implements Serializable {
-		private static final long serialVersionUID = -1751329860707450138L;
-		
-	}
-	
 	@Named("departmentList")
 	@RequestScoped
 	public static class DepartmentList {

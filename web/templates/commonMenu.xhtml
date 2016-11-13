@@ -23,9 +23,17 @@
 						<li><a href="schedule.xhtml">Rozvrh</a></li>
 					</c:if>
 					
-					<!-- spravce -->
+					<c:if
+						test="#{security.hasRole('GARANT')}">
+						<!-- garant -->
+						<li>
+							<a href="gmyDept.xhtml">Mé katedry</a>
+						</li>
+					</c:if>
+					
 					<c:if
 						test="#{security.hasRole('ADMIN')}">
+						<!-- spravce -->
 						<li>
 							<a href="admApp.xhtml">Správa aplikace</a> <span class="caret"></span>
 							<div>

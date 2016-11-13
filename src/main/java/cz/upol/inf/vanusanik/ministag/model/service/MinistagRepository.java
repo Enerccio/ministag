@@ -135,6 +135,19 @@ public class MinistagRepository {
 			
 		});
 	}
+
+	public List<Department> getDepartmentByGarant(final User garant) {
+		return inTransaction(new InTransaction(em) {
+
+			@Override
+			Object doInTransaction() throws Exception {
+				return em.createQuery("SELECT d FROM Department d WHERE ? in d.garant", Department.class)
+						.setParameter(1, garant)
+						.getResultList();
+			}
+			
+		});
+	}
 }
 
 abstract class InTransaction {

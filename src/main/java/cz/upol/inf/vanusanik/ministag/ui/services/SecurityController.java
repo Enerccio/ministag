@@ -3,6 +3,8 @@ package cz.upol.inf.vanusanik.ministag.ui.services;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,10 +15,11 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import cz.upol.inf.vanusanik.ministag.model.entities.AppSettings;
 import cz.upol.inf.vanusanik.ministag.model.entities.Roles;
 import cz.upol.inf.vanusanik.ministag.model.entities.User;
 import cz.upol.inf.vanusanik.ministag.model.service.MinistagRepository;
-import cz.upol.inf.vanusanik.ministag.ui.services.Security.AddEditUserRequest.CurrentlyEditedUser;
+import cz.upol.inf.vanusanik.ministag.ui.services.SecurityController.AddEditUserRequest.CurrentlyEditedUser;
 import cz.upol.inf.vanusanik.ministag.ui.tools.Action;
 import cz.upol.inf.vanusanik.ministag.ui.tools.Utils;
 
@@ -26,7 +29,7 @@ import cz.upol.inf.vanusanik.ministag.ui.tools.Utils;
  * Handles security of the application. Resolves logins, logouts, new users, change passwords,
  * logged-in check and roles check.
  */
-public class Security {
+public class SecurityController {
 	
 	@PostConstruct
 	/**
@@ -48,6 +51,23 @@ public class Security {
 			}
 		}
 	}
+	
+	@SessionScoped
+	@Named("currentSession")
+	public static class ActiveSession implements Serializable {
+		private static final long serialVersionUID = -3755950572410738849L;
+		private User currentUser;
+
+		public User getCurrentUser() {
+			return currentUser;
+		}
+
+		public void setCurrentUser(User currentUser) {
+			this.currentUser = currentUser;
+		}
+		
+	}
+
 
 	@Named("loginTarget")
 	@RequestScoped
@@ -74,7 +94,7 @@ public class Security {
 	public static class LoginRequest {
 		
 		@Inject
-		private Security security;
+		private SecurityController security;
 		
 		private String login, password;
 		private boolean loginFailure, loginNeeded;
@@ -293,6 +313,69 @@ public class Security {
 			repository.remove(repository.find(id, User.class));
 			return "";
 		}
+	}
+	
+	@Named("admApp")
+	@RequestScoped
+	public static class AdmAppRequest {
+		
+		@Inject 
+		private MinistagRepository repository;
+
+		@Inject
+		private SecurityController security;
+		
+		@PostConstruct
+		public void init() {
+			AppSettings as = repository.getAppSettings();
+			startYear = as.getStartOfYear().getTime();
+			numWeeks = as.getNumWeeks();
+		}
+		
+		private Date startYear;
+		
+		private int numWeeks;
+		
+		public SecurityController getSecurity() {
+			return security;
+		}
+
+		public void setSecurity(SecurityController security) {
+			this.security = security;
+		}
+
+		public Date getStartYear() {
+			return startYear;
+		}
+
+		public void setStartYear(Date startYear) {
+			this.startYear = startYear;
+		}
+
+		public int getNumWeeks() {
+			return numWeeks;
+		}
+
+		public void setNumWeeks(int numWeeks) {
+			this.numWeeks = numWeeks;
+		}
+
+		public String save() {
+			return security.runPrivileged(new Action() {
+				
+				@Override
+				public String run() {
+					AppSettings as = repository.getAppSettings();
+					Calendar c = Calendar.getInstance();
+					c.setTime(startYear);
+					as.setNumWeeks(getNumWeeks());
+					as.setStartOfYear(c);
+					repository.save(as);
+					return Utils.redirect("Nastavení aplikace ulženo", "/admApp.xhtml");
+				}
+			}, Roles.ADMIN);
+		}
+		
 	}
 	
 	@Inject

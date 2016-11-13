@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+    </h:head>
+    <body>
+        <ui:composition template="./templates/masterTemplate.xhtml">
+
+            <ui:define name="top">
+                <ui:include src="./templates/commonMenu.xhtml "/>
+            </ui:define>
+
+            <ui:define name="content">
+             	<h:form>
+             		<div id="displayTable">
+	             		<h:dataTable value="#{departmentList.departments}" var="dept">
+	                		<h:column>
+	                			<f:facet name="header">Zkratka</f:facet>
+	                			<h:commandLink value="#{dept.shortName}"
+									action="#{garant.editCoursesIn(dept)}" />	                			
+	                		</h:column>
+	                		<h:column>
+	                			<f:facet name="header">Název katedry</f:facet>
+	                			<span class="nobr">#{dept.name}</span>
+	                		</h:column>
+	                		<h:column>
+	                			<f:facet name="header">Garanti</f:facet>
+	               				<h:dataTable value="#{dept.garants}" var="user">
+	               					<h:column>
+	               						<span class="nobr">#{user.name}</span>
+	               					</h:column>
+	               				</h:dataTable>
+	                		</h:column>
+	                		<h:column>
+	                			<f:facet name="header">Učitelé</f:facet>
+	                			<h:dataTable value="#{dept.teachers}" var="user">
+	               					<h:column>
+	               						<span class="nobr">#{user.name}</span>
+	               					</h:column>
+	               				</h:dataTable>
+	                		</h:column>
+	                	</h:dataTable>
+	                </div>
+             	</h:form>
+            </ui:define>
+
+        </ui:composition>
+    </body>
+</html>
