@@ -173,6 +173,7 @@ public class GarantController {
 				c = repository.find(ac.getCurrentCourse().getId(), Course.class);
 			} else {
 				c = new Course();
+				c.setDept(ad.getCurrentDepartment());
 				newCourse = true;
 			}
 			
@@ -229,5 +230,13 @@ public class GarantController {
 		ac.setCurrentCourse(c);
 		ab.setCurrentBlock(b);
 		return Utils.appendRedirect("gTimetable.xhtml");
+	}
+	
+	public String delete(Course c) {
+		c.getDept().getCourses().remove(c);
+		Department d = c.getDept();
+		repository.save(d);
+		repository.remove(c);
+		return "";
 	}
 }

@@ -70,6 +70,10 @@
 			          			<f:facet name="header">Typ ukončení</f:facet>
 			          			#{utils.endingType2Display(c.endingType)}<ui:fragment rendered="#{c.hasExam eq true}">+Zk</ui:fragment>
 			          		</h:column>
+			          		<h:column>
+			          			<h:commandLink value="Smazat předmět"
+											action="#{garant.delete(c)}" />
+			          		</h:column>
 			        	</h:dataTable>
 			        </c:if>
              	</h:form>

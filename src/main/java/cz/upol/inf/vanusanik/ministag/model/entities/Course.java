@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -29,6 +30,9 @@ public class Course extends BasicEntity {
 	
 	@Column(length = 10)
 	private String shortName;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Department dept; 
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "class_garant", nullable=false)
@@ -157,6 +161,14 @@ public class Course extends BasicEntity {
 	@Override
 	public String getMappedName() {
 		return "Course";
+	}
+
+	public Department getDept() {
+		return dept;
+	}
+
+	public void setDept(Department dept) {
+		this.dept = dept;
 	}
 	
 	

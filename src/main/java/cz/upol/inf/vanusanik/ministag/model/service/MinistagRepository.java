@@ -148,6 +148,21 @@ public class MinistagRepository {
 			
 		});
 	}
+
+	public boolean uniqueCourseName(final String shortName, final String value) {
+		return inTransaction(new InTransaction(em) {
+
+			@Override
+			Object doInTransaction() throws Exception {
+				return em.createQuery("SELECT COUNT(distinct c) FROM Department d join d.courses c "
+							+ "WHERE d.shortName = ?1 AND c.shortName = ?2", Long.class)
+						.setParameter(1, shortName)
+						.setParameter(2, value)
+						.getSingleResult().equals(0L);
+			}
+			
+		});
+	}
 }
 
 abstract class InTransaction {

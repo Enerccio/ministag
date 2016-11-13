@@ -27,6 +27,7 @@
 	                    <h:inputText id="abbr" 
 	                    	value="#{garantCourseEdit.abbr}" >
 	                    	<f:validator validatorId="GUARDNotEmpty" />
+	                    	<f:validator binding="#{GUARDCourseAbbr}" />
 	                    </h:inputText>
 	                    
 	                    <h:outputLabel for="name">Název předmětu:</h:outputLabel>
