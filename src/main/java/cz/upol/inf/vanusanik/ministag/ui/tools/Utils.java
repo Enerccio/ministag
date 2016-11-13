@@ -1,6 +1,10 @@
 package cz.upol.inf.vanusanik.ministag.ui.tools;
 
 import java.security.MessageDigest;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
@@ -9,6 +13,7 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
 import cz.upol.inf.vanusanik.ministag.model.entities.EndingType;
+import cz.upol.inf.vanusanik.ministag.model.entities.TimetableType;
 
 @ApplicationScoped
 @Named("utils")
@@ -38,6 +43,35 @@ public class Utils {
 		return "";
 	}
 	
+	public String timetableType2Display(TimetableType t) {
+		switch (t) {
+		case LECTURE:
+			return "Přednáška";
+		case SEMINAR:
+			return "Seminář";
+		case SPECIAL:
+			return "Cvičení";
+		default:
+			break;
+		
+		}
+		return "";
+	}
+	
+	public String day2display(int day) {
+		switch (day) {
+		case 0: return "Pondělí";
+		case 1: return "Uterý";
+		case 2: return "Středa";
+		case 3: return "Čtvrtek";
+		case 4: return "Pátek";
+		}
+		return "";
+	}
+	
+	public List<Integer> getAllDays() {
+		return Arrays.asList(new Integer[]{0, 1, 2, 3, 4});
+	}
 
 	/**
 	 * Returns byte array as hex string
@@ -93,4 +127,9 @@ public class Utils {
 		return "redirect.xhtml?redirectTo=" + uri + "&msg="+message;
 	}
 
+	public static Date calendarData(int h, int m) {
+		Calendar c = Calendar.getInstance();
+		c.set(0, 0, 0, h, m, 0);
+		return c.getTime();
+	}
 }

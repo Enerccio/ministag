@@ -1,0 +1,18 @@
+<ui:component
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:cc="http://java.sun.com/jsf/composite"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <cc:interface componentType="inputTime">
+        <cc:attribute name="value" type="java.util.Date" shortDescription="The selected time. Defaults to now." />
+    </cc:interface>
+    
+    <cc:implementation>
+        <span id="#{cc.clientId}" style="white-space:nowrap">
+            <h:inputText id="hour" a:style="width:30px;" binding="#{cc.hour}" maxlength="2" converter="javax.faces.Integer" />h
+            <h:inputText id="minute" a:style="width:30px;" binding="#{cc.minute}" maxlength="2" converter="javax.faces.Integer" />
+        </span>
+    </cc:implementation>
+</ui:component>

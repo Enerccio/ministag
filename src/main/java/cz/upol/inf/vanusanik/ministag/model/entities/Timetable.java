@@ -1,7 +1,7 @@
 package cz.upol.inf.vanusanik.ministag.model.entities;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -16,8 +16,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "timetable")
@@ -45,19 +43,9 @@ public class Timetable extends BasicEntity {
 		    inverseJoinColumns=@JoinColumn(name="user_id", referencedColumnName="ID"))
 	private List<User> students = new ArrayList<User>();
 	
-	/* Unix time differences!*/
-	private int timeFrom;
-	
-	/* Unix time differences!*/
-	private int timeTo;
-	
-	private ScheduleType scheduleType;
-	
-	@Temporal(TemporalType.DATE)
-	private Calendar startWeek;
-	
-	@Temporal(TemporalType.DATE)
-	private Calendar endWeek;
+	private Date classFrom;
+	private Date classTo;
+	private int day;
 	
 	public Long getId() {
 		return id;
@@ -99,46 +87,6 @@ public class Timetable extends BasicEntity {
 		this.students = students;
 	}
 
-	public int getTimeFrom() {
-		return timeFrom;
-	}
-
-	public void setTimeFrom(int timeFrom) {
-		this.timeFrom = timeFrom;
-	}
-
-	public int getTimeTo() {
-		return timeTo;
-	}
-
-	public void setTimeTo(int timeTo) {
-		this.timeTo = timeTo;
-	}
-
-	public ScheduleType getScheduleType() {
-		return scheduleType;
-	}
-
-	public void setScheduleType(ScheduleType scheduleType) {
-		this.scheduleType = scheduleType;
-	}
-
-	public Calendar getStartWeek() {
-		return startWeek;
-	}
-
-	public void setStartWeek(Calendar startWeek) {
-		this.startWeek = startWeek;
-	}
-
-	public Calendar getEndWeek() {
-		return endWeek;
-	}
-
-	public void setEndWeek(Calendar endWeek) {
-		this.endWeek = endWeek;
-	}
-
 	@Override
 	public String getPrimaryKey() {
 		return "id";
@@ -157,5 +105,29 @@ public class Timetable extends BasicEntity {
 	@Override
 	public String displayShort() {
 		return "";
+	}
+
+	public Date getClassFrom() {
+		return classFrom;
+	}
+
+	public void setClassFrom(Date classFrom) {
+		this.classFrom = classFrom;
+	}
+
+	public Date getClassTo() {
+		return classTo;
+	}
+
+	public void setClassTo(Date classTo) {
+		this.classTo = classTo;
+	}
+
+	public int getDay() {
+		return day;
+	}
+
+	public void setDay(int day) {
+		this.day = day;
 	}
 }

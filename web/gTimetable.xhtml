@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:my="http://java.sun.com/jsf/composite/components">
+    <h:head>
+    </h:head>
+    <body>
+        <ui:composition template="./templates/masterTemplate.xhtml">
+        
+        	<ui:define name="meta">
+        		<c:if test="${garantChosenDept.currentDepartment == null}">
+        			<meta http-equiv="refresh" content="0;url=gmyDept.xhtml" />
+        		</c:if>
+        		<c:if test="${garantChosenCourse.currentCourse == null}">
+        			<meta http-equiv="refresh" content="0;url=gmyDept.xhtml" />
+        		</c:if>
+        	</ui:define>
+
+            <ui:define name="top">
+                <ui:include src="./templates/commonMenu.xhtml "/>
+            </ui:define>
+
+            <ui:define name="content">
+          		<h:form>
+	                <h:panelGrid columns="2">
+	                    <h:outputLabel for="name">Název bloku:</h:outputLabel>
+	                    <h:inputText id="name" 
+	                    	value="#{garantEditBlock.blockId}" >
+	                    	<f:validator validatorId="GUARDNotEmpty" />
+	                    </h:inputText>
+	                    
+	                    <h:outputLabel for="course">Předmět:</h:outputLabel>
+	                    <h:outputLabel id="course">#{garantEditBlock.courseName}</h:outputLabel>
+	                    
+	                    <h:outputLabel for="tt">Časové plány:</h:outputLabel>
+	                    <h:dataTable id="tt" value="#{garantEditBlock.timetables}" var="t">
+			          		<h:column>
+			          			<f:facet name="header">Typ</f:facet>				          			
+			          			<h:selectOneMenu value="#{t.type}">
+							        <f:selectItems value="#{garantEditBlock.timetableTypes}" var="ttype"
+							                       itemLabel="#{utils.timetableType2Display(ttype)}" 
+							                       itemValue="#{ttype}" />
+							    </h:selectOneMenu>
+			          		</h:column>
+			          		
+			          		<h:column>
+			          			<f:facet name="header">Vyučující</f:facet>
+			          			<h:selectOneMenu value="#{t.teacher}" converter="#{ConverterUser}">
+							        <f:selectItems value="#{garantEditBlock.allTeachers}" var="teacher"
+							                       itemLabel="#{teacher.name}" 
+							                       itemValue="#{teacher}" />
+							    </h:selectOneMenu>
+			          		</h:column>
+			          		
+			          		<h:column>
+			          			<f:facet name="header">Den</f:facet>
+			          			<h:selectOneMenu value="#{t.day}">
+							        <f:selectItems value="#{utils.allDays}" var="d"
+							                       itemLabel="#{utils.day2display(d)}" 
+							                       itemValue="#{d}" />
+							    </h:selectOneMenu>
+			          		</h:column>
+			          		
+			          		<h:column>
+			          			<f:facet name="header">Od</f:facet>
+			          			<my:inputTime value="#{t.classFrom}" />
+			          		</h:column>
+			          		
+			          		<h:column>
+			          			<f:facet name="header">Do</f:facet>
+			          			<my:inputTime value="#{t.classTo}" />
+			          		</h:column>
+			          		      		
+			          		<h:column>
+			    				<h:commandButton  value="Upravit" action="#{garantEditBlock.modify(t)}"/>
+			          		</h:column>      		
+			          		
+			          		<h:column>
+			    				<h:commandButton  value="Odstranit" action="#{garantEditBlock.delete(t)}"/>
+			          		</h:column>
+			          	</h:dataTable>
+			          	
+			          	<h:outputLabel for="ttadd">Časové plány - přidat:</h:outputLabel>
+		        		<h:panelGrid id="ttadd" columns="2">
+		        			<h:outputLabel for="timetabletype">Typ:</h:outputLabel>
+		        			<h:selectOneMenu id="timetabletype" value="#{garantEditBlock.type}">
+						        <f:selectItems value="#{garantEditBlock.timetableTypes}" var="ttype"
+						                       itemLabel="#{utils.timetableType2Display(ttype)}" 
+						                       itemValue="#{ttype}" />
+						    </h:selectOneMenu>
+						    
+						    <h:outputLabel for="timetableteacher">Učitel:</h:outputLabel>
+						    <h:selectOneMenu id="timetableteacher" value="#{garantEditBlock.teacher}">
+						        <f:selectItems value="#{garantEditBlock.allTeachers}" var="teacher"
+						                       itemLabel="#{teacher.name}" 
+						                       itemValue="#{teacher.login}" />
+						    </h:selectOneMenu>
+						    
+						    <h:outputLabel for="timetableday">Den:</h:outputLabel>
+		          			<h:selectOneMenu id="timetableday" value="#{garantEditBlock.day}">
+						        <f:selectItems value="#{utils.allDays}" var="d"
+						                       itemLabel="#{utils.day2display(d)}" 
+						                       itemValue="#{d}" />
+						    </h:selectOneMenu>
+						    
+						    <h:outputLabel for="ttablefrom">Čas od:</h:outputLabel>
+						    <my:inputTime id="ttablefrom" value="#{garantEditBlock.classFrom}" />
+						    
+						    <h:outputLabel for="ttableto">Čas do:</h:outputLabel>
+						    <my:inputTime id="ttableto" value="#{garantEditBlock.classTo}" />
+			        	</h:panelGrid>
+			        	<h:outputLabel for="ttaddb"></h:outputLabel>
+			        	<h:commandButton id="ttaddb" value="Přidat" action="#{garantEditBlock.add()}"/>
+			        	 
+	                </h:panelGrid>
+	                
+	                <h:messages style="color:red;" showDetail="true"/>
+			        <h:commandButton  value="Uložit" action="#{garantEditBlock.submit()}"/>
+	            </h:form>
+            </ui:define>
+
+        </ui:composition>
+    </body>
+</html>

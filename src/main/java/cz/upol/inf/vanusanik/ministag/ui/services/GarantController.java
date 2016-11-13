@@ -3,6 +3,7 @@ package cz.upol.inf.vanusanik.ministag.ui.services;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -17,6 +18,7 @@ import cz.upol.inf.vanusanik.ministag.model.entities.Department;
 import cz.upol.inf.vanusanik.ministag.model.entities.EndingType;
 import cz.upol.inf.vanusanik.ministag.model.entities.RequiredBlock;
 import cz.upol.inf.vanusanik.ministag.model.entities.Timetable;
+import cz.upol.inf.vanusanik.ministag.model.entities.TimetableType;
 import cz.upol.inf.vanusanik.ministag.model.entities.User;
 import cz.upol.inf.vanusanik.ministag.model.service.MinistagRepository;
 import cz.upol.inf.vanusanik.ministag.ui.services.SecurityController.ActiveSession;
@@ -196,6 +198,174 @@ public class GarantController {
 				ad.setCurrentDepartment(repository.save(d));
 			}
 			return Utils.appendRedirect("gmyCourses.xhtml");
+		}
+	}
+	
+	@SessionScoped
+	@Named("garantEditBlock")
+	public static class GarantEditBlock implements Serializable {
+		private static final long serialVersionUID = -8455586560856921293L;
+		
+		@Inject private ChosenCourse ac;
+		@Inject private ChosenDepartment ad;
+		@Inject private ChosenBlock ab;
+		@Inject private MinistagRepository repository;
+		@Inject private ActiveSession as;
+		
+		private String blockId = "";
+		private String courseName = "";
+		private List<Timetable> timetables = new ArrayList<Timetable>();
+		
+		private List<Timetable> timetables2delete = new ArrayList<Timetable>();
+		
+		private String teacher;
+		private TimetableType type = TimetableType.LECTURE;
+		private Date classFrom = Utils.calendarData(8, 0);
+		private Date classTo = Utils.calendarData(9, 45);
+		private int day = 0;
+		
+		@PostConstruct
+		public void init() {
+			teacher = as.getCurrentUser().getLogin();
+			courseName = ad.getCurrentDepartment().getShortName() + "/" + ac.getCurrentCourse().getShortName();
+			timetables.clear();
+			timetables2delete.clear();
+			if (ab.getCurrentBlock() != null) {
+				timetables.clear();
+				timetables.addAll(ab.getCurrentBlock().getTimetableChoices());
+				blockId = ab.getCurrentBlock().getBlockDisplayName();
+			}
+		}
+		
+		public String submit() {
+			RequiredBlock rb;
+			if (ab.getCurrentBlock() == null) {
+				rb = new RequiredBlock();
+			} else {
+				rb = ab.getCurrentBlock();
+			}
+			rb.setBlockDisplayName(getBlockId());
+			rb.setTaughtClass(ac.getCurrentCourse());
+			rb = repository.save(rb);
+			
+			for (Timetable td : timetables2delete) {
+				if (td.getBlock() != null) {
+					rb.getTimetableChoices().remove(td);
+					repository.remove(td);
+				}
+			}
+			
+			for (Timetable td : timetables) {
+				if (td.getBlock() == null) {
+					td.setBlock(rb);
+					td = repository.save(td);
+					rb.getTimetableChoices().add(td);
+				} else {
+					repository.save(td);
+				}
+			}
+			
+			ab.setCurrentBlock(repository.save(rb));
+			init();
+			return Utils.appendRedirect("gmyCourses.xhtml");
+		}
+		
+		public String add() {
+			Timetable t = new Timetable();
+			t.setClassFrom(getClassFrom());
+			t.setClassTo(getClassTo());
+			t.setTeacher(repository.find(getTeacher(), User.class));
+			t.setType(getType());
+			t.setDay(getDay());
+			timetables.add(t);
+			
+			type = TimetableType.LECTURE;
+			teacher = null;
+			classFrom = Utils.calendarData(8, 0);
+			classTo = Utils.calendarData(9, 45);
+			return "";
+		}
+		
+		public String modify(Timetable t) {
+			return "";
+		}
+		
+		public String delete(Timetable t) {
+			timetables2delete.add(t);
+			timetables.remove(t);
+			return "";
+		}
+
+		public String getBlockId() {
+			return blockId;
+		}
+
+		public void setBlockId(String blockId) {
+			this.blockId = blockId;
+		}
+
+		public String getCourseName() {
+			return courseName;
+		}
+
+		public void setCourseName(String courseName) {
+			this.courseName = courseName;
+		}
+
+		public List<Timetable> getTimetables() {
+			return timetables;
+		}
+
+		public void setTimetables(List<Timetable> timetables) {
+			this.timetables = timetables;
+		}
+
+		public String getTeacher() {
+			return teacher;
+		}
+
+		public void setTeacher(String teacher) {
+			this.teacher = teacher;
+		}
+
+		public TimetableType getType() {
+			return type;
+		}
+
+		public void setType(TimetableType type) {
+			this.type = type;
+		}
+
+		public Date getClassFrom() {
+			return classFrom;
+		}
+
+		public void setClassFrom(Date classFrom) {
+			this.classFrom = classFrom;
+		}
+
+		public Date getClassTo() {
+			return classTo;
+		}
+
+		public void setClassTo(Date classTo) {
+			this.classTo = classTo;
+		}
+		
+		public List<TimetableType> getTimetableTypes() {
+			return new ArrayList<TimetableType>(Arrays.asList(TimetableType.values()));
+		}
+		
+		public List<User> getAllTeachers() {
+			return ad.getCurrentDepartment().getTeachers();
+		}
+
+		public int getDay() {
+			return day;
+		}
+
+		public void setDay(int day) {
+			this.day = day;
 		}
 	}
 

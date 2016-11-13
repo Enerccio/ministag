@@ -41,16 +41,16 @@ public class MinistagRepository {
 			
 			@Override
 			Object doInTransaction() throws Exception {
-				try {
-					if (em.contains(entity)) {
-						return em.merge(entity);
-					} else {
-						em.persist(entity);
-						return entity;
-					}
-				} finally {
+				if (em.contains(entity)) {
+					Object o = em.merge(entity);
 					em.flush();
+					return o;
+				} else {
+					em.persist(entity);
+					em.flush();
+					return entity;
 				}
+				
 			}
 		});		
 	}
