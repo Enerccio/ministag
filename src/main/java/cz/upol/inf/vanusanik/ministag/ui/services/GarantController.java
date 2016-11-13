@@ -16,6 +16,7 @@ import cz.upol.inf.vanusanik.ministag.model.entities.Course;
 import cz.upol.inf.vanusanik.ministag.model.entities.Department;
 import cz.upol.inf.vanusanik.ministag.model.entities.EndingType;
 import cz.upol.inf.vanusanik.ministag.model.entities.RequiredBlock;
+import cz.upol.inf.vanusanik.ministag.model.entities.Timetable;
 import cz.upol.inf.vanusanik.ministag.model.entities.User;
 import cz.upol.inf.vanusanik.ministag.model.service.MinistagRepository;
 import cz.upol.inf.vanusanik.ministag.ui.services.SecurityController.ActiveSession;
@@ -234,8 +235,13 @@ public class GarantController {
 	
 	public String delete(Course c) {
 		c.getDept().getCourses().remove(c);
-		Department d = c.getDept();
-		repository.save(d);
+		repository.save(c.getDept());
+		for (RequiredBlock b : c.getBlocks()) {
+			for (Timetable t : b.getTimetableChoices()) {
+				repository.remove(t);
+			}
+			repository.remove(b);
+		}
 		repository.remove(c);
 		return "";
 	}

@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -37,7 +38,7 @@ public class Department extends BasicEntity {
 	    inverseJoinColumns=@JoinColumn(name="user_id", referencedColumnName="ID"))
 	private List<User> teachers = new ArrayList<User>();
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 		name="dept_courses",
 	    joinColumns=@JoinColumn(name="dept_id", referencedColumnName="ID"),
