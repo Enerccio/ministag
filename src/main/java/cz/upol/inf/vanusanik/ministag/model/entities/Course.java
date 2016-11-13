@@ -1,7 +1,9 @@
 package cz.upol.inf.vanusanik.ministag.model.entities;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,6 +48,16 @@ public class Course extends BasicEntity {
 	private boolean hasExam;
 	
 	private EndingType endingType;
+	
+	public List<User> getTeachers() {
+		Set<User> teachers = new HashSet<User>();
+		for (RequiredBlock rb : blocks) {
+			for (Timetable t : rb.getTimetableChoices()) {
+				teachers.add(t.getTeacher());
+			}
+		}
+		return new ArrayList<User>(teachers);
+	}
 	
 	@Override
 	public String displayShort() {

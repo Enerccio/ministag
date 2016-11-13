@@ -1,0 +1,78 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+   	<!-- Department fragment BODY -->
+   	
+   	<c:set var="te" scope="request" 
+		value="#{indexSearch.currentSearchStack.get(indexSearch.currentSearchStack.size()-1)}"/>
+		
+	<!-- Top element is department -->
+	<div class="displaybox">
+		<div class="innerbox">#{te.shortName}</div>
+		<div class="innerbox">#{te.description}</div>
+		<div class="innerbox">Garanti:
+			<ui:repeat value="#{te.garants}" var="g">
+				<h:commandLink value="#{g.displayShort()}"
+						action="#{index.select(g)}" varStatus="statusG" />
+				<c:if test="#{statusG.last != true}">,&#160;</c:if>
+			</ui:repeat>
+		</div>
+		<div class="innerbox">Učitelé:
+			<ui:repeat value="#{te.teachers}" var="t" varStatus="statusU" >
+				<h:commandLink value="#{t.displayShort()}"
+						action="#{index.select(t)}" />
+				<c:if test="#{statusU.last != true}">,&#160;</c:if>
+			</ui:repeat>
+		</div>
+		<div class="innerbox">
+			<div>Vypsané předměty:</div>
+			<div>
+				<h:dataTable value="#{te.courses}" var="c"
+						rendered="#{not empty te.courses}">
+	          		<h:column>
+	          			<f:facet name="header">Zkratka</f:facet>
+	          			<h:commandLink value="#{c.displayShort()}"
+							action="#{index.select(c)}" />
+	          		</h:column>
+	          		<h:column>
+	          			<f:facet name="header">Jméno předmětu</f:facet>
+	          			#{c.name}
+	          		</h:column>
+	          		<h:column>
+	          			<f:facet name="header">Garant</f:facet>
+	          			<h:commandLink value="#{c.garant.name}"
+							action="#{index.select(c.garant)}" />
+	          		</h:column>
+	          		<h:column>
+	          			<f:facet name="header">Učitelé</f:facet>
+	          			<ui:repeat value="#{c.teachers}" var="t">
+							<h:commandLink value="#{t.displayShort()}"
+									action="#{index.select(t)}" varStatus="statusT2" />
+							<c:if test="#{statusT2.last != true}">,&#160;</c:if>
+						</ui:repeat>
+	          		</h:column>
+	          		<h:column>
+	          			<f:facet name="header">Vyučovací bloky</f:facet>
+	          			<ui:repeat value="#{c.blocks}" var="b">
+	          				<div>
+								<h:commandLink value="#{b.displayShort()}"
+										action="#{index.select(b)}" />
+							</div>
+						</ui:repeat>
+	          		</h:column>
+	          		<h:column>
+	          			<f:facet name="header">Počet kreditů</f:facet>
+	          			#{c.creditCount}
+	          		</h:column>
+	          		<h:column>
+	          			<f:facet name="header">Typ ukončení</f:facet>
+	          			#{utils.endingType2Display(c.endingType)}<c:if test="#{c.hasExam}">+Zk</c:if>
+	          		</h:column>
+		        </h:dataTable>
+			</div>
+	   	</div>
+	</div>
+</ui:composition>

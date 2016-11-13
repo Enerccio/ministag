@@ -2,10 +2,30 @@ package cz.upol.inf.vanusanik.ministag.ui.tools;
 
 import java.security.MessageDigest;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
+
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
+import cz.upol.inf.vanusanik.ministag.model.entities.EndingType;
+
+@ApplicationScoped
+@Named("utils")
 public class Utils {
+	
+	public String endingType2Display(EndingType e) {
+		switch (e) {
+		case COLLOQUIUM:
+			return "K";
+		case CREDIT:
+			return "Z";
+		default:
+			break;		
+		}
+		return "";
+	}
+	
 
 	/**
 	 * Returns byte array as hex string

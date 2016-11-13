@@ -47,23 +47,24 @@
 									action="#{index.showAllTeachers()}" />
 	                	</c:if>
 	                	
-	                	<c:forEach var="e" items="#{indexSearch.currentSearchStack}">
-	                		<h:commandLink value="#{r.displayShort()}"
+	                	<ui:repeat var="e" value="#{indexSearch.currentSearchStack}">
+	                		- <h:commandLink value="#{e.displayShort()}"
 									action="#{index.select(e)}" />
-	                	</c:forEach>
+	                	</ui:repeat>
 	                	
 	                	<br />
 	                	
 	                	<c:if test="#{indexSearch.currentSearchStack.size() eq 0}">
 	                		<!-- Display all -->
+	                		
 	                		<c:if test="#{indexSearch.root eq 'ROOT_DEPT'}">
-	                			<c:forEach var="d" items="#{index.allDepartments}">
+	                			<ui:repeat var="d" value="#{index.allDepartments}">
 	                				<div class="box">
 	                					<span style="color:green"><h:commandLink value="#{d.displayShort()}"
 											action="#{index.select(d)}" /> #{d.name}</span><br />
 										#{d.description}
 	                				</div>
-			                	</c:forEach>
+			                	</ui:repeat>
 		                	</c:if>
 		                	
 		                	<c:if test="#{indexSearch.root eq 'ROOT_TEACHERS'}">
@@ -77,6 +78,16 @@
 	                	
 	                	<c:if test="#{indexSearch.currentSearchStack.size() > 0}">
 	                		<!-- display top element -->
+	                		
+	                		<c:set var="te" scope="request" 
+	                			value="#{indexSearch.currentSearchStack.get(indexSearch.currentSearchStack.size()-1)}"/>
+	                		
+	                		<c:if test="#{te.class.simpleName eq 'Department'}">
+		                		<!-- Department fragment BEGINNING-->
+		                		<ui:include src="/fragments/index$department.fragment.xhtml"/>
+		                		<!-- Department fragment END-->
+		                	</c:if>
+		                	
 	                	</c:if>
 	                	
 	                </c:if>

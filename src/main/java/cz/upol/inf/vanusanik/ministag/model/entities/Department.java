@@ -36,6 +36,13 @@ public class Department extends BasicEntity {
 	    joinColumns=@JoinColumn(name="dept_id", referencedColumnName="ID"),
 	    inverseJoinColumns=@JoinColumn(name="user_id", referencedColumnName="ID"))
 	private List<User> teachers = new ArrayList<User>();
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+		name="dept_courses",
+	    joinColumns=@JoinColumn(name="dept_id", referencedColumnName="ID"),
+	    inverseJoinColumns=@JoinColumn(name="course_id", referencedColumnName="ID"))
+	private List<Course> courses = new ArrayList<Course>();
 	
 	@Column(length = 64)
 	private String name;
@@ -100,4 +107,11 @@ public class Department extends BasicEntity {
 		this.name = name;
 	}	
 	
+	public List<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
+	}
 }

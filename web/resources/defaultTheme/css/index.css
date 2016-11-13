@@ -1,5 +1,20 @@
 div.box {
-	width: 100%;
+	width: 80%;
 	border: 1px solid red;
 	border-style: solid;
+}
+
+div.displaybox {
+	width: 80%;
+	padding: 5px 20px 13px 20px;
+	border-radius: 10px;
+	background: #ffd;
+	background: -moz-linear-gradient(#ffd, #999);
+	background: -webkit-linear-gradient(#ffd, #999);
+	background: -o-linear-gradient(#ffd, #999);
+}
+
+div.innerbox {
+	padding: 5px 20px 13px 20px;
+	border-radius: 10px;	
 }

@@ -23,6 +23,8 @@ public class RequiredBlock extends BasicEntity {
 	@Column(name = "ID")
 	private Long id;
 	
+	private String blockDisplayName;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="class_id")
 	private Course taughtClass;
@@ -40,6 +42,14 @@ public class RequiredBlock extends BasicEntity {
 
 	public Course getTaughtClass() {
 		return taughtClass;
+	}
+
+	public List<Timetable> getTimetableChoices() {
+		return timetableChoices;
+	}
+
+	public void setTimetableChoices(List<Timetable> timetableChoices) {
+		this.timetableChoices = timetableChoices;
 	}
 
 	public void setTaughtClass(Course taughtClass) {
@@ -63,7 +73,15 @@ public class RequiredBlock extends BasicEntity {
 	
 	@Override
 	public String displayShort() {
-		return "";
+		return blockDisplayName;
+	}
+
+	public String getBlockDisplayName() {
+		return blockDisplayName;
+	}
+
+	public void setBlockDisplayName(String blockDisplayName) {
+		this.blockDisplayName = blockDisplayName;
 	}
 	
 }

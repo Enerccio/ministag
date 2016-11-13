@@ -79,11 +79,14 @@ public class Index {
 	}
 	
 	public String select(BasicEntity selector) {
+		LinkedList<BasicEntity> bl = activeSearch.getCurrentSearchStack();
 		if (activeSearch.getCurrentSearchStack().contains(selector)) {
-			activeSearch.setCurrentSearchStack(new LinkedList<BasicEntity>(activeSearch.getCurrentSearchStack().subList(0, 
-					activeSearch.getCurrentSearchStack().indexOf(selector)))); 
+			LinkedList<BasicEntity> newList = new LinkedList<BasicEntity>(
+					bl.subList(0, 
+							bl.indexOf(selector)+1));
+			activeSearch.setCurrentSearchStack(newList); 
 		} else {
-			activeSearch.getCurrentSearchStack().add(selector);
+			bl.add(selector);
 		}
 		return "";
 	}
