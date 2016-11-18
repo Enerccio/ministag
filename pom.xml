@@ -29,6 +29,12 @@
 			<artifactId>hibernate4-sqlite-dialect</artifactId>
 			<version>0.1.2</version>
 		</dependency>
+		
+		<dependency>
+		    <groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		    <version>2.5</version>
+		</dependency>
 
 		<!-- Hibernate framework -->
 		<dependency>

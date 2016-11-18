@@ -11,7 +11,11 @@ import javax.inject.Named;
 
 import cz.upol.inf.vanusanik.ministag.model.entities.BasicEntity;
 import cz.upol.inf.vanusanik.ministag.model.entities.Department;
+import cz.upol.inf.vanusanik.ministag.model.entities.Roles;
+import cz.upol.inf.vanusanik.ministag.model.entities.User;
 import cz.upol.inf.vanusanik.ministag.model.service.MinistagRepository;
+import cz.upol.inf.vanusanik.ministag.schedule.ScheduleRequest;
+import cz.upol.inf.vanusanik.ministag.ui.tools.Utils;
 
 @ApplicationScoped
 @Named("index")
@@ -55,6 +59,13 @@ public class Index {
 	
 	@Inject private ActiveIndexSearch activeSearch; 
 	@Inject private MinistagRepository repository;
+	@Inject private ScheduleRequest schedule;
+	
+	public String clearCache() {
+		activeSearch.setRoot(null);
+		activeSearch.getCurrentSearchStack().clear();
+		return "index.xhtml";
+	}
 	
 	public String showAllDepartments() {
 		activeSearch.getCurrentSearchStack().clear();
@@ -89,5 +100,21 @@ public class Index {
 			bl.add(selector);
 		}
 		return "";
+	}
+	
+	public String showSchedule(Object o, int w, int h, String encType) throws Exception {
+		if (o instanceof User) {
+			User u = (User)o;
+			if (u.getRole() == Roles.TEACHER) {
+				fillTeacherSchedule(u);
+				return Utils.showSchedule(w, h, encType);
+			}
+		}
+		throw new Exception("not a valid object");
+	}
+
+	private void fillTeacherSchedule(User u) {
+		schedule.setColored(true);
+		schedule.setTitle("Rozvrh učitele " + u.getName());
 	}
 }

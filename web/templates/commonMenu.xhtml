@@ -15,7 +15,8 @@
 				<ul>
 					<h:graphicImage library="defaultTheme"
 						name="images/up_prf_logo_300.png" alt="UP Logo" width="40" />
-					<li><a href="index.xhtml">Předměty</a></li>
+					<li><h:form><h:commandLink value="Předměty"
+								action="#{index.clearCache()}" /></h:form></li>
 					<c:if
 						test="#{security.hasRole('STUDENT') ||  
 	                			  security.hasRole('TEACHER') || 

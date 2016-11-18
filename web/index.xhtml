@@ -78,6 +78,7 @@
 	                	
 	                	<c:if test="#{indexSearch.currentSearchStack.size() > 0}">
 	                		<!-- display top element -->
+	                		<!-- #{te.class} -->
 	                		
 	                		<c:set var="te" scope="request" 
 	                			value="#{indexSearch.currentSearchStack.get(indexSearch.currentSearchStack.size()-1)}"/>
@@ -86,6 +87,12 @@
 		                		<!-- Department fragment BEGINNING-->
 		                		<ui:include src="/fragments/index$department.fragment.xhtml"/>
 		                		<!-- Department fragment END-->
+		                	</c:if>
+		                	
+		                	<c:if test="#{te.class.simpleName eq 'User' and te.role eq 'TEACHER'}">
+		                		<!-- User fragment BEGINNING-->
+		                		<ui:include src="/fragments/index$user.fragment.xhtml"/>
+		                		<!-- User fragment END-->
 		                	</c:if>
 		                	
 	                	</c:if>

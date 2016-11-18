@@ -132,4 +132,8 @@ public class Utils {
 		c.set(0, 0, 0, h, m, 0);
 		return c.getTime();
 	}
+
+	public static String showSchedule(int w, int h, String encType) {
+		return "schedule/draw?width="+w+"&height="+h+"&encoding="+encType;
+	}
 }
