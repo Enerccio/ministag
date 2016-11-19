@@ -136,6 +136,6 @@ public class Index {
 	}
 
 	public List<Course> taughtCourses(User u) {
-		return repository.getCoursesForUser(u);
+		return repository.getCoursesForTeacher(u);
 	}
 }

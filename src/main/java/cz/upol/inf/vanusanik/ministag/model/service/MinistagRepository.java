@@ -163,7 +163,7 @@ public class MinistagRepository {
 		});
 	}
 
-	public List<Timetable> getTimetableForUser(final User u) {
+	public List<Timetable> getTimetableForTeacher(final User u) {
 		return inTransaction(new InTransaction(em) {
 
 			@Override
@@ -174,14 +174,38 @@ public class MinistagRepository {
 
 		});
 	}
+	
+	public List<Timetable> getTimetableForStudent(final User u) {
+		return inTransaction(new InTransaction(em) {
 
-	public List<Course> getCoursesForUser(User u) {
+			@Override
+			Object doInTransaction() throws Exception {
+				return em.createQuery("SELECT distinct s FROM Timetable t JOIN t.students s " + "WHERE s = ?1",
+						Timetable.class).setParameter(1, u).getResultList();
+			}
+
+		});
+	}
+
+	public List<Course> getCoursesForTeacher(User u) {
 		return inTransaction(new InTransaction(em) {
 
 			@Override
 			Object doInTransaction() throws Exception {
 				return em.createQuery("SELECT distinct c FROM Course c JOIN c.blocks b JOIN b.timetableChoices tc "
 						+ "WHERE tc.teacher = ?1", Course.class).setParameter(1, u).getResultList();
+			}
+
+		});
+	}
+	
+	public List<Course> getCoursesForStudent(User u) {
+		return inTransaction(new InTransaction(em) {
+
+			@Override
+			Object doInTransaction() throws Exception {
+				return em.createQuery("SELECT distinct c FROM Course c JOIN c.blocks b JOIN b.timetableChoices tc "
+						+ "WHERE ?1 IN tc.students", Course.class).setParameter(1, u).getResultList();
 			}
 
 		});

@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:my="http://java.sun.com/jsf/composite/components">
+    <h:head>
+    </h:head>
+    <body>
+        <ui:composition template="./templates/masterTemplate.xhtml">
+        
+        	<ui:define name="meta">
+        		<c:if test="${currentSession.currentUser == null or 
+        					  !((currentSession.currentUser.role eq 'STUDENT') or
+        					    (currentSession.currentUser.role eq 'GARANT') or
+        					    (currentSession.currentUser.role eq 'TEACHER'))}">
+        			<meta http-equiv="refresh" content="0;url=index.xhtml" />
+        		</c:if>
+        	</ui:define>
+
+            <ui:define name="top">
+                <ui:include src="./templates/commonMenu.xhtml "/>
+            </ui:define>
+
+            <ui:define name="content">
+          		<div>Mé předměty:</div>
+          		<c:if test="${currentSession.currentUser != null and 
+        					    (currentSession.currentUser.role eq 'STUDENT') or
+        					    (currentSession.currentUser.role eq 'GARANT') or
+        					    (currentSession.currentUser.role eq 'TEACHER')}">
+       				<div>
+       					<c:set var="data" scope="request" 
+       						value="#{schedulerController.getRelevantCourses(currentSession.currentUser)}"/>
+	       				<h:dataTable value="#{data}" 
+	       							 var="c"
+									 rendered="#{not empty data}">
+							<h:column>
+			          			<f:facet name="header">Katedra:</f:facet>
+			          			#{c.dept.displayShort()}
+			          		</h:column>
+							<h:column>
+			          			<f:facet name="header">Zkratka</f:facet>
+			          			#{c.displayShort()}
+			          		</h:column>
+			          		<h:column>
+			          			<f:facet name="header">Jméno předmětu</f:facet>
+			          			#{c.name}
+			          		</h:column>
+			          		<h:column>
+			          			<f:facet name="header">Garant</f:facet>
+			          			#{c.garant.name}
+			          		</h:column>
+			          		<h:column>
+			          			<f:facet name="header">Učitelé</f:facet>
+			          			<ui:repeat value="#{c.teachers}" var="t">
+									#{t.displayShort()}
+									<ui:fragment rendered="#{statusT2.last != true}">,&#160;</ui:fragment>
+								</ui:repeat>
+			          		</h:column>
+			          		<h:column>
+			          			<f:facet name="header">Počet kreditů</f:facet>
+			          			#{c.creditCount}
+			          		</h:column>
+			          		<h:column>
+			          			<f:facet name="header">Typ ukončení</f:facet>
+			          			#{utils.endingType2Display(c.endingType)}<ui:fragment rendered="#{c.hasExam eq true}">+Zk</ui:fragment>
+			          		</h:column>
+				        </h:dataTable>
+       				</div>
+       				<div>
+       					<img src="#{schedulerController.showSchedule(currentSession.currentUser, 800, 400, 'png')}" />
+       				</div>
+        		</c:if>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

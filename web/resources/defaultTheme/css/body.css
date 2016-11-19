@@ -16,6 +16,7 @@ div.mainBody {
   display: block;
   margin: 8px 22px 8px 22px;
   overflow: hidden;
+  overflow-y: scroll;
   height: 90%;
 }
 

@@ -1,5 +1,7 @@
 package cz.upol.inf.vanusanik.ministag.ui.services;
 
+import java.util.List;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -26,7 +28,12 @@ public class SchedulerController {
 			User u = (User) o;
 			if (u.getRole() == Roles.TEACHER || u.getRole() == Roles.GARANT) {
 				schedule.setTitle("Rozvrh učitele " + u.getName());
-				schedule.setDrawList(repository.getTimetableForUser(u));
+				schedule.setDrawList(repository.getTimetableForTeacher(u));
+				return Utils.showSchedule(w, h, encType);
+			}
+			if (u.getRole() == Roles.STUDENT) {
+				schedule.setTitle("Rozvrh studenta " + u.getName());
+				schedule.setDrawList(repository.getTimetableForStudent(u));
 				return Utils.showSchedule(w, h, encType);
 			}
 		}
@@ -46,4 +53,13 @@ public class SchedulerController {
 		throw new Exception("not a valid object");
 	}
 
+	public List<Course> getRelevantCourses(User u) {
+		if (u.getRole() == Roles.STUDENT) {
+			return repository.getCoursesForStudent(u);
+		}
+		if (u.getRole() == Roles.TEACHER || u.getRole() == Roles.GARANT) {
+			return repository.getCoursesForTeacher(u);
+		}
+		return null;
+	}
 }
