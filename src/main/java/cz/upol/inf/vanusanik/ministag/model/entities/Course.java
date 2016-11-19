@@ -22,37 +22,37 @@ import javax.persistence.Table;
 public class Course extends BasicEntity {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	private Long id;
-	
+
 	private String name;
-	
+
 	@Column(length = 10)
 	private String shortName;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
-	private Department dept; 
-	
+	private Department dept;
+
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "class_garant", nullable=false)
+	@JoinColumn(name = "class_garant", nullable = false)
 	private User garant;
-	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy="taughtClass")
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "taughtClass")
 	private List<RequiredBlock> blocks = new ArrayList<RequiredBlock>();
-	
+
 	@Column(columnDefinition = "LONGTEXT")
 	private String description;
-	
+
 	@Column(columnDefinition = "LONGTEXT")
 	private String syllabus;
-	
+
 	private int creditCount;
-	
+
 	private boolean hasExam;
-	
+
 	private EndingType endingType;
-	
+
 	public List<User> getTeachers() {
 		Set<User> teachers = new HashSet<User>();
 		for (RequiredBlock rb : blocks) {
@@ -62,7 +62,7 @@ public class Course extends BasicEntity {
 		}
 		return new ArrayList<User>(teachers);
 	}
-	
+
 	@Override
 	public String displayShort() {
 		return shortName;
@@ -170,6 +170,5 @@ public class Course extends BasicEntity {
 	public void setDept(Department dept) {
 		this.dept = dept;
 	}
-	
-	
+
 }

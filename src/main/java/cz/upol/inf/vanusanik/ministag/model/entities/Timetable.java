@@ -20,33 +20,30 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "timetable")
 public class Timetable extends BasicEntity {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	private Long id;
-	
+
 	private TimetableType type;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="class_id")
+	@JoinColumn(name = "class_id")
 	private RequiredBlock block;
-	
+
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "timetable_teacher", nullable=false)
+	@JoinColumn(name = "timetable_teacher", nullable = false)
 	private User teacher;
-	
+
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(
-			name="enrolled_students",
-		    joinColumns=@JoinColumn(name="time_id", referencedColumnName="ID"),
-		    inverseJoinColumns=@JoinColumn(name="user_id", referencedColumnName="ID"))
+	@JoinTable(name = "enrolled_students", joinColumns = @JoinColumn(name = "time_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "ID"))
 	private List<User> students = new ArrayList<User>();
-	
+
 	private Date classFrom;
 	private Date classTo;
 	private int day;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -101,7 +98,7 @@ public class Timetable extends BasicEntity {
 	public String getMappedName() {
 		return "Timetable";
 	}
-	
+
 	@Override
 	public String displayShort() {
 		return "";

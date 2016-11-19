@@ -5,7 +5,7 @@ package cz.upol.inf.vanusanik.ministag.ui.tools;
  *
  */
 public interface Action {
-	
+
 	/**
 	 * @return uri to go to. If null, it will be the loginTarget.uri
 	 */

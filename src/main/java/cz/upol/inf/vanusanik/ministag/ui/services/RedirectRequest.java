@@ -10,7 +10,7 @@ import cz.upol.inf.vanusanik.ministag.ui.tools.Utils;
 public class RedirectRequest {
 
 	private String uriFragment;
-	
+
 	private String message;
 
 	public String getUriFragment() {
@@ -28,7 +28,7 @@ public class RedirectRequest {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
+
 	public String redirect() {
 		return Utils.appendRedirect(uriFragment);
 	}

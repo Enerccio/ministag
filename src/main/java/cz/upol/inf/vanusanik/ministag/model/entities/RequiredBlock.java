@@ -19,19 +19,19 @@ import javax.persistence.Table;
 public class RequiredBlock extends BasicEntity {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	private Long id;
-	
+
 	private String blockDisplayName;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="class_id")
+	@JoinColumn(name = "class_id")
 	private Course taughtClass;
-	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy="block")
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "block")
 	private List<Timetable> timetableChoices = new ArrayList<Timetable>();
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -70,7 +70,7 @@ public class RequiredBlock extends BasicEntity {
 	public String getMappedName() {
 		return "RequiredBlock";
 	}
-	
+
 	@Override
 	public String displayShort() {
 		return blockDisplayName;
@@ -83,5 +83,5 @@ public class RequiredBlock extends BasicEntity {
 	public void setBlockDisplayName(String blockDisplayName) {
 		this.blockDisplayName = blockDisplayName;
 	}
-	
+
 }

@@ -20,39 +20,30 @@ public class Department extends BasicEntity {
 	@Id
 	@Column(length = 10, name = "ID")
 	private String shortName;
-	
-	@Column(columnDefinition="LONGTEXT")
+
+	@Column(columnDefinition = "LONGTEXT")
 	private String description;
-	
+
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(
-		name="dept_garants",
-	    joinColumns=@JoinColumn(name="dept_id", referencedColumnName="ID"),
-	    inverseJoinColumns=@JoinColumn(name="user_id", referencedColumnName="ID"))
+	@JoinTable(name = "dept_garants", joinColumns = @JoinColumn(name = "dept_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "ID"))
 	private List<User> garants = new ArrayList<User>();
-	
+
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(
-		name="dept_teachers",
-	    joinColumns=@JoinColumn(name="dept_id", referencedColumnName="ID"),
-	    inverseJoinColumns=@JoinColumn(name="user_id", referencedColumnName="ID"))
+	@JoinTable(name = "dept_teachers", joinColumns = @JoinColumn(name = "dept_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "ID"))
 	private List<User> teachers = new ArrayList<User>();
 
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinTable(
-		name="dept_courses",
-	    joinColumns=@JoinColumn(name="dept_id", referencedColumnName="ID"),
-	    inverseJoinColumns=@JoinColumn(name="course_id", referencedColumnName="ID"))
+	@JoinTable(name = "dept_courses", joinColumns = @JoinColumn(name = "dept_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "ID"))
 	private List<Course> courses = new ArrayList<Course>();
-	
+
 	@Column(length = 64)
 	private String name;
-	
+
 	@Override
 	public String displayShort() {
 		return shortName;
 	}
-	
+
 	@Override
 	public String getPrimaryKey() {
 		return "shortName";
@@ -106,8 +97,8 @@ public class Department extends BasicEntity {
 
 	public void setName(String name) {
 		this.name = name;
-	}	
-	
+	}
+
 	public List<Course> getCourses() {
 		return courses;
 	}

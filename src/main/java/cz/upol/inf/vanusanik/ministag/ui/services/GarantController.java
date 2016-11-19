@@ -27,18 +27,25 @@ import cz.upol.inf.vanusanik.ministag.ui.tools.Utils;
 @ApplicationScoped
 @Named("garant")
 public class GarantController {
-	
-	@Inject private ActiveSession as;
-	@Inject private MinistagRepository repository;
-	@Inject private ChosenDepartment ad;
-	@Inject private ChosenCourse ac;
-	@Inject private ChosenBlock ab;
-	
+
+	@Inject
+	private ActiveSession as;
+	@Inject
+	private MinistagRepository repository;
+	@Inject
+	private ChosenDepartment ad;
+	@Inject
+	private ChosenCourse ac;
+	@Inject
+	private ChosenBlock ab;
+	@Inject
+	private GarantEditBlock eb;
+
 	@SessionScoped
 	@Named("garantChosenDept")
 	public static class ChosenDepartment implements Serializable {
 		private static final long serialVersionUID = 8978334012055233297L;
-		
+
 		private Department currentDepartment;
 
 		public Department getCurrentDepartment() {
@@ -49,12 +56,12 @@ public class GarantController {
 			this.currentDepartment = currentDepartment;
 		}
 	}
-	
+
 	@SessionScoped
 	@Named("garantChosenCourse")
 	public static class ChosenCourse implements Serializable {
 		private static final long serialVersionUID = 8978334012055233298L;
-		
+
 		private Course currentCourse;
 
 		public Course getCurrentCourse() {
@@ -65,12 +72,12 @@ public class GarantController {
 			this.currentCourse = currentCourse;
 		}
 	}
-	
+
 	@SessionScoped
 	@Named("garantChosenBlock")
 	public static class ChosenBlock implements Serializable {
 		private static final long serialVersionUID = 7978334012055233298L;
-		
+
 		private RequiredBlock currentBlock;
 
 		public RequiredBlock getCurrentBlock() {
@@ -81,27 +88,32 @@ public class GarantController {
 			this.currentBlock = currentBlock;
 		}
 	}
-	
+
 	@RequestScoped
 	@Named("garantDeptList")
 	public static class GarantDepartmentList {
-		
-		@Inject private GarantController controller;
-		
+
+		@Inject
+		private GarantController controller;
+
 		public List<Department> getDepartments() {
 			return controller.listDepartments();
 		}
-		
+
 	}
-	
+
 	@RequestScoped
 	@Named("garantCourseEdit")
 	public static class GarantEditCourse {
-		@Inject private GarantController controller;
-		@Inject private ChosenCourse ac;
-		@Inject private ChosenDepartment ad;
-		@Inject private MinistagRepository repository;
-		
+		@Inject
+		private GarantController controller;
+		@Inject
+		private ChosenCourse ac;
+		@Inject
+		private ChosenDepartment ad;
+		@Inject
+		private MinistagRepository repository;
+
 		private String abbr = "";
 		private String name = "";
 		private User garant;
@@ -110,65 +122,80 @@ public class GarantController {
 		private int creditCount = 0;
 		private EndingType endingType = EndingType.CREDIT;
 		private boolean exam = false;
-		
+
 		@PostConstruct
 		public void init() {
 			controller.initEditCourse(this);
 		}
-		
+
 		public String getAbbr() {
 			return abbr;
 		}
+
 		public void setAbbr(String abbr) {
 			this.abbr = abbr;
 		}
+
 		public String getName() {
 			return name;
 		}
+
 		public void setName(String name) {
 			this.name = name;
 		}
+
 		public User getGarant() {
 			return garant;
 		}
+
 		public void setGarant(User garant) {
 			this.garant = garant;
 		}
+
 		public String getDescription() {
 			return description;
 		}
+
 		public void setDescription(String description) {
 			this.description = description;
 		}
+
 		public String getSyllabus() {
 			return syllabus;
 		}
+
 		public void setSyllabus(String syllabus) {
 			this.syllabus = syllabus;
 		}
+
 		public int getCreditCount() {
 			return creditCount;
 		}
+
 		public void setCreditCount(int creditCount) {
 			this.creditCount = creditCount;
 		}
+
 		public EndingType getEndingType() {
 			return endingType;
 		}
+
 		public void setEndingType(EndingType endingType) {
 			this.endingType = endingType;
 		}
+
 		public boolean isExam() {
 			return exam;
 		}
+
 		public void setExam(boolean exam) {
 			this.exam = exam;
-		}	
-		
+		}
+
 		public List<EndingType> getEndings() {
 			return new ArrayList<EndingType>(Arrays.asList(EndingType.values()));
 		}
-		
+
 		public String submit() {
 			Course c;
 			boolean newCourse = false;
@@ -179,7 +206,7 @@ public class GarantController {
 				c.setDept(ad.getCurrentDepartment());
 				newCourse = true;
 			}
-			
+
 			c.setShortName(getAbbr());
 			c.setCreditCount(getCreditCount());
 			c.setDescription(getDescription());
@@ -188,42 +215,47 @@ public class GarantController {
 			c.setHasExam(isExam());
 			c.setName(getName());
 			c.setSyllabus(getSyllabus());
-			
+
 			ac.setCurrentCourse(repository.save(c));
-			
+
 			if (newCourse) {
 				Department d = repository.find(ad.getCurrentDepartment().getShortName(), Department.class);
 				d.getCourses().add(ac.getCurrentCourse());
-				
+
 				ad.setCurrentDepartment(repository.save(d));
 			}
 			return Utils.appendRedirect("gmyCourses.xhtml");
 		}
 	}
-	
+
 	@SessionScoped
 	@Named("garantEditBlock")
 	public static class GarantEditBlock implements Serializable {
 		private static final long serialVersionUID = -8455586560856921293L;
-		
-		@Inject private ChosenCourse ac;
-		@Inject private ChosenDepartment ad;
-		@Inject private ChosenBlock ab;
-		@Inject private MinistagRepository repository;
-		@Inject private ActiveSession as;
-		
+
+		@Inject
+		private ChosenCourse ac;
+		@Inject
+		private ChosenDepartment ad;
+		@Inject
+		private ChosenBlock ab;
+		@Inject
+		private MinistagRepository repository;
+		@Inject
+		private ActiveSession as;
+
 		private String blockId = "";
 		private String courseName = "";
 		private List<Timetable> timetables = new ArrayList<Timetable>();
-		
+
 		private List<Timetable> timetables2delete = new ArrayList<Timetable>();
-		
+
 		private String teacher;
 		private TimetableType type = TimetableType.LECTURE;
 		private Date classFrom = Utils.calendarData(8, 0);
 		private Date classTo = Utils.calendarData(9, 45);
 		private int day = 0;
-		
+
 		@PostConstruct
 		public void init() {
 			teacher = as.getCurrentUser().getLogin();
@@ -236,7 +268,7 @@ public class GarantController {
 				blockId = ab.getCurrentBlock().getBlockDisplayName();
 			}
 		}
-		
+
 		public String submit() {
 			RequiredBlock rb;
 			if (ab.getCurrentBlock() == null) {
@@ -247,14 +279,17 @@ public class GarantController {
 			rb.setBlockDisplayName(getBlockId());
 			rb.setTaughtClass(ac.getCurrentCourse());
 			rb = repository.save(rb);
-			
+
+			ac.getCurrentCourse().getBlocks().add(rb);
+			ac.setCurrentCourse(repository.save(ac.getCurrentCourse()));
+
 			for (Timetable td : timetables2delete) {
 				if (td.getBlock() != null) {
 					rb.getTimetableChoices().remove(td);
 					repository.remove(td);
 				}
 			}
-			
+
 			for (Timetable td : timetables) {
 				if (td.getBlock() == null) {
 					td.setBlock(rb);
@@ -264,12 +299,12 @@ public class GarantController {
 					repository.save(td);
 				}
 			}
-			
+
 			ab.setCurrentBlock(repository.save(rb));
 			init();
 			return Utils.appendRedirect("gmyCourses.xhtml");
 		}
-		
+
 		public String add() {
 			Timetable t = new Timetable();
 			t.setClassFrom(getClassFrom());
@@ -278,18 +313,18 @@ public class GarantController {
 			t.setType(getType());
 			t.setDay(getDay());
 			timetables.add(t);
-			
+
 			type = TimetableType.LECTURE;
 			teacher = null;
 			classFrom = Utils.calendarData(8, 0);
 			classTo = Utils.calendarData(9, 45);
 			return "";
 		}
-		
+
 		public String modify(Timetable t) {
 			return "";
 		}
-		
+
 		public String delete(Timetable t) {
 			timetables2delete.add(t);
 			timetables.remove(t);
@@ -351,11 +386,11 @@ public class GarantController {
 		public void setClassTo(Date classTo) {
 			this.classTo = classTo;
 		}
-		
+
 		public List<TimetableType> getTimetableTypes() {
 			return new ArrayList<TimetableType>(Arrays.asList(TimetableType.values()));
 		}
-		
+
 		public List<User> getAllTeachers() {
 			return ad.getCurrentDepartment().getTeachers();
 		}
@@ -367,13 +402,21 @@ public class GarantController {
 		public void setDay(int day) {
 			this.day = day;
 		}
+
+		public ChosenBlock getAb() {
+			return ab;
+		}
+
+		public void setAb(ChosenBlock ab) {
+			this.ab = ab;
+		}
 	}
 
 	public List<Department> listDepartments() {
 		User garant = as.getCurrentUser();
 		return repository.getDepartmentByGarant(garant);
 	}
-	
+
 	public void initEditCourse(GarantEditCourse ec) {
 		if (ac.getCurrentCourse() != null) {
 			ec.setAbbr(ac.getCurrentCourse().getShortName());
@@ -391,18 +434,19 @@ public class GarantController {
 		ad.setCurrentDepartment(d);
 		return Utils.appendRedirect("gmyCourses.xhtml");
 	}
-	
+
 	public String editCourse(Course c) {
 		ac.setCurrentCourse(c);
 		return Utils.appendRedirect("gmyCourse.xhtml");
 	}
-	
+
 	public String editBlock(Course c, RequiredBlock b) {
 		ac.setCurrentCourse(c);
 		ab.setCurrentBlock(b);
+		eb.init();
 		return Utils.appendRedirect("gTimetable.xhtml");
 	}
-	
+
 	public String delete(Course c) {
 		c.getDept().getCourses().remove(c);
 		repository.save(c.getDept());

@@ -13,8 +13,55 @@
 	<div class="displaybox">
 		<div class="innerbox">#{te.name}</div>
 		<div class="innerbox">
+			<div>
+				<c:set var="data" scope="request" value="#{index.taughtCourses(te)}"/>
+				<h:dataTable value="#{data}" var="c"
+						rendered="#{not empty data}">
+	          		<h:column>
+	          			<f:facet name="header">Zkratka</f:facet>
+	          			<h:commandLink value="#{c.displayShort()}"
+							action="#{index.select(c)}" />
+	          		</h:column>
+	          		<h:column>
+	          			<f:facet name="header">Jméno předmětu</f:facet>
+	          			#{c.name}
+	          		</h:column>
+	          		<h:column>
+	          			<f:facet name="header">Garant</f:facet>
+	          			<h:commandLink value="#{c.garant.name}"
+							action="#{index.select(c.garant)}" />
+	          		</h:column>
+	          		<h:column>
+	          			<f:facet name="header">Učitelé</f:facet>
+	          			<ui:repeat value="#{c.teachers}" var="t">
+							<h:commandLink value="#{t.displayShort()}"
+									action="#{index.select(t)}" varStatus="statusT2" />
+							<ui:fragment rendered="#{statusT2.last != true}">,&#160;</ui:fragment>
+						</ui:repeat>
+	          		</h:column>
+	          		<h:column>
+	          			<f:facet name="header">Vyučovací bloky</f:facet>
+	          			<ui:repeat value="#{c.blocks}" var="b">
+	          				<div>
+								<h:commandLink value="#{b.displayShort()}"
+										action="#{index.select(b)}" />
+							</div>
+						</ui:repeat>
+	          		</h:column>
+	          		<h:column>
+	          			<f:facet name="header">Počet kreditů</f:facet>
+	          			#{c.creditCount}
+	          		</h:column>
+	          		<h:column>
+	          			<f:facet name="header">Typ ukončení</f:facet>
+	          			#{utils.endingType2Display(c.endingType)}<ui:fragment rendered="#{c.hasExam eq true}">+Zk</ui:fragment>
+	          		</h:column>
+		        </h:dataTable>
+			</div>
+	   	</div>
+		<div class="innerbox">
 			<div>Rozvrh:</div>
-			<img src="#{index.showSchedule(te, 800, 400, 'png')}" />
+			<img src="#{schedulerController.showSchedule(te, 800, 400, 'png')}" />
 	   	</div>
 	</div>
 </ui:composition>

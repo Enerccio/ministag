@@ -8,22 +8,22 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "sys_usertable")
 public class User extends BasicEntity {
-	
+
 	@Id
-	@Column(nullable = false, length=32, unique = true, name = "ID")
+	@Column(nullable = false, length = 32, unique = true, name = "ID")
 	private String login;
 
 	@Column(length = 64)
 	private String password;
-	
+
 	@Column(length = 64)
 	private String name;
-	
+
 	@Column(nullable = false)
 	private Roles role;
-	
+
 	private String salt;
-	
+
 	@Override
 	public String displayShort() {
 		return name;
@@ -82,6 +82,6 @@ public class User extends BasicEntity {
 
 	public void setName(String name) {
 		this.name = name;
-	}	
-	
+	}
+
 }

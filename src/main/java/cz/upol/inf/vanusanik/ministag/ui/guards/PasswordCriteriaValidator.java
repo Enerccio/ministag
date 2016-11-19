@@ -16,20 +16,23 @@ import cz.upol.inf.vanusanik.ministag.ui.services.SecurityController.AddEditUser
 public class PasswordCriteriaValidator implements Validator {
 
 	private @Inject CurrentlyEditedUser ceu;
-	
+
 	@Override
 	public void validate(FacesContext arg0, UIComponent arg1, Object value) throws ValidatorException {
 		if (value == null) {
-			throw new ValidatorException(new FacesMessage("Nesprávne heslo", "Heslo musí mít alespoň 5 znaků a obsahovat číslici"));
+			throw new ValidatorException(
+					new FacesMessage("Nesprávne heslo", "Heslo musí mít alespoň 5 znaků a obsahovat číslici"));
 		}
 		String password = value.toString();
 		if (password.length() == 0 && ceu.getCurrentUser() != null)
 			return;
 		if (password.length() < 5) {
-			throw new ValidatorException(new FacesMessage("Nesprávne heslo", "Heslo musí mít alespoň 5 znaků a obsahovat číslici"));
+			throw new ValidatorException(
+					new FacesMessage("Nesprávne heslo", "Heslo musí mít alespoň 5 znaků a obsahovat číslici"));
 		}
 		if (!password.matches(".*\\d+.*")) {
-			throw new ValidatorException(new FacesMessage("Nesprávne heslo", "Heslo musí mít alespoň 5 znaků a obsahovat číslici"));
+			throw new ValidatorException(
+					new FacesMessage("Nesprávne heslo", "Heslo musí mít alespoň 5 znaků a obsahovat číslici"));
 		}
 	}
 

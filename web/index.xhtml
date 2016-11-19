@@ -31,18 +31,21 @@
 	                <c:if test="#{indexSearch != null and indexSearch.root != null}">
 	                	<!-- Display selection -->
 	                	
+	                	<h:commandLink value=">"
+									action="#{index.clearCache()}" /> 
+	                	
 	                	<!-- Header -->
 	                	<c:if test="#{indexSearch.root eq 'ROOT_DEPT'}">
 	                		<h:commandLink value="Zobrazit katedry"
 									action="#{index.showAllDepartments()}" /> 
 	                	</c:if>
 	                	
-	                	<c:if test="#{indexSearch.root eq 'ROOT_TEACHERS'}">
+	                	<c:if test="#{indexSearch.root eq 'ROOT_COURSES'}">
 	                		<h:commandLink value="Zobrazit předměty"
 									action="#{index.showAllCourses()}" />
 	                	</c:if>
 	                	
-	                	<c:if test="#{indexSearch.root eq 'ROOT_COURSES'}">
+	                	<c:if test="#{indexSearch.root eq 'ROOT_TEACHERS'}">
 	                		<h:commandLink value="Zobrazit učitelé"
 									action="#{index.showAllTeachers()}" />
 	                	</c:if>
@@ -68,11 +71,22 @@
 		                	</c:if>
 		                	
 		                	<c:if test="#{indexSearch.root eq 'ROOT_TEACHERS'}">
-		                		
+		                		<ui:repeat var="u" value="#{index.allTeachers}">
+	                				<div>
+	                					<h:commandLink value="#{u.displayShort()}"
+											action="#{index.select(u)}" />
+	                				</div>
+			                	</ui:repeat>
 		                	</c:if>
 		                	
 		                	<c:if test="#{indexSearch.root eq 'ROOT_COURSES'}">
-		                		
+		                		<ui:repeat var="c" value="#{index.allCourses}">
+	                				<div>
+	                					<h:commandLink value="#{c.dept.displayShort()}"
+											action="#{index.select(c.dept)}" /> / <h:commandLink value="#{c.displayShort()}"
+											action="#{index.select(c)}" />
+	                				</div>
+			                	</ui:repeat>
 		                	</c:if>
 	                	</c:if>
 	                	
@@ -94,6 +108,18 @@
 		                		<!-- User fragment BEGINNING-->
 		                		<ui:include src="/fragments/index$user.fragment.xhtml"/>
 		                		<!-- User fragment END-->
+		                	</c:if>
+		                	
+		                	<c:if test="#{te.class.simpleName eq 'Course'}">
+		                		<!-- Course fragment BEGINNING-->
+		                		<ui:include src="/fragments/index$course.fragment.xhtml"/>
+		                		<!-- Course fragment END-->
+		                	</c:if>
+		                	
+		                	<c:if test="#{te.class.simpleName eq 'RequiredBlock'}">
+		                		<!-- Block fragment BEGINNING-->
+		                		<ui:include src="/fragments/index$block.fragment.xhtml"/>
+		                		<!-- Block fragment END-->
 		                	</c:if>
 		                	
 	                	</c:if>

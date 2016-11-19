@@ -118,11 +118,14 @@
 			        	 
 	                </h:panelGrid>
 	                
+	                <c:if test="#{garantEditBlock.ab.currentBlock != null}">
+						<div><img src="#{schedulerController.showSchedule(garantEditBlock.ab.currentBlock, 800, 400, 'png')}" /></div>
+					</c:if>
+	                
 	                <h:messages style="color:red;" showDetail="true"/>
 			        <h:commandButton  value="Uložit" action="#{garantEditBlock.submit()}"/>
 	            </h:form>
             </ui:define>
-
         </ui:composition>
     </body>
 </html>

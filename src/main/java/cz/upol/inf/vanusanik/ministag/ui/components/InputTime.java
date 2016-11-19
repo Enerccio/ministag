@@ -17,68 +17,67 @@ import javax.faces.convert.ConverterException;
 public class InputTime extends UIInput implements NamingContainer {
 
 	private UIInput hour;
-    private UIInput minute;
+	private UIInput minute;
 
-    /**
-     * As required by <cc:interface>.
-     */
-    @Override
-    public String getFamily() {
-        return UINamingContainer.COMPONENT_FAMILY;
-    }
+	/**
+	 * As required by <cc:interface>.
+	 */
+	@Override
+	public String getFamily() {
+		return UINamingContainer.COMPONENT_FAMILY;
+	}
 
-    /**
-     * Set initial hour and minute based on model.
-     */
-    @Override
-    public void encodeBegin(FacesContext context) throws IOException {
-        Calendar calendar = Calendar.getInstance();
-        Date date = (Date) getValue();
+	/**
+	 * Set initial hour and minute based on model.
+	 */
+	@Override
+	public void encodeBegin(FacesContext context) throws IOException {
+		Calendar calendar = Calendar.getInstance();
+		Date date = (Date) getValue();
 
-        if (date != null) {
-            calendar.setTime(date);
-        }
+		if (date != null) {
+			calendar.setTime(date);
+		}
 
-        hour.setValue(calendar.get(Calendar.HOUR_OF_DAY));
-        minute.setValue(calendar.get(Calendar.MINUTE));
-        super.encodeBegin(context);
-    }
+		hour.setValue(calendar.get(Calendar.HOUR_OF_DAY));
+		minute.setValue(calendar.get(Calendar.MINUTE));
+		super.encodeBegin(context);
+	}
 
-    /**
-     * Returns the submitted value in HH-mm format.
-     */
-    @Override
-    public Object getSubmittedValue() {
-        return hour.getSubmittedValue() + "-" + minute.getSubmittedValue();
-    }
+	/**
+	 * Returns the submitted value in HH-mm format.
+	 */
+	@Override
+	public Object getSubmittedValue() {
+		return hour.getSubmittedValue() + "-" + minute.getSubmittedValue();
+	}
 
-    /**
-     * Converts the submitted value to concrete {@link Date} instance.
-     */
-    @Override
-    protected Object getConvertedValue(FacesContext context, Object submittedValue) {
-        try {
-            return new SimpleDateFormat("HH-mm").parse((String) submittedValue);
-        }
-        catch (ParseException e) {
-            throw new ConverterException(e);
-        }
-    }
+	/**
+	 * Converts the submitted value to concrete {@link Date} instance.
+	 */
+	@Override
+	protected Object getConvertedValue(FacesContext context, Object submittedValue) {
+		try {
+			return new SimpleDateFormat("HH-mm").parse((String) submittedValue);
+		} catch (ParseException e) {
+			throw new ConverterException(e);
+		}
+	}
 
-    public UIInput getHour() {
-        return hour;
-    }
+	public UIInput getHour() {
+		return hour;
+	}
 
-    public void setHour(UIInput hour) {
-        this.hour = hour;
-    }
+	public void setHour(UIInput hour) {
+		this.hour = hour;
+	}
 
-    public UIInput getMinute() {
-        return minute;
-    }
+	public UIInput getMinute() {
+		return minute;
+	}
 
-    public void setMinute(UIInput minute) {
-        this.minute = minute;
-    }
-    
+	public void setMinute(UIInput minute) {
+		this.minute = minute;
+	}
+
 }

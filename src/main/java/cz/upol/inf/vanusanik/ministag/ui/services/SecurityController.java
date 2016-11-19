@@ -26,15 +26,15 @@ import cz.upol.inf.vanusanik.ministag.ui.tools.Utils;
 @Named("security")
 @ApplicationScoped
 /**
- * Handles security of the application. Resolves logins, logouts, new users, change passwords,
- * logged-in check and roles check.
+ * Handles security of the application. Resolves logins, logouts, new users,
+ * change passwords, logged-in check and roles check.
  */
 public class SecurityController {
-	
+
 	@PostConstruct
 	/**
-	 * Performs initialization post @Inject. 
-	 * Creates admin user, if there is none
+	 * Performs initialization post @Inject. Creates admin user, if there is
+	 * none
 	 */
 	public void init() {
 		User u = repository.find("admin", User.class);
@@ -47,11 +47,11 @@ public class SecurityController {
 				u.setPassword(Utils.asHex(Utils.hash("#admin", u.getSalt())));
 				repository.save(u);
 			} catch (Exception e) {
-				
+
 			}
 		}
 	}
-	
+
 	@SessionScoped
 	@Named("currentSession")
 	public static class ActiveSession implements Serializable {
@@ -65,9 +65,8 @@ public class SecurityController {
 		public void setCurrentUser(User currentUser) {
 			this.currentUser = currentUser;
 		}
-		
-	}
 
+	}
 
 	@Named("loginTarget")
 	@RequestScoped
@@ -85,17 +84,17 @@ public class SecurityController {
 			this.url = url;
 		}
 	}
-	
+
 	@Named("login")
 	@RequestScoped
 	/**
 	 * Request handler for login
 	 */
 	public static class LoginRequest {
-		
+
 		@Inject
 		private SecurityController security;
-		
+
 		private String login, password;
 		private boolean loginFailure, loginNeeded;
 
@@ -130,45 +129,47 @@ public class SecurityController {
 		public void setPassword(String password) {
 			this.password = password;
 		}
-		
+
 		/**
 		 * Performs the login. Validating is done via LoginGuard.
-		 * @param target page to return to
+		 * 
+		 * @param target
+		 *            page to return to
 		 * @return redirect
 		 */
 		public String doLogin(String target) {
 			return security.doLogin(target, this);
 		}
 	}
-	
+
 	@Named("logout")
 	@RequestScoped
 	/**
 	 * Request handler for logout
 	 */
 	public static class LogoutRequest {
-		
+
 		@Inject
 		private ActiveSession session;
-		
+
 		public String logout() {
 			session.setCurrentUser(null);
 			return "index.xhtml";
 		}
-		
+
 	}
-	
+
 	@Named("addEditUser")
 	@RequestScoped
 	/**
 	 * Request handler for user management
 	 */
-	public static class AddEditUserRequest {	
-		
+	public static class AddEditUserRequest {
+
 		@Named("currentlyEditedUser")
 		@SessionScoped
 		public static class CurrentlyEditedUser implements Serializable {
-			
+
 			private static final long serialVersionUID = 5504155210761645432L;
 			private String currentUser;
 
@@ -179,20 +180,23 @@ public class SecurityController {
 			public void setCurrentUser(String currentUser) {
 				this.currentUser = currentUser;
 			}
-			
+
 		}
-		
-		@Inject private MinistagRepository repository;
-		@Inject private ActiveSession as;
-		@Inject private CurrentlyEditedUser ceu;
-		
+
+		@Inject
+		private MinistagRepository repository;
+		@Inject
+		private ActiveSession as;
+		@Inject
+		private CurrentlyEditedUser ceu;
+
 		private User user;
 		private String editUser;
 		private String displayName;
 		private String password;
 		private String password2;
 		private Roles userRole;
-		
+
 		@PostConstruct
 		public void init() {
 			if (ceu.getCurrentUser() != null && !"".equals(ceu.getCurrentUser())) {
@@ -202,15 +206,15 @@ public class SecurityController {
 				this.displayName = user.getName();
 			}
 		}
-		
+
 		public List<Roles> getRoles() {
 			return new ArrayList<Roles>(Arrays.asList(Roles.values()));
 		}
-		
+
 		public String submit() {
 			if (ceu.getCurrentUser() != null) {
 				User u = repository.find(ceu.getCurrentUser(), User.class);
-				
+
 				if (password.length() != 0) {
 					u.setSalt(UUID.randomUUID().toString());
 					u.setPassword(Utils.asHex(Utils.hash(password, u.getSalt())));
@@ -219,26 +223,28 @@ public class SecurityController {
 					u.setRole(userRole);
 				}
 				u.setName(displayName);
-				
+
 				repository.save(u);
 			} else {
 				User u = new User();
-				
+
 				u.setLogin(editUser);
 				u.setSalt(UUID.randomUUID().toString());
 				u.setPassword(Utils.asHex(Utils.hash(password, u.getSalt())));
 				u.setRole(userRole);
 				u.setName(displayName);
-				
+
 				repository.save(u);
 			}
 			return Utils.appendRedirect("admUsers.xhtml");
 		}
-		
+
 		/**
 		 * Checks whether role is editable.
 		 * 
-		 * Role is not editable when user is editing himself (to not remove ADMIN tag)
+		 * Role is not editable when user is editing himself (to not remove
+		 * ADMIN tag)
+		 * 
 		 * @return
 		 */
 		public boolean cannotEditRole() {
@@ -287,15 +293,18 @@ public class SecurityController {
 			this.displayName = displayName;
 		}
 	}
-	
+
 	@RequestScoped
 	@Named(value = "userList")
 	public static class UserList {
-		
-		@Inject private MinistagRepository repository;
-		@Inject private ActiveSession as;
-		@Inject private CurrentlyEditedUser ceu;
-		
+
+		@Inject
+		private MinistagRepository repository;
+		@Inject
+		private ActiveSession as;
+		@Inject
+		private CurrentlyEditedUser ceu;
+
 		public List<User> getUsers() {
 			return repository.getUsers();
 		}
@@ -306,7 +315,7 @@ public class SecurityController {
 			ceu.setCurrentUser(id);
 			return Utils.appendRedirect("admUser.xhtml");
 		}
-		
+
 		public String remove(String id) {
 			if (as.getCurrentUser().getLogin().equals(id))
 				return "";
@@ -314,28 +323,28 @@ public class SecurityController {
 			return "";
 		}
 	}
-	
+
 	@Named("admApp")
 	@RequestScoped
 	public static class AdmAppRequest {
-		
-		@Inject 
+
+		@Inject
 		private MinistagRepository repository;
 
 		@Inject
 		private SecurityController security;
-		
+
 		@PostConstruct
 		public void init() {
 			AppSettings as = repository.getAppSettings();
 			startYear = as.getStartOfYear().getTime();
 			numWeeks = as.getNumWeeks();
 		}
-		
+
 		private Date startYear;
-		
+
 		private int numWeeks;
-		
+
 		public SecurityController getSecurity() {
 			return security;
 		}
@@ -362,7 +371,7 @@ public class SecurityController {
 
 		public String save() {
 			return security.runPrivileged(new Action() {
-				
+
 				@Override
 				public String run() {
 					AppSettings as = repository.getAppSettings();
@@ -375,30 +384,31 @@ public class SecurityController {
 				}
 			}, Roles.ADMIN);
 		}
-		
+
 	}
-	
+
 	@Inject
 	private MinistagRepository repository;
-	
+
 	@Inject
 	private ActiveSession session;
-	
+
 	@Inject
 	private LoginRequest lr;
-	
+
 	@Inject
 	private LoginTarget loginTarget;
-	
+
 	private String defaultRedirect = "login.xhtml?faces-redirect=true&includeViewParams=true";
-	
+
 	private String loginRedirect = "login.xhtml?faces-redirect=true&includeViewParams=true";
 
 	/**
 	 * Checks whether provided username or password is valid user or not
+	 * 
 	 * @param login
 	 * @param target
-	 * @param loginRequest 
+	 * @param loginRequest
 	 * @return redirect
 	 */
 	public String doLogin(String target, LoginRequest loginRequest) {
@@ -411,13 +421,15 @@ public class SecurityController {
 			loginRequest.setLoginFailure(true);
 			return loginRedirect + "&backurl=" + loginTarget.getUrl();
 		}
-		session.setCurrentUser(u);	
+		session.setCurrentUser(u);
 		return Utils.appendRedirect(loginTarget.getUrl());
 	}
-	
+
 	/**
 	 * Checks whether current user has any of roles or not
-	 * @param roles (empty if you only need logged in check)
+	 * 
+	 * @param roles
+	 *            (empty if you only need logged in check)
 	 * @return false if no one is logged in or role is mismatched
 	 */
 	public boolean hasRole(String role) {
@@ -428,20 +440,26 @@ public class SecurityController {
 	}
 
 	/**
-	 * Checks if user is logged in before running the action. 
+	 * Checks if user is logged in before running the action.
 	 * 
-	 * Action is run if current session contains logged-in user. Otherwise returns defaultRedirect.
-	 * @param action to be run if user is logged in
+	 * Action is run if current session contains logged-in user. Otherwise
+	 * returns defaultRedirect.
+	 * 
+	 * @param action
+	 *            to be run if user is logged in
 	 * @return redirect page
 	 */
 	public String runPrivileged(Action action) {
 		return runPrivileged(action, null);
 	}
-	
+
 	/**
 	 * Same as runPrivileged, but also checks for the role.
-	 * @param action to be run if user is logged in and has required role
-	 * @param role role to check against
+	 * 
+	 * @param action
+	 *            to be run if user is logged in and has required role
+	 * @param role
+	 *            role to check against
 	 * @return redirect page
 	 */
 	public String runPrivileged(Action action, Roles role) {

@@ -13,8 +13,9 @@ import cz.upol.inf.vanusanik.ministag.model.service.MinistagRepository;
 @ApplicationScoped
 @Named("ConverterUser")
 public class UserConverter implements Converter {
-	
-	@Inject private MinistagRepository repository;
+
+	@Inject
+	private MinistagRepository repository;
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -23,7 +24,7 @@ public class UserConverter implements Converter {
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
-		return ((User)value).getLogin();
+		return ((User) value).getLogin();
 	}
 
 }

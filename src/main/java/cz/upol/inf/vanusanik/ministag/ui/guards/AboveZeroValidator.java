@@ -17,24 +17,25 @@ public class AboveZeroValidator implements Validator {
 		Number n = null;
 		if (value instanceof String) {
 			try {
-				n = Integer.parseInt((String)value);
+				n = Integer.parseInt((String) value);
 			} catch (Exception e) {
 				try {
-					n = Double.parseDouble((String)value);
+					n = Double.parseDouble((String) value);
 				} catch (Exception ee) {
-					
+
 				}
 			}
 		} else if (value instanceof Number) {
-			n = (Number)value;
+			n = (Number) value;
 		}
-		
+
 		if (n == null) {
 			throw new ValidatorException(new FacesMessage("Nesprávný formát čísla!", "Nesprávný formát čísla!"));
 		}
-		
+
 		if (n.doubleValue() <= 0) {
-			throw new ValidatorException(new FacesMessage("Hodnota musí být větší než nula!", "Hodnota musí být větší než nula!"));
+			throw new ValidatorException(
+					new FacesMessage("Hodnota musí být větší než nula!", "Hodnota musí být větší než nula!"));
 		}
 	}
 

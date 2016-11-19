@@ -15,8 +15,9 @@ import cz.upol.inf.vanusanik.ministag.model.service.MinistagRepository;
 @Named("GUARDLoginName")
 @ApplicationScoped
 public class LoginNameValidator implements Validator {
-	
-	@Inject	private MinistagRepository repository;
+
+	@Inject
+	private MinistagRepository repository;
 
 	@Override
 	public void validate(FacesContext arg0, UIComponent arg1, Object value) throws ValidatorException {

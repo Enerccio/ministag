@@ -12,7 +12,7 @@ import org.apache.commons.io.IOUtils;
 
 @ApplicationScoped
 public class ImageOutputWriter {
-	
+
 	public static final String ENCODING_PNG = "png";
 	public static final String ENCODING_JPG = "jpg";
 	public static final String ENCODING_GIF = "gif";
@@ -32,7 +32,7 @@ public class ImageOutputWriter {
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
-		
+
 		int rqs = os.size();
 		resp.setContentLength(rqs);
 		IOUtils.copy(new ByteArrayInputStream(os.toByteArray()), resp.getOutputStream());

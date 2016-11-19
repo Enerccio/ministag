@@ -17,15 +17,18 @@ import cz.upol.inf.vanusanik.ministag.ui.services.GarantController.ChosenDepartm
 @ApplicationScoped
 public class CourseAbbrValidator implements Validator {
 
-	@Inject private ChosenDepartment ad;
-	@Inject private ChosenCourse ac;
-	@Inject private MinistagRepository repository;
-	
+	@Inject
+	private ChosenDepartment ad;
+	@Inject
+	private ChosenCourse ac;
+	@Inject
+	private MinistagRepository repository;
+
 	@Override
 	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 		if (ac.getCurrentCourse() != null && value.equals(ac.getCurrentCourse().getShortName()))
 			return;
-		if (!repository.uniqueCourseName(ad.getCurrentDepartment().getShortName(), (String)value))
+		if (!repository.uniqueCourseName(ad.getCurrentDepartment().getShortName(), (String) value))
 			throw new ValidatorException(new FacesMessage("Zkratka musí být unikátní", ""));
 	}
 

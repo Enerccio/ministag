@@ -16,9 +16,11 @@ public class ScheduleServlet extends HttpServlet {
 	public static final String WIDTH = "width";
 	public static final String HEIGHT = "height";
 	public static final String ENCODING = "encoding";
-	
-	@Inject private ImageOutputWriter outputWriter;
-	@Inject private ScheduleGenerator outputGenerator;
+
+	@Inject
+	private ImageOutputWriter outputWriter;
+	@Inject
+	private ScheduleGenerator outputGenerator;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,20 +28,20 @@ public class ScheduleServlet extends HttpServlet {
 			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 			return;
 		}
-		
-		resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); 
-		resp.setHeader("Pragma", "no-cache"); 
+
+		resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+		resp.setHeader("Pragma", "no-cache");
 		resp.setDateHeader("Expires", 0);
-		
+
 		String strw = req.getParameter(WIDTH);
 		String strh = req.getParameter(HEIGHT);
 		String encoding = req.getParameter(ENCODING);
-		
+
 		if (strw == null || strh == null || encoding == null) {
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
-		
+
 		int w, h;
 		try {
 			w = Integer.parseInt(strw);
@@ -48,12 +50,12 @@ public class ScheduleServlet extends HttpServlet {
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
-		
+
 		if (w == 0 || h == 0) {
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
-		
+
 		try {
 			BufferedImage i = outputGenerator.generate(w, h);
 			outputWriter.generate(i, encoding, resp);
@@ -61,9 +63,5 @@ public class ScheduleServlet extends HttpServlet {
 			throw new ServletException(e);
 		}
 	}
-	
-	
-
-	
 
 }

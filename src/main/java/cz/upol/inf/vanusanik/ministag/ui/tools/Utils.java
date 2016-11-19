@@ -18,7 +18,7 @@ import cz.upol.inf.vanusanik.ministag.model.entities.TimetableType;
 @ApplicationScoped
 @Named("utils")
 public class Utils {
-	
+
 	public String endingType2Display(EndingType e) {
 		switch (e) {
 		case COLLOQUIUM:
@@ -26,11 +26,11 @@ public class Utils {
 		case CREDIT:
 			return "Z";
 		default:
-			break;		
+			break;
 		}
 		return "";
 	}
-	
+
 	public String endingType2DisplayLonger(EndingType e) {
 		switch (e) {
 		case COLLOQUIUM:
@@ -38,11 +38,11 @@ public class Utils {
 		case CREDIT:
 			return "Zápočet";
 		default:
-			break;		
+			break;
 		}
 		return "";
 	}
-	
+
 	public String timetableType2Display(TimetableType t) {
 		switch (t) {
 		case LECTURE:
@@ -53,21 +53,22 @@ public class Utils {
 			return "Cvičení";
 		default:
 			break;
-		
+
 		}
 		return "";
 	}
-	
+
 	public String day2display(int day) {
 		return day2text(day);
 	}
-	
+
 	public List<Integer> getAllDays() {
-		return Arrays.asList(new Integer[]{0, 1, 2, 3, 4});
+		return Arrays.asList(new Integer[] { 0, 1, 2, 3, 4 });
 	}
 
 	/**
 	 * Returns byte array as hex string
+	 * 
 	 * @param hash
 	 * @return
 	 */
@@ -77,6 +78,7 @@ public class Utils {
 
 	/**
 	 * Decodes hex string as byte array
+	 * 
 	 * @param hex
 	 * @return
 	 */
@@ -91,6 +93,7 @@ public class Utils {
 
 	/**
 	 * Performs salted hash check
+	 * 
 	 * @param password
 	 * @return
 	 */
@@ -106,7 +109,9 @@ public class Utils {
 	}
 
 	/**
-	 * Appends ?faces-redirect=true or &faces-redirect=true to redirect, based on the uri
+	 * Appends ?faces-redirect=true or &faces-redirect=true to redirect, based
+	 * on the uri
+	 * 
 	 * @param url
 	 * @return
 	 */
@@ -117,7 +122,7 @@ public class Utils {
 	}
 
 	public static String redirect(String message, String uri) {
-		return "redirect.xhtml?redirectTo=" + uri + "&msg="+message;
+		return "redirect.xhtml?redirectTo=" + uri + "&msg=" + message;
 	}
 
 	public static Date calendarData(int h, int m) {
@@ -127,16 +132,21 @@ public class Utils {
 	}
 
 	public static String showSchedule(int w, int h, String encType) {
-		return "schedule/draw?width="+w+"&height="+h+"&encoding="+encType;
+		return "schedule/draw?width=" + w + "&height=" + h + "&encoding=" + encType;
 	}
 
 	public static String day2text(int day) {
 		switch (day) {
-		case 0: return "Pondělí";
-		case 1: return "Uterý";
-		case 2: return "Středa";
-		case 3: return "Čtvrtek";
-		case 4: return "Pátek";
+		case 0:
+			return "Pondělí";
+		case 1:
+			return "Uterý";
+		case 2:
+			return "Středa";
+		case 3:
+			return "Čtvrtek";
+		case 4:
+			return "Pátek";
 		}
 		return "";
 	}

@@ -1,0 +1,37 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+   	<!-- Department fragment BODY -->
+   	
+   	<c:set var="te" scope="request" 
+		value="#{indexSearch.currentSearchStack.get(indexSearch.currentSearchStack.size()-1)}"/>
+		
+	<!-- Top element is department -->
+	<div class="displaybox">
+		<div class="innerbox">#{te.displayShort()}</div>
+		<div class="innerbox">Počet kreditů: #{te.creditCount}</div>
+		<div class="innerbox">Typ ukončení: #{utils.endingType2DisplayLonger(te.endingType)}<ui:fragment rendered="#{te.hasExam eq true}">, Zkouška</ui:fragment></div>
+		<div class="innerbox">Garant: <h:commandLink value="#{te.garant.name}"
+							action="#{index.select(te.garant)}" /></div>
+		<div class="innerbox">Učitelé: <ui:repeat value="#{te.teachers}" var="t">
+							<h:commandLink value="#{t.displayShort()}"
+									action="#{index.select(t)}" varStatus="statusT2" />
+							<ui:fragment rendered="#{statusT2.last != true}">,&#160;</ui:fragment>
+						</ui:repeat></div>
+		<div class="innerbox">Bloky:<ui:repeat value="#{te.blocks}" var="b">
+	          				<div>
+								<h:commandLink value="#{b.displayShort()}"
+										action="#{index.select(b)}" />
+							</div>
+						</ui:repeat></div>
+		<div class="innerbox">#{te.syllabus}</div>
+		<div class="innerbox">#{te.description}</div>
+		<div class="innerbox">
+			<div>Rozvrh:</div>
+			<img src="#{schedulerController.showSchedule(te, 800, 400, 'png')}" />
+	   	</div>
+	</div>
+</ui:composition>

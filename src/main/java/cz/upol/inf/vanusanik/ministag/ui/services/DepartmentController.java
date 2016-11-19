@@ -20,12 +20,12 @@ import cz.upol.inf.vanusanik.ministag.ui.tools.Utils;
 @Named("departmentController")
 @ApplicationScoped
 public class DepartmentController {
-	
+
 	@Named("activeDepartment")
 	@SessionScoped
 	public static class ActiveDepartment implements Serializable {
 		private static final long serialVersionUID = -1751329860707450138L;
-		
+
 		private String activeDepartment;
 
 		public String getActiveDepartment() {
@@ -34,46 +34,50 @@ public class DepartmentController {
 
 		public void setActiveDepartment(String activeDepartment) {
 			this.activeDepartment = activeDepartment;
-		}		
-		
+		}
+
 	}
-	
+
 	@Named("departmentList")
 	@RequestScoped
 	public static class DepartmentList {
-	
-		@Inject private DepartmentController controller;
-		
+
+		@Inject
+		private DepartmentController controller;
+
 		public List<Department> getDepartments() {
 			return controller.getDepartments();
 		}
-		
+
 		public String edit(String dept) {
 			if ("".equals(dept))
 				dept = null;
 			return controller.editDepartment(dept);
 		}
-		
+
 		public String remove(String dept) {
 			controller.removeDepartments(dept);
 			return Utils.appendRedirect("admDept.xhtml");
 		}
 	}
-	
+
 	@Named("editDepartment")
 	@RequestScoped
 	public static class EditDepartment {
-		
-		@Inject private ActiveDepartment ad;
-		@Inject private MinistagRepository repository;
-		@Inject private DepartmentController controller;
-		
+
+		@Inject
+		private ActiveDepartment ad;
+		@Inject
+		private MinistagRepository repository;
+		@Inject
+		private DepartmentController controller;
+
 		private String abbr;
 		private String desc;
 		private String name;
 		private List<String> garants;
 		private List<String> teachers;
-		
+
 		@PostConstruct
 		public void init() {
 			if (ad.getActiveDepartment() != null) {
@@ -83,72 +87,85 @@ public class DepartmentController {
 				name = d.getName();
 				garants = new ArrayList<String>();
 				teachers = new ArrayList<String>();
-				
+
 				for (User u : d.getGarants()) {
 					garants.add(u.getLogin());
 				}
-				
+
 				for (User u : d.getTeachers()) {
 					teachers.add(u.getLogin());
 				}
 			}
 		}
-		
+
 		public List<User> getAllGarants() {
 			return repository.getUsersByRole(Roles.GARANT);
 		}
-		
+
 		public List<User> getAllTeachers() {
 			List<User> ul = new ArrayList<User>(repository.getUsersByRole(Roles.GARANT));
 			ul.addAll(repository.getUsersByRole(Roles.TEACHER));
 			return ul;
 		}
-		
+
 		public ActiveDepartment getAd() {
 			return ad;
 		}
+
 		public void setAd(ActiveDepartment ad) {
 			this.ad = ad;
 		}
+
 		public String getAbbr() {
 			return abbr;
 		}
+
 		public void setAbbr(String abbr) {
 			this.abbr = abbr;
 		}
+
 		public String getDesc() {
 			return desc;
 		}
+
 		public void setDesc(String desc) {
 			this.desc = desc;
 		}
+
 		public String getName() {
 			return name;
 		}
+
 		public void setName(String name) {
 			this.name = name;
 		}
+
 		public List<String> getGarants() {
 			return garants;
 		}
+
 		public void setGarants(List<String> garants) {
 			this.garants = garants;
 		}
+
 		public List<String> getTeachers() {
 			return teachers;
 		}
+
 		public void setTeachers(List<String> teachers) {
 			this.teachers = teachers;
 		}
-		
+
 		public String submit() {
 			return controller.editDepartment(this);
 		}
 	}
-	
-	@Inject private MinistagRepository repository;
-	@Inject private ActiveDepartment activeDepartment;
-	
+
+	@Inject
+	private MinistagRepository repository;
+	@Inject
+	private ActiveDepartment activeDepartment;
+
 	public List<Department> getDepartments() {
 		return repository.getDepartments();
 	}
@@ -160,7 +177,7 @@ public class DepartmentController {
 		} else {
 			d = new Department();
 		}
-		
+
 		d.setShortName(editDepartment.getAbbr());
 		d.setName(editDepartment.getName());
 		d.setDescription(editDepartment.getDesc());
@@ -174,9 +191,9 @@ public class DepartmentController {
 			User u = repository.find(g, User.class);
 			d.getTeachers().add(u);
 		}
-		
+
 		repository.save(d);
-		
+
 		return Utils.appendRedirect("admDept.xhtml");
 	}
 
@@ -188,5 +205,5 @@ public class DepartmentController {
 		activeDepartment.setActiveDepartment(dept);
 		return Utils.appendRedirect("admEditDept.xhtml");
 	}
-	
+
 }

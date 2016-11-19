@@ -17,9 +17,11 @@ import cz.upol.inf.vanusanik.ministag.ui.services.DepartmentController.ActiveDep
 @ApplicationScoped
 public class DepartmentAbbrValidator implements Validator {
 
-	@Inject private ActiveDepartment ad;
-	@Inject private MinistagRepository repository;
-	
+	@Inject
+	private ActiveDepartment ad;
+	@Inject
+	private MinistagRepository repository;
+
 	@Override
 	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 		if (value.equals(ad.getActiveDepartment()))

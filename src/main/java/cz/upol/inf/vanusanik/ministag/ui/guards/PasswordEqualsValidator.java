@@ -15,25 +15,25 @@ import cz.upol.inf.vanusanik.ministag.ui.services.SecurityController.AddEditUser
 @Named("GAURDPasswordEquals")
 @ApplicationScoped
 public class PasswordEqualsValidator implements Validator {
-	
+
 	private @Inject CurrentlyEditedUser ceu;
 
 	@Override
-    public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        
-        UIInput passwdComponent = (UIInput) component.getAttributes().get("passwordComponentBinding");        
-        String passwd = (String) passwdComponent.getValue();
-        if (passwd == null)
-        	return; // bad password so don't check this
-        
-        if (passwd.length() == 0 && ceu.getCurrentUser() != null)
+	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+
+		UIInput passwdComponent = (UIInput) component.getAttributes().get("passwordComponentBinding");
+		String passwd = (String) passwdComponent.getValue();
+		if (passwd == null)
+			return; // bad password so don't check this
+
+		if (passwd.length() == 0 && ceu.getCurrentUser() != null)
 			return;
-        
-        if (!value.equals(passwd)) {
-            FacesMessage msg = new FacesMessage("Hesla se neshodují", "");
-            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-            throw new ValidatorException(msg);
-        }
-    }
-	
+
+		if (!value.equals(passwd)) {
+			FacesMessage msg = new FacesMessage("Hesla se neshodují", "");
+			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+			throw new ValidatorException(msg);
+		}
+	}
+
 }

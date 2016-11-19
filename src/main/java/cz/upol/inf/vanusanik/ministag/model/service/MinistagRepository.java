@@ -11,6 +11,7 @@ import javax.persistence.Persistence;
 
 import cz.upol.inf.vanusanik.ministag.model.entities.AppSettings;
 import cz.upol.inf.vanusanik.ministag.model.entities.BasicEntity;
+import cz.upol.inf.vanusanik.ministag.model.entities.Course;
 import cz.upol.inf.vanusanik.ministag.model.entities.Department;
 import cz.upol.inf.vanusanik.ministag.model.entities.Roles;
 import cz.upol.inf.vanusanik.ministag.model.entities.Timetable;
@@ -21,15 +22,15 @@ import cz.upol.inf.vanusanik.ministag.model.entities.User;
 public class MinistagRepository {
 
 	private EntityManager em;
-	
+
 	public MinistagRepository() {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ministag");
 		em = factory.createEntityManager();
 	}
-	
+
 	public <T extends BasicEntity> T find(final Object key, final Class<T> clazz) {
 		return inTransaction(new InTransaction(em) {
-			
+
 			@Override
 			Object doInTransaction() throws Exception {
 				return em.find(clazz, key);
@@ -39,7 +40,7 @@ public class MinistagRepository {
 
 	public <T extends BasicEntity> T save(final T entity) {
 		return inTransaction(new InTransaction(em) {
-			
+
 			@Override
 			Object doInTransaction() throws Exception {
 				if (em.contains(entity)) {
@@ -51,53 +52,52 @@ public class MinistagRepository {
 					em.flush();
 					return entity;
 				}
-				
+
 			}
-		});		
+		});
 	}
-	
+
 	public <T extends BasicEntity> void remove(final T entity) {
 		inTransaction(new InTransaction(em) {
-			
+
 			@Override
 			Object doInTransaction() throws Exception {
 				if (em.contains(entity)) {
-			        em.remove(entity);
-			    } else {
-			        BasicEntity ee = em.getReference(entity.getClass(), entity.getPrimaryKeyValue());
-			        em.remove(ee);
-			    }
+					em.remove(entity);
+				} else {
+					BasicEntity ee = em.getReference(entity.getClass(), entity.getPrimaryKeyValue());
+					em.remove(ee);
+				}
 				return null;
 			}
 		});
 	}
-	
+
 	public AppSettings getAppSettings() {
 		return inTransaction(new InTransaction(em) {
-			
+
 			@Override
 			Object doInTransaction() throws Exception {
-				if (em.createQuery("SELECT count(apps) FROM AppSettings apps", Long.class)
-						.getSingleResult() == 0) {
+				if (em.createQuery("SELECT count(apps) FROM AppSettings apps", Long.class).getSingleResult() == 0) {
 					synchronized (em) {
 						if (em.createQuery("SELECT count(apps) FROM AppSettings apps", Long.class)
 								.getSingleResult() == 0) {
 							AppSettings as = new AppSettings();
-							
+
 							Calendar c = Calendar.getInstance();
 							c.set(2016, 8, 19, 0, 0);
 							as.setStartOfYear(c);
-							as.setNumWeeks(13);							
+							as.setNumWeeks(13);
 							save(as);
 						}
 					}
 				}
-				return em.createQuery("SELECT apps FROM AppSettings apps", AppSettings.class)
-						.setMaxResults(1).getResultList().iterator().next();
+				return em.createQuery("SELECT apps FROM AppSettings apps", AppSettings.class).setMaxResults(1)
+						.getResultList().iterator().next();
 			}
 		});
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private <T> T inTransaction(InTransaction inTransaction) {
 		return (T) inTransaction.inTransaction();
@@ -105,7 +105,7 @@ public class MinistagRepository {
 
 	public List<User> getUsers() {
 		return inTransaction(new InTransaction(em) {
-			
+
 			@Override
 			Object doInTransaction() throws Exception {
 				return em.createQuery("SELECT u FROM User u ORDER BY u.login").getResultList();
@@ -114,13 +114,14 @@ public class MinistagRepository {
 	}
 
 	public List<Department> getDepartments() {
-		return inTransaction(new InTransaction(em){
+		return inTransaction(new InTransaction(em) {
 
 			@Override
 			Object doInTransaction() throws Exception {
-				return em.createQuery("SELECT d FROM Department d ORDER BY d.shortName", Department.class).getResultList();
+				return em.createQuery("SELECT d FROM Department d ORDER BY d.shortName", Department.class)
+						.getResultList();
 			}
-			
+
 		});
 	}
 
@@ -129,11 +130,10 @@ public class MinistagRepository {
 
 			@Override
 			Object doInTransaction() throws Exception {
-				return em.createQuery("SELECT u FROM User u WHERE u.role = ?", User.class)
-						.setParameter(1, role)
+				return em.createQuery("SELECT u FROM User u WHERE u.role = ?", User.class).setParameter(1, role)
 						.getResultList();
 			}
-			
+
 		});
 	}
 
@@ -143,10 +143,9 @@ public class MinistagRepository {
 			@Override
 			Object doInTransaction() throws Exception {
 				return em.createQuery("SELECT d FROM Department d WHERE ? in d.garant", Department.class)
-						.setParameter(1, garant)
-						.getResultList();
+						.setParameter(1, garant).getResultList();
 			}
-			
+
 		});
 	}
 
@@ -155,13 +154,12 @@ public class MinistagRepository {
 
 			@Override
 			Object doInTransaction() throws Exception {
-				return em.createQuery("SELECT COUNT(distinct c) FROM Department d join d.courses c "
-							+ "WHERE d.shortName = ?1 AND c.shortName = ?2", Long.class)
-						.setParameter(1, shortName)
-						.setParameter(2, value)
-						.getSingleResult().equals(0L);
+				return em
+						.createQuery("SELECT COUNT(distinct c) FROM Department d JOIN d.courses c "
+								+ "WHERE d.shortName = ?1 AND c.shortName = ?2", Long.class)
+						.setParameter(1, shortName).setParameter(2, value).getSingleResult().equals(0L);
 			}
-			
+
 		});
 	}
 
@@ -170,24 +168,60 @@ public class MinistagRepository {
 
 			@Override
 			Object doInTransaction() throws Exception {
-				return em.createQuery("SELECT t FROM Timetable t join t.teacher u "
-							+ "WHERE u = ?1", Timetable.class)
-						.setParameter(1, u)
-						.getResultList();
+				return em.createQuery("SELECT distinct t FROM Timetable t JOIN t.teacher u " + "WHERE u = ?1",
+						Timetable.class).setParameter(1, u).getResultList();
 			}
-			
+
+		});
+	}
+
+	public List<Course> getCoursesForUser(User u) {
+		return inTransaction(new InTransaction(em) {
+
+			@Override
+			Object doInTransaction() throws Exception {
+				return em.createQuery("SELECT distinct c FROM Course c JOIN c.blocks b JOIN b.timetableChoices tc "
+						+ "WHERE tc.teacher = ?1", Course.class).setParameter(1, u).getResultList();
+			}
+
+		});
+	}
+
+	public List<Timetable> getTimetableForCourse(final Course c) {
+		return inTransaction(new InTransaction(em) {
+
+			@Override
+			Object doInTransaction() throws Exception {
+				return em.createQuery(
+						"SELECT distinct t FROM Course c JOIN c.blocks b JOIN b.timetableChoices t " + "WHERE c = ?1",
+						Timetable.class).setParameter(1, c).getResultList();
+			}
+
+		});
+	}
+
+	public List<Course> getAllCourses() {
+		return inTransaction(new InTransaction(em) {
+
+			@Override
+			Object doInTransaction() throws Exception {
+				return em.createQuery(
+						"SELECT c FROM Course c",
+						Course.class).getResultList();
+			}
+
 		});
 	}
 }
 
 abstract class InTransaction {
-	
+
 	private EntityManager em;
-	
+
 	InTransaction(EntityManager em) {
 		this.em = em;
 	}
-	
+
 	Object inTransaction() {
 		try {
 			boolean activeTransaction = em.getTransaction().isActive();
@@ -205,6 +239,6 @@ abstract class InTransaction {
 			return null;
 		}
 	}
-	
+
 	abstract Object doInTransaction() throws Exception;
 }
