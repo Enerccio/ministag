@@ -13,6 +13,7 @@ import cz.upol.inf.vanusanik.ministag.model.entities.AppSettings;
 import cz.upol.inf.vanusanik.ministag.model.entities.BasicEntity;
 import cz.upol.inf.vanusanik.ministag.model.entities.Department;
 import cz.upol.inf.vanusanik.ministag.model.entities.Roles;
+import cz.upol.inf.vanusanik.ministag.model.entities.Timetable;
 import cz.upol.inf.vanusanik.ministag.model.entities.User;
 
 @ManagedBean(name = "ministag")
@@ -159,6 +160,20 @@ public class MinistagRepository {
 						.setParameter(1, shortName)
 						.setParameter(2, value)
 						.getSingleResult().equals(0L);
+			}
+			
+		});
+	}
+
+	public List<Timetable> getTimetableForUser(final User u) {
+		return inTransaction(new InTransaction(em) {
+
+			@Override
+			Object doInTransaction() throws Exception {
+				return em.createQuery("SELECT t FROM Timetable t join t.teacher u "
+							+ "WHERE u = ?1", Timetable.class)
+						.setParameter(1, u)
+						.getResultList();
 			}
 			
 		});

@@ -42,6 +42,5 @@
 	<filter-mapping>
 		<filter-name>loginGuardCheckFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	
+	</filter-mapping>	
 </web-app>

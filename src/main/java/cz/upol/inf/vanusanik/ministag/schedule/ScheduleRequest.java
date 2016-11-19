@@ -29,12 +29,6 @@ public class ScheduleRequest implements Serializable {
 	public void setDrawList(List<Timetable> drawList) {
 		this.drawList = drawList;
 	}
-	public boolean isColored() {
-		return colored;
-	}
-	public void setColored(boolean colored) {
-		this.colored = colored;
-	}
 	public String getTitle() {
 		return title;
 	}

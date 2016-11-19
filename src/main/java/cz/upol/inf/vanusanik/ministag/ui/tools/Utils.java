@@ -59,14 +59,7 @@ public class Utils {
 	}
 	
 	public String day2display(int day) {
-		switch (day) {
-		case 0: return "Pondělí";
-		case 1: return "Uterý";
-		case 2: return "Středa";
-		case 3: return "Čtvrtek";
-		case 4: return "Pátek";
-		}
-		return "";
+		return day2text(day);
 	}
 	
 	public List<Integer> getAllDays() {
@@ -135,5 +128,16 @@ public class Utils {
 
 	public static String showSchedule(int w, int h, String encType) {
 		return "schedule/draw?width="+w+"&height="+h+"&encoding="+encType;
+	}
+
+	public static String day2text(int day) {
+		switch (day) {
+		case 0: return "Pondělí";
+		case 1: return "Uterý";
+		case 2: return "Středa";
+		case 3: return "Čtvrtek";
+		case 4: return "Pátek";
+		}
+		return "";
 	}
 }

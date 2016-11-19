@@ -105,7 +105,7 @@ public class Index {
 	public String showSchedule(Object o, int w, int h, String encType) throws Exception {
 		if (o instanceof User) {
 			User u = (User)o;
-			if (u.getRole() == Roles.TEACHER) {
+			if (u.getRole() == Roles.TEACHER || u.getRole() == Roles.GARANT) {
 				fillTeacherSchedule(u);
 				return Utils.showSchedule(w, h, encType);
 			}
@@ -114,7 +114,7 @@ public class Index {
 	}
 
 	private void fillTeacherSchedule(User u) {
-		schedule.setColored(true);
 		schedule.setTitle("Rozvrh učitele " + u.getName());
+		schedule.setDrawList(repository.getTimetableForUser(u)); 
 	}
 }

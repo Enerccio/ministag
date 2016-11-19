@@ -20,11 +20,7 @@ public class CoordinateTranslator {
 		}
 
 		public double encodeX(double xp) {
-			if (parent == null) {
-				return doEncodeX(xp);
-			}
-			int absoluteX = (int)Math.floor(doEncodeX(xp));
-			return parent.doEncodeX(parent.relativeX(absoluteX));
+			return doEncodeX(xp);
 		}
 
 		private double relativeX(int absoluteX) {
@@ -36,11 +32,7 @@ public class CoordinateTranslator {
 		}
 
 		public double encodeY(double yp) {
-			if (parent == null) {
-				return doEncodeY(yp);
-			}
-			int absoluteY = (int)Math.floor(doEncodeY(yp));
-			return parent.doEncodeY(parent.relativeY(absoluteY));
+			return doEncodeY(yp);
 		}
 
 		private double relativeY(int absoluteY) {
@@ -59,10 +51,10 @@ public class CoordinateTranslator {
 	}
 	
 	public void push(double xpos, double ypos, double w, double h) {
-		int ax = (int) Math.floor(top.doEncodeX(xpos) - top.x);
-		int ay = (int) Math.floor(top.doEncodeY(ypos) - top.y);
-		int aw = (int) Math.floor(top.doEncodeX(xpos+w) - top.x);
-		int ah = (int) Math.floor(top.doEncodeY(ypos+h) - top.y);
+		int ax = (int) Math.floor(top.doEncodeX(xpos));
+		int ay = (int) Math.floor(top.doEncodeY(ypos));
+		int aw = (int) Math.floor(top.doEncodeX(xpos+w));
+		int ah = (int) Math.floor(top.doEncodeY(ypos+h));
 		top = new InnerSection(top, ax, ay, aw-ax, ah-ay);
 	}
 	

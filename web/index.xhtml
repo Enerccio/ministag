@@ -89,7 +89,8 @@
 		                		<!-- Department fragment END-->
 		                	</c:if>
 		                	
-		                	<c:if test="#{te.class.simpleName eq 'User' and te.role eq 'TEACHER'}">
+		                	<c:if test="#{te.class.simpleName eq 'User' and 
+		                								(te.role eq 'TEACHER' or te.role eq 'GARANT')}">
 		                		<!-- User fragment BEGINNING-->
 		                		<ui:include src="/fragments/index$user.fragment.xhtml"/>
 		                		<!-- User fragment END-->
