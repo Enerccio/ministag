@@ -138,4 +138,8 @@ public class Index {
 	public List<Course> taughtCourses(User u) {
 		return repository.getCoursesForTeacher(u);
 	}
+	
+	public List<Course> attendingCourses(User u) {
+		return repository.getCoursesForStudent(u);
+	}
 }

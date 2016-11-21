@@ -4,17 +4,17 @@
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:c="http://java.sun.com/jsp/jstl/core">
-   	<!-- User-teacher/garant fragment BODY -->
+   	<!-- User-student fragment BODY -->
    	
    	<c:set var="te" scope="request" 
 		value="#{indexSearch.currentSearchStack.get(indexSearch.currentSearchStack.size()-1)}"/>
 		
-	<!-- Top element is user-teacher/garant -->
+	<!-- Top element is user -->
 	<div class="displaybox">
 		<div class="innerbox">#{te.name}</div>
 		<div class="innerbox">
 			<div>
-				<c:set var="data" scope="request" value="#{index.taughtCourses(te)}"/>
+				<c:set var="data" scope="request" value="#{index.attendingCourses(te)}"/>
 				<h:dataTable value="#{data}" var="c"
 						rendered="#{not empty data}">
 	          		<h:column>

@@ -1,0 +1,21 @@
+<ui:component
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:cc="http://java.sun.com/jsf/composite"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    
+    <cc:interface componentType="messageBox">
+        <cc:attribute name="targetPage" type="java.lang.String" shortDescription="What fragment to load"/>
+    </cc:interface>
+    
+    <cc:implementation>
+        <div id="#{cc.clientId}" class="modalWindow">
+        	<span class="modalWindowClose">x</span>
+    		<div class="modalContent">
+    			<ui:include src="#{cc.attrs.targetPage}"/>
+    		</div>
+        </div>
+    </cc:implementation>
+</ui:component>
