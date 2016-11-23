@@ -180,7 +180,7 @@ public class MinistagRepository {
 
 			@Override
 			Object doInTransaction() throws Exception {
-				return em.createQuery("SELECT distinct s FROM Timetable t JOIN t.students s " + "WHERE s = ?1",
+				return em.createQuery("SELECT distinct t FROM Timetable t JOIN t.students s " + "WHERE s = ?1",
 						Timetable.class).setParameter(1, u).getResultList();
 			}
 
@@ -204,8 +204,8 @@ public class MinistagRepository {
 
 			@Override
 			Object doInTransaction() throws Exception {
-				return em.createQuery("SELECT distinct c FROM Course c JOIN c.blocks b JOIN b.timetableChoices tc "
-						+ "WHERE ?1 IN tc.students", Course.class).setParameter(1, u).getResultList();
+				return em.createQuery("SELECT distinct c FROM Course c JOIN c.blocks b JOIN b.timetableChoices tc JOIN tc.students s "
+						+ "WHERE s = ?1", Course.class).setParameter(1, u).getResultList();
 			}
 
 		});

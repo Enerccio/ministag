@@ -25,6 +25,13 @@
 					</c:if>
 					
 					<c:if
+						test="#{security.hasRole('STUDENT')}">
+						<!-- garant -->
+						<li><h:form><h:commandLink value="Předzápis"
+								action="#{preregister.showIndex()}" /></h:form></li>
+					</c:if>
+					
+					<c:if
 						test="#{security.hasRole('GARANT')}">
 						<!-- garant -->
 						<li>
