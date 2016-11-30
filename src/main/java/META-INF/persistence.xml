@@ -16,15 +16,14 @@
 		<class>cz.upol.inf.vanusanik.ministag.model.entities.Timetable</class>
 
 		<properties>
-			<property name="hibernate.dialect" 
-					  value="com.enigmabridge.hibernate.dialect.SQLiteDialect"/>
-			<property name="hibernate.hbm2ddl.auto" value="update"/>
-			<property name="hibernate.show_sql" value="true"/>
-			<property name="hibernate.format_sql" value="false"/>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ministag" />
+            <property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.password" value="heslo" />
 			
-			<property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
-			<property name="javax.persistence.jdbc.url" 
-					  value="jdbc:sqlite:/var/local/ministag.db"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
 		</properties>
 
 	</persistence-unit>

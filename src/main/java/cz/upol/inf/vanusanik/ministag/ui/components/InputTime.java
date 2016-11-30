@@ -25,7 +25,7 @@ public class InputTime extends UIInput implements NamingContainer {
 	private UIInput minute;
 
 	/**
-	 * As required by <cc:interface>.
+	 * As required by cc:interface.
 	 */
 	@Override
 	public String getFamily() {

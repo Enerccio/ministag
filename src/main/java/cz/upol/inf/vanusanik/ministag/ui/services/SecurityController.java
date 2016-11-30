@@ -411,7 +411,6 @@ public class SecurityController {
 	/**
 	 * Checks whether provided username or password is valid user or not
 	 * 
-	 * @param login
 	 * @param target
 	 * @param loginRequest
 	 * @return redirect
@@ -433,7 +432,7 @@ public class SecurityController {
 	/**
 	 * Checks whether current user has any of roles or not
 	 * 
-	 * @param roles
+	 * @param role
 	 *            (empty if you only need logged in check)
 	 * @return false if no one is logged in or role is mismatched
 	 */

@@ -18,6 +18,10 @@
                 <h2>Předzápis</h2>
                 
                 <h:form>
+                	<c:if test="#{activePreregister.currentlyEdited != null}"> 
+                		<ui:include src="/fragments/preregister$display.fragment.xhtml"/>
+                	</c:if>
+                
 	                <div>Mé zapsané předměty:</div>
        				<div>
        					<c:set var="data" scope="request" 
@@ -56,11 +60,55 @@
 			          			<f:facet name="header">Typ ukončení</f:facet>
 			          			#{utils.endingType2Display(c.endingType)}<ui:fragment rendered="#{c.hasExam eq true}">+Zk</ui:fragment>
 			          		</h:column>
+			          		<h:column>
+			          			<h:commandButton action="#{preregister.updateCourseRegistration(c)}" value="Upravit" />
+			          		</h:column>
 				        </h:dataTable>
        				</div>
        				<div>
        					<img src="#{schedulerController.showSchedule(currentSession.currentUser, 800, 400, 'png')}" />
        				</div>
+       				
+       				<c:set var="dataList" scope="request" 
+       						value="#{preregister.getUnregisteredCourses(currentSession.currentUser)}"/>
+       				<h:dataTable value="#{dataList}" 
+	       							 var="c"
+									 rendered="#{not empty dataList}">
+						<h:column>
+		          			<f:facet name="header">Katedra:</f:facet>
+		          			#{c.dept.displayShort()}
+		          		</h:column>
+						<h:column>
+		          			<f:facet name="header">Zkratka</f:facet>
+		          			#{c.displayShort()}
+		          		</h:column>
+		          		<h:column>
+		          			<f:facet name="header">Jméno předmětu</f:facet>
+		          			#{c.name}
+		          		</h:column>
+		          		<h:column>
+		          			<f:facet name="header">Garant</f:facet>
+		          			#{c.garant.name}
+		          		</h:column>
+		          		<h:column>
+		          			<f:facet name="header">Učitelé</f:facet>
+		          			<ui:repeat value="#{c.teachers}" var="t">
+								#{t.displayShort()}
+								<ui:fragment rendered="#{statusT2.last != true}">,&#160;</ui:fragment>
+							</ui:repeat>
+		          		</h:column>
+		          		<h:column>
+		          			<f:facet name="header">Počet kreditů</f:facet>
+		          			#{c.creditCount}
+		          		</h:column>
+		          		<h:column>
+		          			<f:facet name="header">Typ ukončení</f:facet>
+		          			#{utils.endingType2Display(c.endingType)}<ui:fragment rendered="#{c.hasExam eq true}">+Zk</ui:fragment>
+		          		</h:column>
+		          		<h:column>
+		          			<h:commandButton action="#{preregister.updateCourseRegistration(c)}" value="Upravit" />
+		          		</h:column>
+			        </h:dataTable>
 	        	</h:form>
             </ui:define>
 

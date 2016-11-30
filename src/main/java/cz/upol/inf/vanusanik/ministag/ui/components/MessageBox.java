@@ -17,7 +17,7 @@ import javax.faces.context.FacesContext;
 public class MessageBox extends UIComponentBase implements NamingContainer {
 
 	/**
-	 * As required by <cc:interface>.
+	 * As required by cc:interface.
 	 */
 	@Override
 	public String getFamily() {

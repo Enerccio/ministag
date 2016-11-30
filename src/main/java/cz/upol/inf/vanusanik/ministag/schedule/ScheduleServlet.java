@@ -17,9 +17,9 @@ import javax.servlet.http.HttpServletResponse;
  * 
  * Example usage syntax:
  * 
- * /draw?width=800&height=400&encoding=png  
- * /draw?width=800&height=400&encoding=jpg 
- * /draw?width=800&height=400&encoding=gif  
+ * /draw?width=800&amp;height=400&amp;encoding=png  
+ * /draw?width=800&amp;height=400&amp;encoding=jpg 
+ * /draw?width=800&amp;height=400&amp;encoding=gif  
  * @author enerccio
  *
  */

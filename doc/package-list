@@ -1,0 +1,9 @@
+cz.upol.inf.vanusanik.ministag.model.entities
+cz.upol.inf.vanusanik.ministag.model.service
+cz.upol.inf.vanusanik.ministag.schedule
+cz.upol.inf.vanusanik.ministag.ui.components
+cz.upol.inf.vanusanik.ministag.ui.converters
+cz.upol.inf.vanusanik.ministag.ui.filters
+cz.upol.inf.vanusanik.ministag.ui.guards
+cz.upol.inf.vanusanik.ministag.ui.services
+cz.upol.inf.vanusanik.ministag.ui.tools

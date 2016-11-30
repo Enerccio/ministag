@@ -122,7 +122,7 @@ public class SecurityFilter implements Filter {
 	}
 
 	/**
-	 * Redirects to the login.xhtml?backurl=<requested page>
+	 * Redirects to the login.xhtml?backurl=[requested page]
 	 * @param httpRequest
 	 * @param httpResponse
 	 * @param page 

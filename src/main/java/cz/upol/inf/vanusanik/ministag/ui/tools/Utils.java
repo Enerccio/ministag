@@ -139,7 +139,7 @@ public class Utils {
 	}
 
 	/**
-	 * Appends ?faces-redirect=true or &faces-redirect=true to redirect, based
+	 * Appends ?faces-redirect=true or &amp;faces-redirect=true to redirect, based
 	 * on the uri
 	 * 
 	 * @param url
