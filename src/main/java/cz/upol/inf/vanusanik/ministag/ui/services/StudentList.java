@@ -13,10 +13,20 @@ import cz.upol.inf.vanusanik.ministag.model.entities.RequiredBlock;
 import cz.upol.inf.vanusanik.ministag.model.entities.Timetable;
 import cz.upol.inf.vanusanik.ministag.model.entities.User;
 
+/**
+ * Handles the student list ajax requests.
+ * @author enerccio
+ *
+ */
 @ApplicationScoped
 @Named("studentList")
 public class StudentList {
 
+	/**
+	 * Holds the list of students to be displayed in message box
+	 * @author enerccio
+	 *
+	 */
 	@SessionScoped 
 	@Named("activeStudentList")
 	public static class ActiveStudentList implements Serializable {
@@ -57,6 +67,12 @@ public class StudentList {
 	
 	@Inject private ActiveStudentList studentList;
 	
+	/**
+	 * Shows the ajax request
+	 * @param sourceData
+	 * @param links
+	 * @return
+	 */
 	public String show(Object sourceData, boolean links) {
 		if (sourceData instanceof RequiredBlock) {
 			RequiredBlock rb = (RequiredBlock)sourceData;

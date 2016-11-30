@@ -8,6 +8,11 @@ import javax.faces.component.UIComponentBase;
 import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 
+/**
+ * MessageBox ajax component
+ * @author enerccio
+ *
+ */
 @FacesComponent("messageBox")
 public class MessageBox extends UIComponentBase implements NamingContainer {
 

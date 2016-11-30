@@ -15,10 +15,21 @@ import org.apache.commons.codec.binary.Hex;
 import cz.upol.inf.vanusanik.ministag.model.entities.EndingType;
 import cz.upol.inf.vanusanik.ministag.model.entities.TimetableType;
 
+/**
+ * Utility functions. Both instance and out-of-instance variants.
+ * Instance variants are used in jsp
+ * @author enerccio
+ *
+ */
 @ApplicationScoped
 @Named("utils")
 public class Utils {
 
+	/**
+	 * Returns short name for {@link EndingType}
+	 * @param e
+	 * @return
+	 */
 	public String endingType2Display(EndingType e) {
 		switch (e) {
 		case COLLOQUIUM:
@@ -31,6 +42,11 @@ public class Utils {
 		return "";
 	}
 
+	/**
+	 * Returns the longer name for {@link EndingType}
+	 * @param e
+	 * @return
+	 */
 	public String endingType2DisplayLonger(EndingType e) {
 		switch (e) {
 		case COLLOQUIUM:
@@ -43,6 +59,11 @@ public class Utils {
 		return "";
 	}
 
+	/**
+	 * Returns type of timetable for course
+	 * @param t
+	 * @return
+	 */
 	public String timetableType2Display(TimetableType t) {
 		switch (t) {
 		case LECTURE:
@@ -58,10 +79,19 @@ public class Utils {
 		return "";
 	}
 
+	/**
+	 * Returns text form for day ID
+	 * @param day
+	 * @return
+	 */
 	public String day2display(int day) {
 		return day2text(day);
 	}
 
+	/**
+	 * Returns all days in order
+	 * @return
+	 */
 	public List<Integer> getAllDays() {
 		return Arrays.asList(new Integer[] { 0, 1, 2, 3, 4 });
 	}
@@ -121,20 +151,44 @@ public class Utils {
 		return url.contains("?") ? url + "&faces-redirect=true" : url + "?faces-redirect=true";
 	}
 
+	/**
+	 * Handles the redirect request (with message)
+	 * @param message
+	 * @param uri
+	 * @return
+	 */
 	public static String redirect(String message, String uri) {
 		return "redirect.xhtml?redirectTo=" + uri + "&msg=" + message;
 	}
 
+	/**
+	 * Returns calendar data for specific hour and minute
+	 * @param h
+	 * @param m
+	 * @return
+	 */
 	public static Date calendarData(int h, int m) {
 		Calendar c = Calendar.getInstance();
 		c.set(0, 0, 0, h, m, 0);
 		return c.getTime();
 	}
 
+	/**
+	 * Forms basic uri for schedule request
+	 * @param w
+	 * @param h
+	 * @param encType
+	 * @return
+	 */
 	public static String showSchedule(int w, int h, String encType) {
 		return "schedule/draw?width=" + w + "&height=" + h + "&encoding=" + encType;
 	}
 
+	/**
+	 * Transforms day to string representation
+	 * @param day
+	 * @return
+	 */
 	public static String day2text(int day) {
 		switch (day) {
 		case 0:

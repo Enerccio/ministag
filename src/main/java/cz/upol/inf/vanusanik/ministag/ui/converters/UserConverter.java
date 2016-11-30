@@ -10,6 +10,11 @@ import javax.inject.Named;
 import cz.upol.inf.vanusanik.ministag.model.entities.User;
 import cz.upol.inf.vanusanik.ministag.model.service.MinistagRepository;
 
+/**
+ * Converts between user and text representation (primary key) and back
+ * @author enerccio
+ *
+ */
 @ApplicationScoped
 @Named("ConverterUser")
 public class UserConverter implements Converter {

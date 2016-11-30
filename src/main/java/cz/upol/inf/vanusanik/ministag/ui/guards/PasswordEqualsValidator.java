@@ -12,6 +12,11 @@ import javax.inject.Named;
 
 import cz.upol.inf.vanusanik.ministag.ui.services.SecurityController.AddEditUserRequest.CurrentlyEditedUser;
 
+/**
+ * Validates if two passwords entered are identical
+ * @author enerccio
+ *
+ */
 @Named("GAURDPasswordEquals")
 @ApplicationScoped
 public class PasswordEqualsValidator implements Validator {

@@ -9,6 +9,11 @@ import javax.enterprise.context.SessionScoped;
 
 import cz.upol.inf.vanusanik.ministag.model.entities.Timetable;
 
+/**
+ * Holds the session data for generating schedule image
+ * @author enerccio
+ *
+ */
 @SessionScoped
 public class ScheduleRequest implements Serializable {
 	private static final long serialVersionUID = 4588865678998938852L;

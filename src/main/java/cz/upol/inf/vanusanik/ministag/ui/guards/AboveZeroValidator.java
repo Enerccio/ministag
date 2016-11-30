@@ -8,6 +8,11 @@ import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
+/**
+ * Validates whether value is above zero
+ * @author enerccio
+ *
+ */
 @Stateless
 @FacesValidator("GUARDAboveZero")
 public class AboveZeroValidator implements Validator {

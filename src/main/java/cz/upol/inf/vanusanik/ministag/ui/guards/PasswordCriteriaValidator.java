@@ -11,6 +11,17 @@ import javax.inject.Named;
 
 import cz.upol.inf.vanusanik.ministag.ui.services.SecurityController.AddEditUserRequest.CurrentlyEditedUser;
 
+/**
+ * Validates the password entry criteria.
+ * 
+ * Criteria:
+ *  * at least 5 characters
+ *  * contains at least one number
+ *  * not empty
+ * 
+ * @author enerccio
+ *
+ */
 @Named("GUARDPasswordCriteria")
 @ApplicationScoped
 public class PasswordCriteriaValidator implements Validator {

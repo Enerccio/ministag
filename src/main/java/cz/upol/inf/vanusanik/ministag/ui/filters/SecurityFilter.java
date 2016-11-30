@@ -19,6 +19,14 @@ import cz.upol.inf.vanusanik.ministag.model.entities.Roles;
 import cz.upol.inf.vanusanik.ministag.model.entities.User;
 import cz.upol.inf.vanusanik.ministag.ui.services.SecurityController.ActiveSession;
 
+/**
+ * Handles the security of the application.
+ * Checks whether user is logged in for each section of website and if not,
+ * redirects to the login. If incorrect user is logged in, redirects to index.xhtml.
+ * 
+ * @author enerccio
+ *
+ */
 public class SecurityFilter implements Filter {
 
 	@Inject
@@ -44,6 +52,11 @@ public class SecurityFilter implements Filter {
 		pathGar.add("/gmyCourses.xhtml");
 		pathGar.add("/gmyCourse.xhtml");
 		pathGar.add("/gBlocks.xhtml");
+		
+		pathStu.add("/preregister.xhtml");
+		pathStu.add("/schedule.xhtml");
+		
+		pathTea.add("/schedule.xhtml");
 
 		allPaths.addAll(pathAdm);
 		allPaths.addAll(pathGar);
@@ -74,7 +87,7 @@ public class SecurityFilter implements Filter {
 		for (String p : allPaths) {
 			if (path.startsWith(p)) {
 				if (u == null) {
-					redirect(httpRequest, httpResponse, path);
+					redirectLogin(httpRequest, httpResponse, path);
 					return;
 				}
 
@@ -99,7 +112,7 @@ public class SecurityFilter implements Filter {
 				}
 
 				if (!check) {
-					redirect(httpRequest, httpResponse, path);
+					redirectMain(httpRequest, httpResponse);
 					return;
 				}
 			}
@@ -108,9 +121,27 @@ public class SecurityFilter implements Filter {
 		arg2.doFilter(arg0, arg1);
 	}
 
-	private void redirect(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String page)
+	/**
+	 * Redirects to the login.xhtml?backurl=<requested page>
+	 * @param httpRequest
+	 * @param httpResponse
+	 * @param page 
+	 * @throws IOException
+	 */
+	private void redirectLogin(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String page)
 			throws IOException {
 		httpResponse.sendRedirect(httpRequest.getContextPath() + "/login.xhtml?backurl=" + page);
+	}
+	
+	/**
+	 * Redirects to the index.xhtml
+	 * @param httpRequest
+	 * @param httpResponse
+	 * @throws IOException
+	 */
+	private void redirectMain(HttpServletRequest httpRequest, HttpServletResponse httpResponse)
+			throws IOException {
+		httpResponse.sendRedirect(httpRequest.getContextPath() + "/index.xhtml");
 	}
 
 }

@@ -9,6 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * ScheduleServlet.
+ * 
+ * Handles all requests to draw schedule image.
+ * Only responds to /draw request.
+ * 
+ * Example usage syntax:
+ * 
+ * /draw?width=800&height=400&encoding=png  
+ * /draw?width=800&height=400&encoding=jpg 
+ * /draw?width=800&height=400&encoding=gif  
+ * @author enerccio
+ *
+ */
 public class ScheduleServlet extends HttpServlet {
 	private static final long serialVersionUID = 5850204032730392319L;
 

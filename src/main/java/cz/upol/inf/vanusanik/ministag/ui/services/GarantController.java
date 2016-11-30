@@ -24,6 +24,11 @@ import cz.upol.inf.vanusanik.ministag.model.service.MinistagRepository;
 import cz.upol.inf.vanusanik.ministag.ui.services.SecurityController.ActiveSession;
 import cz.upol.inf.vanusanik.ministag.ui.tools.Utils;
 
+/**
+ * GarantController
+ * @author enerccio
+ *
+ */
 @ApplicationScoped
 @Named("garant")
 public class GarantController {
@@ -41,6 +46,11 @@ public class GarantController {
 	@Inject
 	private GarantEditBlock eb;
 
+	/**
+	 * Holds currenly chosen department for session
+	 * @author enerccio
+	 *
+	 */
 	@SessionScoped
 	@Named("garantChosenDept")
 	public static class ChosenDepartment implements Serializable {
@@ -57,6 +67,11 @@ public class GarantController {
 		}
 	}
 
+	/**
+	 * Holds currently chosen course for session
+	 * @author enerccio
+	 *
+	 */
 	@SessionScoped
 	@Named("garantChosenCourse")
 	public static class ChosenCourse implements Serializable {
@@ -73,6 +88,11 @@ public class GarantController {
 		}
 	}
 
+	/**
+	 * Holds currently chosen block for session
+	 * @author enerccio
+	 *
+	 */
 	@SessionScoped
 	@Named("garantChosenBlock")
 	public static class ChosenBlock implements Serializable {
@@ -89,6 +109,11 @@ public class GarantController {
 		}
 	}
 
+	/**
+	 * Handles showing department list
+	 * @author enerccio
+	 *
+	 */
 	@RequestScoped
 	@Named("garantDeptList")
 	public static class GarantDepartmentList {
@@ -102,6 +127,11 @@ public class GarantController {
 
 	}
 
+	/**
+	 * Handles editing the course
+	 * @author enerccio
+	 *
+	 */
 	@RequestScoped
 	@Named("garantCourseEdit")
 	public static class GarantEditCourse {
@@ -228,6 +258,11 @@ public class GarantController {
 		}
 	}
 
+	/**
+	 * Handles editing block
+	 * @author enerccio
+	 *
+	 */
 	@SessionScoped
 	@Named("garantEditBlock")
 	public static class GarantEditBlock implements Serializable {
@@ -305,6 +340,10 @@ public class GarantController {
 			return Utils.appendRedirect("gmyCourses.xhtml");
 		}
 
+		/**
+		 * Adds single timetable entry. This is not saved until submit.
+		 * @return
+		 */
 		public String add() {
 			Timetable t = new Timetable();
 			t.setClassFrom(getClassFrom());

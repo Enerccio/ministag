@@ -17,17 +17,40 @@ import javax.inject.Inject;
 import cz.upol.inf.vanusanik.ministag.model.entities.Timetable;
 import cz.upol.inf.vanusanik.ministag.ui.tools.Utils;
 
+/**
+ * Generates image from schedule
+ * @author enerccio
+ *
+ */
 @ApplicationScoped
 public class ScheduleGenerator {
 
+	/**
+	 * Represents single day in schedule
+	 * @author enerccio
+	 *
+	 */
 	private static class DayRow {
+		/**
+		 * Day ID (0=Monday, 1=Tuesday, 2=Wednesday, 3=Thursday, 4=Friday)
+		 */
 		private int day;
+		/**
+		 * Ordered list of timetable entries. They shouldn't overlap
+		 */
 		private List<Timetable> ordered = new ArrayList<Timetable>();
 	}
 
 	@Inject
 	private ScheduleRequest rq;
 
+	/**
+	 * Generates image for specified with and height. Content of image is taken from {@link ScheduleRequest}
+	 * @param width
+	 * @param height
+	 * @return
+	 * @throws Exception
+	 */
 	public BufferedImage generate(int width, int height) throws Exception {
 		CoordinateTranslator ct = new CoordinateTranslator(width, height);
 		BufferedImage i = new BufferedImage(width, height, BufferedImage.TYPE_USHORT_GRAY);
@@ -37,6 +60,12 @@ public class ScheduleGenerator {
 		return i;
 	}
 
+	/**
+	 * Generates schedule image to specified graphics using specified coordinate translator
+	 * @param graphics
+	 * @param ct
+	 * @throws Exception
+	 */
 	private void doGenerate(Graphics2D graphics, CoordinateTranslator ct) throws Exception {
 		// add border
 		ct.push(0.025, 0.05, 0.95, 0.9);
@@ -52,6 +81,12 @@ public class ScheduleGenerator {
 		draw(graphics, ct, dayRows);
 	}
 
+	/**
+	 * Draw specific days to specified graphics using coordinate translator
+	 * @param graphics
+	 * @param ct
+	 * @param dayRows
+	 */
 	private void draw(Graphics2D graphics, CoordinateTranslator ct, List<DayRow> dayRows) {
 		int cnt = dayRows.size() + 1; // header
 		double perLine = 1.0 / cnt;
@@ -137,6 +172,10 @@ public class ScheduleGenerator {
 		}
 	}
 
+	/**
+	 * Read the session scoped data bean and uses it to fill schedule as list of DayRows.
+	 * @return
+	 */
 	private List<DayRow> fillSchedule() {
 		List<DayRow> drl = new ArrayList<DayRow>();
 		for (int i = 0; i < 5; i++) {
@@ -191,6 +230,12 @@ public class ScheduleGenerator {
 		return drl;
 	}
 
+	/**
+	 * Adds title to the schedule image. Will push the passed in coordinate translator
+	 * @param graphics
+	 * @param ct
+	 * @throws Exception
+	 */
 	private void addTitle(Graphics2D graphics, CoordinateTranslator ct) throws Exception {
 		graphics.setColor(Color.BLACK);
 		ct.push(0, 0, 1, 0.1);
@@ -204,6 +249,12 @@ public class ScheduleGenerator {
 		ct.push(0, 0.1, 1, 0.9);
 	}
 
+	/**
+	 * Writes anchored text at specified coordinates. Anchored both at x and y.
+	 * @param text
+	 * @param graphics
+	 * @param ct
+	 */
 	private void writeAnchoredText(String text, Graphics2D graphics, CoordinateTranslator ct) {
 		FontMetrics fm = graphics.getFontMetrics();
 		int th = fm.getHeight();

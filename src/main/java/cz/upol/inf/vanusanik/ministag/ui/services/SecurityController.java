@@ -54,6 +54,11 @@ public class SecurityController {
 
 	@SessionScoped
 	@Named("currentSession")
+	/**
+	 * Holds currently logged in user
+	 * @author enerccio
+	 *
+	 */
 	public static class ActiveSession implements Serializable {
 		private static final long serialVersionUID = -3755950572410738849L;
 		private User currentUser;

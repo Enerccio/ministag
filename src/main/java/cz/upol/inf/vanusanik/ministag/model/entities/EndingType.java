@@ -1,7 +1,15 @@
 package cz.upol.inf.vanusanik.ministag.model.entities;
 
+/**
+ * Type of the course-ending.
+ * @author enerccio
+ *
+ */
 public enum EndingType {
 
-	CREDIT, COLLOQUIUM
+	/** Zapocet */
+	CREDIT, 
+	/** Kolokvium */
+	COLLOQUIUM
 
 }

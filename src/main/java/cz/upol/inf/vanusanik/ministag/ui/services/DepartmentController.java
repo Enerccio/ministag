@@ -17,10 +17,20 @@ import cz.upol.inf.vanusanik.ministag.model.entities.User;
 import cz.upol.inf.vanusanik.ministag.model.service.MinistagRepository;
 import cz.upol.inf.vanusanik.ministag.ui.tools.Utils;
 
+/**
+ * DepartmentController
+ * @author enerccio
+ *
+ */
 @Named("departmentController")
 @ApplicationScoped
 public class DepartmentController {
 
+	/**
+	 * Holds active department for session
+	 * @author enerccio
+	 *
+	 */
 	@Named("activeDepartment")
 	@SessionScoped
 	public static class ActiveDepartment implements Serializable {
@@ -38,6 +48,11 @@ public class DepartmentController {
 
 	}
 
+	/**
+	 * Holds active departments for session
+	 * @author enerccio
+	 *
+	 */
 	@Named("departmentList")
 	@RequestScoped
 	public static class DepartmentList {
@@ -61,6 +76,11 @@ public class DepartmentController {
 		}
 	}
 
+	/**
+	 * Handles requests to edit department
+	 * @author enerccio
+	 *
+	 */
 	@Named("editDepartment")
 	@RequestScoped
 	public static class EditDepartment {
@@ -170,6 +190,11 @@ public class DepartmentController {
 		return repository.getDepartments();
 	}
 
+	/**
+	 * Actually edits the department specified. Called on submit.
+	 * @param editDepartment
+	 * @return
+	 */
 	public String editDepartment(EditDepartment editDepartment) {
 		Department d = null;
 		if (activeDepartment.getActiveDepartment() != null) {
@@ -201,6 +226,11 @@ public class DepartmentController {
 		repository.remove(repository.find(dept, Department.class));
 	}
 
+	/**
+	 * Selects which department is to be edited and then redirects to edit page
+	 * @param dept
+	 * @return
+	 */
 	public String editDepartment(String dept) {
 		activeDepartment.setActiveDepartment(dept);
 		return Utils.appendRedirect("admEditDept.xhtml");

@@ -14,6 +14,11 @@ import cz.upol.inf.vanusanik.ministag.model.service.MinistagRepository;
 import cz.upol.inf.vanusanik.ministag.schedule.ScheduleRequest;
 import cz.upol.inf.vanusanik.ministag.ui.tools.Utils;
 
+/**
+ * Handles requests for scheduler. Fills the session info and renders the image
+ * @author enerccio
+ *
+ */
 @ApplicationScoped
 @Named("schedulerController")
 public class SchedulerController {
@@ -23,6 +28,15 @@ public class SchedulerController {
 	@Inject
 	private ScheduleRequest schedule;
 
+	/**
+	 * Returns the image link for request. Fills the schedule session data.
+	 * @param o
+	 * @param w
+	 * @param h
+	 * @param encType
+	 * @return
+	 * @throws Exception
+	 */
 	public String showSchedule(Object o, int w, int h, String encType) throws Exception {
 		if (o instanceof User) {
 			User u = (User) o;
@@ -53,6 +67,11 @@ public class SchedulerController {
 		throw new Exception("not a valid object");
 	}
 
+	/**
+	 * Returns relevant courses for specified user
+	 * @param u
+	 * @return
+	 */
 	public List<Course> getRelevantCourses(User u) {
 		if (u.getRole() == Roles.STUDENT) {
 			return repository.getCoursesForStudent(u);

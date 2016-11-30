@@ -13,6 +13,11 @@ import cz.upol.inf.vanusanik.ministag.model.service.MinistagRepository;
 import cz.upol.inf.vanusanik.ministag.ui.services.GarantController.ChosenCourse;
 import cz.upol.inf.vanusanik.ministag.ui.services.GarantController.ChosenDepartment;
 
+/**
+ * Validates whether course name is valid (not empty and unique)
+ * @author enerccio
+ *
+ */
 @Named("GUARDCourseAbbr")
 @ApplicationScoped
 public class CourseAbbrValidator implements Validator {

@@ -10,6 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 
+/**
+ * Draws specific buffered image into the response.
+ * Image encoding is dependent of the requested encoding
+ * @author enerccio
+ *
+ */
 @ApplicationScoped
 public class ImageOutputWriter {
 
@@ -17,6 +23,13 @@ public class ImageOutputWriter {
 	public static final String ENCODING_JPG = "jpg";
 	public static final String ENCODING_GIF = "gif";
 
+	/**
+	 * Sends the buffered image to the response upstream
+	 * @param i
+	 * @param encoding
+	 * @param resp
+	 * @throws Exception
+	 */
 	public void generate(BufferedImage i, String encoding, HttpServletResponse resp) throws Exception {
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		if (encoding.equals(ENCODING_PNG)) {

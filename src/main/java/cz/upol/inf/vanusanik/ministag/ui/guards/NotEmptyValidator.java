@@ -7,6 +7,11 @@ import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
+/**
+ * Checks that value is not empty
+ * @author enerccio
+ *
+ */
 @FacesValidator("GUARDNotEmpty")
 public class NotEmptyValidator implements Validator {
 

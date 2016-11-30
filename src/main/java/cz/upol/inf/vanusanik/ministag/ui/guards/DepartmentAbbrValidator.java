@@ -13,6 +13,11 @@ import cz.upol.inf.vanusanik.ministag.model.entities.Department;
 import cz.upol.inf.vanusanik.ministag.model.service.MinistagRepository;
 import cz.upol.inf.vanusanik.ministag.ui.services.DepartmentController.ActiveDepartment;
 
+/**
+ * Validates whether department abbreviation is valid (not empty and unique)
+ * @author enerccio
+ *
+ */
 @Named("GUARDDeptAbbr")
 @ApplicationScoped
 public class DepartmentAbbrValidator implements Validator {

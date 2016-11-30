@@ -13,6 +13,11 @@ import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.ConverterException;
 
+/**
+ * InputTime component
+ * @author enerccio
+ *
+ */
 @FacesComponent("inputTime")
 public class InputTime extends UIInput implements NamingContainer {
 

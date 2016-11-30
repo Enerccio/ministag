@@ -12,6 +12,11 @@ import javax.inject.Named;
 import cz.upol.inf.vanusanik.ministag.model.entities.User;
 import cz.upol.inf.vanusanik.ministag.model.service.MinistagRepository;
 
+/**
+ * Checks whether login name is valid (unique and not less than 5 characters)
+ * @author enerccio
+ *
+ */
 @Named("GUARDLoginName")
 @ApplicationScoped
 public class LoginNameValidator implements Validator {

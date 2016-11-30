@@ -5,6 +5,11 @@ import javax.inject.Named;
 
 import cz.upol.inf.vanusanik.ministag.ui.tools.Utils;
 
+/**
+ * Handles redirect request
+ * @author enerccio
+ *
+ */
 @Named("redirect")
 @RequestScoped
 public class RedirectRequest {

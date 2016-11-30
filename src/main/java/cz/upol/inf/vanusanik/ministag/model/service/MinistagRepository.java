@@ -17,10 +17,16 @@ import cz.upol.inf.vanusanik.ministag.model.entities.Roles;
 import cz.upol.inf.vanusanik.ministag.model.entities.Timetable;
 import cz.upol.inf.vanusanik.ministag.model.entities.User;
 
+/**
+ * Handles all entity persistency functions
+ * @author enerccio
+ *
+ */
 @ManagedBean(name = "ministag")
 @ApplicationScoped
 public class MinistagRepository {
 
+	/** EntityManager instance */
 	private EntityManager em;
 
 	public MinistagRepository() {
@@ -28,6 +34,12 @@ public class MinistagRepository {
 		em = factory.createEntityManager();
 	}
 
+	/**
+	 * Finds an object by class and primary key value
+	 * @param key
+	 * @param clazz
+	 * @return
+	 */
 	public <T extends BasicEntity> T find(final Object key, final Class<T> clazz) {
 		return inTransaction(new InTransaction(em) {
 
@@ -38,6 +50,11 @@ public class MinistagRepository {
 		});
 	}
 
+	/**
+	 * Saves object to persistency
+	 * @param entity
+	 * @return
+	 */
 	public <T extends BasicEntity> T save(final T entity) {
 		return inTransaction(new InTransaction(em) {
 
@@ -57,6 +74,10 @@ public class MinistagRepository {
 		});
 	}
 
+	/**
+	 * Deletes object from persistency
+	 * @param entity
+	 */
 	public <T extends BasicEntity> void remove(final T entity) {
 		inTransaction(new InTransaction(em) {
 
@@ -73,6 +94,10 @@ public class MinistagRepository {
 		});
 	}
 
+	/**
+	 * Returns AppSettings singleton from database
+	 * @return
+	 */
 	public AppSettings getAppSettings() {
 		return inTransaction(new InTransaction(em) {
 
@@ -88,7 +113,7 @@ public class MinistagRepository {
 							c.set(2016, 8, 19, 0, 0);
 							as.setStartOfYear(c);
 							as.setNumWeeks(13);
-							save(as);
+							return save(as);							
 						}
 					}
 				}
@@ -98,11 +123,20 @@ public class MinistagRepository {
 		});
 	}
 
+	/**
+	 * Handles code in transaction
+	 * @param inTransaction
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	private <T> T inTransaction(InTransaction inTransaction) {
 		return (T) inTransaction.inTransaction();
 	}
 
+	/**
+	 * Returns all users in list
+	 * @return
+	 */
 	public List<User> getUsers() {
 		return inTransaction(new InTransaction(em) {
 
@@ -113,6 +147,10 @@ public class MinistagRepository {
 		});
 	}
 
+	/**
+	 * Returns all departments in list
+	 * @return
+	 */
 	public List<Department> getDepartments() {
 		return inTransaction(new InTransaction(em) {
 
@@ -125,6 +163,11 @@ public class MinistagRepository {
 		});
 	}
 
+	/**
+	 * Returns list of users of specified role
+	 * @param role
+	 * @return
+	 */
 	public List<User> getUsersByRole(final Roles role) {
 		return inTransaction(new InTransaction(em) {
 
@@ -137,6 +180,11 @@ public class MinistagRepository {
 		});
 	}
 
+	/**
+	 * Returns list of departments user is garant of
+	 * @param garant
+	 * @return
+	 */
 	public List<Department> getDepartmentByGarant(final User garant) {
 		return inTransaction(new InTransaction(em) {
 
@@ -149,7 +197,13 @@ public class MinistagRepository {
 		});
 	}
 
-	public boolean uniqueCourseName(final String shortName, final String value) {
+	/**
+	 * Checks whether course abbreviation is unique
+	 * @param dabbr department abbreviation
+	 * @param cabbr course abbreviation
+	 * @return
+	 */
+	public boolean uniqueCourseName(final String dabbr, final String cabbr) {
 		return inTransaction(new InTransaction(em) {
 
 			@Override
@@ -157,12 +211,17 @@ public class MinistagRepository {
 				return em
 						.createQuery("SELECT COUNT(distinct c) FROM Department d JOIN d.courses c "
 								+ "WHERE d.shortName = ?1 AND c.shortName = ?2", Long.class)
-						.setParameter(1, shortName).setParameter(2, value).getSingleResult().equals(0L);
+						.setParameter(1, dabbr).setParameter(2, cabbr).getSingleResult().equals(0L);
 			}
 
 		});
 	}
 
+	/**
+	 * Returns all timetable entries in a list for specified teacher
+	 * @param u
+	 * @return
+	 */
 	public List<Timetable> getTimetableForTeacher(final User u) {
 		return inTransaction(new InTransaction(em) {
 
@@ -175,6 +234,11 @@ public class MinistagRepository {
 		});
 	}
 	
+	/**
+	 * Returns all timetable entries in a list for specified student
+	 * @param u
+	 * @return
+	 */
 	public List<Timetable> getTimetableForStudent(final User u) {
 		return inTransaction(new InTransaction(em) {
 
@@ -187,6 +251,11 @@ public class MinistagRepository {
 		});
 	}
 
+	/**
+	 * Returns list of courses for specified teacher
+	 * @param u
+	 * @return
+	 */
 	public List<Course> getCoursesForTeacher(User u) {
 		return inTransaction(new InTransaction(em) {
 
@@ -199,6 +268,11 @@ public class MinistagRepository {
 		});
 	}
 	
+	/**
+	 * Returns list of courses for specified student
+	 * @param u
+	 * @return
+	 */
 	public List<Course> getCoursesForStudent(User u) {
 		return inTransaction(new InTransaction(em) {
 
@@ -211,6 +285,11 @@ public class MinistagRepository {
 		});
 	}
 
+	/**
+	 * Returns list of timetable entries for course
+	 * @param c
+	 * @return
+	 */
 	public List<Timetable> getTimetableForCourse(final Course c) {
 		return inTransaction(new InTransaction(em) {
 
@@ -224,6 +303,10 @@ public class MinistagRepository {
 		});
 	}
 
+	/**
+	 * Returns all courses in a list
+	 * @return
+	 */
 	public List<Course> getAllCourses() {
 		return inTransaction(new InTransaction(em) {
 
@@ -238,6 +321,13 @@ public class MinistagRepository {
 	}
 }
 
+/**
+ * Transaction helper. 
+ * 
+ * Code executed inside the doInTransaction() method is handled inside the transaction
+ * @author enerccio
+ *
+ */
 abstract class InTransaction {
 
 	private EntityManager em;
@@ -246,6 +336,10 @@ abstract class InTransaction {
 		this.em = em;
 	}
 
+	/**
+	 * Manages the transactions
+	 * @return
+	 */
 	Object inTransaction() {
 		try {
 			boolean activeTransaction = em.getTransaction().isActive();
@@ -264,5 +358,10 @@ abstract class InTransaction {
 		}
 	}
 
+	/**
+	 * Code executed here is done in transaction, if there is no transaction open already
+	 * @return
+	 * @throws Exception
+	 */
 	abstract Object doInTransaction() throws Exception;
 }

@@ -7,6 +7,11 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+/**
+ * Handles preregister.xhtml
+ * @author enerccio
+ *
+ */
 @ApplicationScoped
 @Named("preregister")
 public class PreregisterController {

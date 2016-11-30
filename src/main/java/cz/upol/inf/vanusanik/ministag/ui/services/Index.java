@@ -19,6 +19,14 @@ import cz.upol.inf.vanusanik.ministag.model.entities.Roles;
 import cz.upol.inf.vanusanik.ministag.model.entities.User;
 import cz.upol.inf.vanusanik.ministag.model.service.MinistagRepository;
 
+/**
+ * Displays the index. 
+ * 
+ * Index is used to show all courses, teachers, garants, departments etc.
+ * 
+ * @author enerccio
+ *
+ */
 @ApplicationScoped
 @Named("index")
 public class Index {
@@ -34,12 +42,23 @@ public class Index {
 		ROOT_DEPT, ROOT_TEACHERS, ROOT_COURSES
 	}
 
+	/**
+	 * Holds current search for index session.
+	 * @author enerccio
+	 *
+	 */
 	@SessionScoped
 	@Named("indexSearch")
 	public static class ActiveIndexSearch implements Serializable {
 		private static final long serialVersionUID = -6197987957315181285L;
 
+		/**
+		 * Stack of all searched items in a hierarchy
+		 */
 		private LinkedList<BasicEntity> currentSearchStack = new LinkedList<BasicEntity>();
+		/**
+		 * What root section are we in
+		 */
 		private DisplayRootDataSelector root;
 
 		public LinkedList<BasicEntity> getCurrentSearchStack() {
@@ -65,6 +84,10 @@ public class Index {
 	@Inject
 	private MinistagRepository repository;
 
+	/**
+	 * Removes all session info for index. 
+	 * @return
+	 */
 	public String clearCache() {
 		activeSearch.setRoot(null);
 		activeSearch.getCurrentSearchStack().clear();
