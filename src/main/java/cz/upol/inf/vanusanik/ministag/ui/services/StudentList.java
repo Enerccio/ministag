@@ -81,7 +81,15 @@ public class StudentList {
 				studentList.getStudents().addAll(t.getStudents());
 			}
 			studentList.setDisplay(true);
-			studentList.setLinks(true);
+			studentList.setLinks(links);
+			return null;
+		}
+		if (sourceData instanceof Timetable) {
+			Timetable t = (Timetable)sourceData;
+			studentList.getStudents().clear();
+			studentList.getStudents().addAll(t.getStudents());
+			studentList.setDisplay(true);
+			studentList.setLinks(links);
 			return null;
 		}
 		studentList.getStudents().clear();

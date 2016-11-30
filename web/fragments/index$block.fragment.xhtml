@@ -16,12 +16,12 @@
 		<div class="innerbox">
 			<h:commandLink value="Seznam studentů"
 					action="#{studentList.show(te, true)}">
-				<f:ajax execute="@this" render="@none" />
-    			<f:ajax render=":modalwindow"/>
-    			<f:ajax onevent="window.showModal()"/>
+    			<f:ajax event="action" render="modalWindow" onevent="function(data) { window.showModal(data, '#{modalWindowMsg.clientId}') }"/>
 			</h:commandLink>
 			
-			<my:messageBox id="modalWindow" targetPage="/fragments/studentlist.fragment.xhtml" />
+			<h:panelGroup id="modalWindow" layout="block" binding="#{modalWindowMsg}">
+				<my:messageBox targetPage="/fragments/studentlist.fragment.xhtml" />
+			</h:panelGroup>
 		</div>
 		<div class="innerbox">
 			<div>Rozvrh:</div>

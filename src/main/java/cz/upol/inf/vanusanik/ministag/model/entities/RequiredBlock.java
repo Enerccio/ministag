@@ -14,6 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 @Entity
 @Table(name = "class_block")
 public class RequiredBlock extends BasicEntity {
@@ -30,6 +33,7 @@ public class RequiredBlock extends BasicEntity {
 	private Course taughtClass;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "block")
+	@Fetch(FetchMode.SELECT)
 	private List<Timetable> timetableChoices = new ArrayList<Timetable>();
 
 	public Long getId() {

@@ -10,6 +10,9 @@
 	<div>
 		<c:if test="${activeStudentList.display}">
 			<!-- displaying list of students -->
+			<c:forEach var="st" items="#{activeStudentList.students}">
+				#{st.name}<br />
+			</c:forEach>
 		</c:if>
 	</div>
 </ui:composition>

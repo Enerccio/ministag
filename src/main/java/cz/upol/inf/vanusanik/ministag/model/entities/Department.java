@@ -13,6 +13,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 @Entity
 @Table(name = "dept")
 public class Department extends BasicEntity {
@@ -26,14 +29,17 @@ public class Department extends BasicEntity {
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "dept_garants", joinColumns = @JoinColumn(name = "dept_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "ID"))
+	@Fetch(FetchMode.SELECT)
 	private List<User> garants = new ArrayList<User>();
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "dept_teachers", joinColumns = @JoinColumn(name = "dept_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "ID"))
+	@Fetch(FetchMode.SELECT)
 	private List<User> teachers = new ArrayList<User>();
 
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "dept_courses", joinColumns = @JoinColumn(name = "dept_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "ID"))
+	@Fetch(FetchMode.SELECT)
 	private List<Course> courses = new ArrayList<Course>();
 
 	@Column(length = 64)

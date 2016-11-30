@@ -4,8 +4,72 @@
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:c="http://java.sun.com/jsp/jstl/core"
-    xmlns:my="http://java.sun.com/jsf/composite/components">
+    xmlns:my="http://java.sun.com/jsf/composite/components"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:jsf="http://xmlns.jcp.org/jsf">
    	
+   	<div>
+   		<c:set var="course" scope="request" 
+			value="#{activePreregister.currentlyEdited}"/>
    	
-   	
+   		<ui:fragment rendered="#{empty course.blocks}">
+   			Nemá vypsané bloky
+   		</ui:fragment>
+   		
+   		<ui:repeat var="block" value="#{course.blocks}" rendered="#{not empty course.blocks}"
+   				varStatus="st">   			
+   			
+    		<h:panelGroup id="modalWindow" layout="block" binding="#{modalWindowMsg}">
+				<my:messageBox targetPage="/fragments/studentlist.fragment.xhtml" />
+			</h:panelGroup>
+			
+   			<div>
+	   			Blok <h:commandLink value="#{block.displayShort()}"
+						action="#{studentList.show(block, false)}">
+		    			<f:ajax event="action" render="modalWindow" onevent="function(data) { window.showModal(data, '#{modalWindowMsg.clientId}') }"/>
+					</h:commandLink>
+				<h:dataTable value="#{block.timetableChoices}" 
+	       							 var="tc"
+									 rendered="#{not empty block.timetableChoices}">
+					<h:column>
+	          			<f:facet name="header">Typ:</f:facet>
+	          			#{utils.timetableType2Display(tc.type)}
+	          		</h:column>
+	          		<h:column>
+	          			<f:facet name="header">Vyučující:</f:facet>
+	          			#{tc.teacher.displayShort()}
+	          		</h:column>
+	          		<h:column>
+	          			<h:commandLink value="Zapsáni studenti"
+								action="#{studentList.show(tc, false)}">
+			    			<f:ajax event="action" render="#{modalWindowMsg.clientId}" onevent="function(data) { window.showModal(data, '#{modalWindowMsg.clientId}') }"/>
+						</h:commandLink>
+	          		</h:column>
+	          		<h:column>
+	          			<f:facet name="header">Den</f:facet>
+	          			#{utils.day2display(tc.day)}
+	          		</h:column>
+	          		<h:column>
+	          			<f:facet name="header">Od</f:facet>
+	          			#{utils.getHour(tc.classFrom)}:#{utils.getMinute(tc.classFrom)} 
+	          		</h:column>
+	          		<h:column>
+	          			<f:facet name="header">Do</f:facet>
+	          			#{utils.getHour(tc.classTo)}:#{utils.getMinute(tc.classTo)} 
+	          		</h:column>
+	          		<h:column>	          			
+	          			<input type="radio" jsf:id="item" a:name="#{hiddenItem.clientId}"
+			                value="#{tc.id}" a:checked="#{preregister.valid(tc.id, activePreregister.choices[st.index].choice)? 'checked' : null}" />
+			            <h:outputLabel for="item" value="Zapsat/Odepsat" />
+	          		</h:column>
+				</h:dataTable>			
+				<h:inputHidden id="selectedItem" binding="#{hiddenItem}" 
+					value="#{activePreregister.choices[st.index].choice}"/>
+   			</div>
+   		</ui:repeat>
+   		
+   		<c:if test="#{activePreregister.fail}"><span style="color:red">Musíte vybrat všechny bloky</span><br /></c:if>
+   		
+   		<h:commandButton  value="Odepsat předmět" action="#{preregister.unsub()}"/> <h:commandButton  value="Uložit" action="#{preregister.submit()}"/>
+   	</div>   	
 </ui:composition>

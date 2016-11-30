@@ -17,6 +17,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 @Entity
 @Table(name = "course")
 public class Course extends BasicEntity {
@@ -36,9 +39,11 @@ public class Course extends BasicEntity {
 
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "class_garant", nullable = false)
+	@Fetch(FetchMode.SELECT)
 	private User garant;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "taughtClass")
+	@Fetch(FetchMode.SELECT)
 	private List<RequiredBlock> blocks = new ArrayList<RequiredBlock>();
 
 	@Column(columnDefinition = "LONGTEXT")

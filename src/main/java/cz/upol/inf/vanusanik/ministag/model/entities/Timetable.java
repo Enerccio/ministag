@@ -17,6 +17,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 @Entity
 @Table(name = "timetable")
 public class Timetable extends BasicEntity {
@@ -38,6 +41,7 @@ public class Timetable extends BasicEntity {
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "enrolled_students", joinColumns = @JoinColumn(name = "time_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "ID"))
+	@Fetch(FetchMode.SELECT)
 	private List<User> students = new ArrayList<User>();
 
 	private Date classFrom;

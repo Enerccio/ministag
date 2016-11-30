@@ -95,6 +95,28 @@ public class Utils {
 	public List<Integer> getAllDays() {
 		return Arrays.asList(new Integer[] { 0, 1, 2, 3, 4 });
 	}
+	
+	/**
+	 * Returns hour from date as String
+	 * @param date
+	 * @return
+	 */
+	public String getHour(Date date) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		return "" + c.get(Calendar.HOUR_OF_DAY);
+	}
+	
+	/**
+	 * Returns minute from date as String
+	 * @param date
+	 * @return
+	 */
+	public String getMinute(Date date) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		return String.format("%02d", c.get(Calendar.MINUTE));
+	}
 
 	/**
 	 * Returns byte array as hex string
