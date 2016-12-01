@@ -1,7 +1,9 @@
 package cz.upol.inf.vanusanik.ministag.ui.services;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -45,6 +47,10 @@ public class StudentList {
 		
 		public Set<User> getStudents() {
 			return students;
+		}
+		
+		public List<User> getStudentList() {
+			return new ArrayList<User>(getStudents());
 		}
 		
 		public Set<User> getStudentsOnce() {

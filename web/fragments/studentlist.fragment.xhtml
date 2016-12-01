@@ -10,9 +10,9 @@
 	<div>
 		<c:if test="${activeStudentList.display}">
 			<!-- displaying list of students -->
-			<c:forEach var="st" items="#{activeStudentList.students}">
+			<ui:repeat var="st" value="#{activeStudentList.studentList}">
 				#{st.name}<br />
-			</c:forEach>
+			</ui:repeat>
 		</c:if>
 	</div>
 </ui:composition>
