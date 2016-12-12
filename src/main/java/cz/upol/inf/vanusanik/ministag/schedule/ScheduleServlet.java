@@ -12,14 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * ScheduleServlet.
  * 
- * Handles all requests to draw schedule image.
- * Only responds to /draw request.
+ * Handles all requests to draw schedule image. Only responds to /draw request.
  * 
  * Example usage syntax:
  * 
- * /draw?width=800&amp;height=400&amp;encoding=png  
- * /draw?width=800&amp;height=400&amp;encoding=jpg 
- * /draw?width=800&amp;height=400&amp;encoding=gif  
+ * /draw?width=800&amp;height=400&amp;encoding=png
+ * /draw?width=800&amp;height=400&amp;encoding=jpg
+ * /draw?width=800&amp;height=400&amp;encoding=gif
+ * 
  * @author enerccio
  *
  */

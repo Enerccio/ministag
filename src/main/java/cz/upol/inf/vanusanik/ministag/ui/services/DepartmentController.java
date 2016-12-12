@@ -19,6 +19,7 @@ import cz.upol.inf.vanusanik.ministag.ui.tools.Utils;
 
 /**
  * DepartmentController
+ * 
  * @author enerccio
  *
  */
@@ -28,6 +29,7 @@ public class DepartmentController {
 
 	/**
 	 * Holds active department for session
+	 * 
 	 * @author enerccio
 	 *
 	 */
@@ -50,6 +52,7 @@ public class DepartmentController {
 
 	/**
 	 * Holds active departments for session
+	 * 
 	 * @author enerccio
 	 *
 	 */
@@ -78,6 +81,7 @@ public class DepartmentController {
 
 	/**
 	 * Handles requests to edit department
+	 * 
 	 * @author enerccio
 	 *
 	 */
@@ -192,6 +196,7 @@ public class DepartmentController {
 
 	/**
 	 * Actually edits the department specified. Called on submit.
+	 * 
 	 * @param editDepartment
 	 * @return
 	 */
@@ -228,6 +233,7 @@ public class DepartmentController {
 
 	/**
 	 * Selects which department is to be edited and then redirects to edit page
+	 * 
 	 * @param dept
 	 * @return
 	 */

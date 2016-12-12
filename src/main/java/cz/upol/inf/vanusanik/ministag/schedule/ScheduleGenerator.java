@@ -19,6 +19,7 @@ import cz.upol.inf.vanusanik.ministag.ui.tools.Utils;
 
 /**
  * Generates image from schedule
+ * 
  * @author enerccio
  *
  */
@@ -27,6 +28,7 @@ public class ScheduleGenerator {
 
 	/**
 	 * Represents single day in schedule
+	 * 
 	 * @author enerccio
 	 *
 	 */
@@ -45,7 +47,9 @@ public class ScheduleGenerator {
 	private ScheduleRequest rq;
 
 	/**
-	 * Generates image for specified with and height. Content of image is taken from {@link ScheduleRequest}
+	 * Generates image for specified with and height. Content of image is taken
+	 * from {@link ScheduleRequest}
+	 * 
 	 * @param width
 	 * @param height
 	 * @return
@@ -61,7 +65,9 @@ public class ScheduleGenerator {
 	}
 
 	/**
-	 * Generates schedule image to specified graphics using specified coordinate translator
+	 * Generates schedule image to specified graphics using specified coordinate
+	 * translator
+	 * 
 	 * @param graphics
 	 * @param ct
 	 * @throws Exception
@@ -83,6 +89,7 @@ public class ScheduleGenerator {
 
 	/**
 	 * Draw specific days to specified graphics using coordinate translator
+	 * 
 	 * @param graphics
 	 * @param ct
 	 * @param dayRows
@@ -173,7 +180,9 @@ public class ScheduleGenerator {
 	}
 
 	/**
-	 * Read the session scoped data bean and uses it to fill schedule as list of DayRows.
+	 * Read the session scoped data bean and uses it to fill schedule as list of
+	 * DayRows.
+	 * 
 	 * @return
 	 */
 	private List<DayRow> fillSchedule() {
@@ -231,7 +240,9 @@ public class ScheduleGenerator {
 	}
 
 	/**
-	 * Adds title to the schedule image. Will push the passed in coordinate translator
+	 * Adds title to the schedule image. Will push the passed in coordinate
+	 * translator
+	 * 
 	 * @param graphics
 	 * @param ct
 	 * @throws Exception
@@ -251,6 +262,7 @@ public class ScheduleGenerator {
 
 	/**
 	 * Writes anchored text at specified coordinates. Anchored both at x and y.
+	 * 
 	 * @param text
 	 * @param graphics
 	 * @param ct

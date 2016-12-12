@@ -20,7 +20,7 @@ import cz.upol.inf.vanusanik.ministag.model.entities.User;
 import cz.upol.inf.vanusanik.ministag.model.service.MinistagRepository;
 
 /**
- * Displays the index. 
+ * Displays the index.
  * 
  * Index is used to show all courses, teachers, garants, departments etc.
  * 
@@ -44,6 +44,7 @@ public class Index {
 
 	/**
 	 * Holds current search for index session.
+	 * 
 	 * @author enerccio
 	 *
 	 */
@@ -85,7 +86,8 @@ public class Index {
 	private MinistagRepository repository;
 
 	/**
-	 * Removes all session info for index. 
+	 * Removes all session info for index.
+	 * 
 	 * @return
 	 */
 	public String clearCache() {
@@ -130,7 +132,7 @@ public class Index {
 		});
 		return u;
 	}
-	
+
 	public List<Course> getAllCourses() {
 		List<Course> clist = repository.getAllCourses();
 		Collections.sort(clist, new Comparator<Course>() {
@@ -161,7 +163,7 @@ public class Index {
 	public List<Course> taughtCourses(User u) {
 		return repository.getCoursesForTeacher(u);
 	}
-	
+
 	public List<Course> attendingCourses(User u) {
 		return repository.getCoursesForStudent(u);
 	}

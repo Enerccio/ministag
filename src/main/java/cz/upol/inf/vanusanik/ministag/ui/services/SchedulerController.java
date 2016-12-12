@@ -16,6 +16,7 @@ import cz.upol.inf.vanusanik.ministag.ui.tools.Utils;
 
 /**
  * Handles requests for scheduler. Fills the session info and renders the image
+ * 
  * @author enerccio
  *
  */
@@ -30,6 +31,7 @@ public class SchedulerController {
 
 	/**
 	 * Returns the image link for request. Fills the schedule session data.
+	 * 
 	 * @param o
 	 * @param w
 	 * @param h
@@ -69,6 +71,7 @@ public class SchedulerController {
 
 	/**
 	 * Returns relevant courses for specified user
+	 * 
 	 * @param u
 	 * @return
 	 */

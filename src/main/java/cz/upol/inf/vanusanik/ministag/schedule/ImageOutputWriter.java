@@ -11,8 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 
 /**
- * Draws specific buffered image into the response.
- * Image encoding is dependent of the requested encoding
+ * Draws specific buffered image into the response. Image encoding is dependent
+ * of the requested encoding
+ * 
  * @author enerccio
  *
  */
@@ -25,6 +26,7 @@ public class ImageOutputWriter {
 
 	/**
 	 * Sends the buffered image to the response upstream
+	 * 
 	 * @param i
 	 * @param encoding
 	 * @param resp

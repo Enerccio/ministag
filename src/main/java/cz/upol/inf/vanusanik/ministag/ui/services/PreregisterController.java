@@ -19,15 +19,17 @@ import cz.upol.inf.vanusanik.ministag.ui.services.SecurityController.ActiveSessi
 
 /**
  * Handles preregister.xhtml
+ * 
  * @author enerccio
  *
  */
 @ApplicationScoped
 @Named("preregister")
 public class PreregisterController {
-	
+
 	/**
 	 * Holds current block choice timetable
+	 * 
 	 * @author enerccio
 	 *
 	 */
@@ -56,7 +58,7 @@ public class PreregisterController {
 	@Named("activePreregister")
 	public static class ActivePreregister implements Serializable {
 		private static final long serialVersionUID = -7909077009774084563L;
-		
+
 		private Course currentlyEdited;
 		private List<RBlockChoice> choices = new ArrayList<RBlockChoice>();
 		private boolean fail;
@@ -89,24 +91,29 @@ public class PreregisterController {
 
 		public void setFail(boolean fail) {
 			this.fail = fail;
-		}		
+		}
 	}
-	
-	@Inject private ActivePreregister ap;
-	@Inject private ActiveSession as;
-	@Inject	private MinistagRepository repository;
-	
+
+	@Inject
+	private ActivePreregister ap;
+	@Inject
+	private ActiveSession as;
+	@Inject
+	private MinistagRepository repository;
+
 	/**
 	 * Clears preregister cache and displays preregister.xhtml
+	 * 
 	 * @return
 	 */
 	public String showIndex() {
 		ap.clear();
 		return "preregister.xhtml";
 	}
-	
+
 	/**
 	 * Returns the list of courses without ones that are signed up by student
+	 * 
 	 * @param u
 	 * @return
 	 */
@@ -114,13 +121,14 @@ public class PreregisterController {
 		if (u.getRole() == Roles.STUDENT) {
 			List<Course> ac = repository.getAllCourses();
 			ac.removeAll(repository.getCoursesForStudent(u));
-			return ac; 
+			return ac;
 		}
 		return new ArrayList<Course>();
 	}
-	
+
 	/**
 	 * Loads the course as currently being registered/deregistered
+	 * 
 	 * @param c
 	 * @return
 	 */
@@ -140,9 +148,10 @@ public class PreregisterController {
 		}
 		return "";
 	}
-	
+
 	/**
 	 * Checks whether ids are equals based on choice
+	 * 
 	 * @param testId
 	 * @param selId
 	 * @return
@@ -152,9 +161,10 @@ public class PreregisterController {
 			return false;
 		return selId.equals(testId);
 	}
-	
+
 	/**
 	 * Removes the student from all timetables for current course
+	 * 
 	 * @return
 	 */
 	public String unsub() {
@@ -169,7 +179,7 @@ public class PreregisterController {
 		ap.clear();
 		return "";
 	}
-	
+
 	public String submit() {
 		List<RBlockChoice> choices = ap.getChoices();
 		for (RBlockChoice rbc : choices) {
@@ -178,7 +188,7 @@ public class PreregisterController {
 				return "";
 			}
 		}
-		
+
 		for (RequiredBlock rb : ap.getCurrentlyEdited().getBlocks()) {
 			rb = repository.find(rb.getId(), RequiredBlock.class);
 			for (Timetable t : rb.getTimetableChoices()) {
@@ -186,11 +196,11 @@ public class PreregisterController {
 				repository.save(t);
 			}
 		}
-		
+
 		for (RBlockChoice rbc : choices) {
 			Timetable t = repository.find(rbc.getChoice(), Timetable.class);
 			t.getStudents().add(as.getCurrentUser());
-			repository.save(t);			
+			repository.save(t);
 		}
 		ap.clear();
 		return "";

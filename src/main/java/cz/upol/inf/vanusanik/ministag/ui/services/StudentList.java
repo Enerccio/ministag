@@ -17,6 +17,7 @@ import cz.upol.inf.vanusanik.ministag.model.entities.User;
 
 /**
  * Handles the student list ajax requests.
+ * 
  * @author enerccio
  *
  */
@@ -26,62 +27,65 @@ public class StudentList {
 
 	/**
 	 * Holds the list of students to be displayed in message box
+	 * 
 	 * @author enerccio
 	 *
 	 */
-	@SessionScoped 
+	@SessionScoped
 	@Named("activeStudentList")
 	public static class ActiveStudentList implements Serializable {
 		private static final long serialVersionUID = -5056712862414319772L;
 		private boolean display = false;
 		private boolean links = false;
 		private Set<User> students = new HashSet<User>();
-		
+
 		public boolean isDisplay() {
 			return display;
 		}
-		
+
 		public void setDisplay(boolean display) {
 			this.display = display;
 		}
-		
+
 		public Set<User> getStudents() {
 			return students;
 		}
-		
+
 		public List<User> getStudentList() {
 			return new ArrayList<User>(getStudents());
 		}
-		
+
 		public Set<User> getStudentsOnce() {
 			this.display = false;
 			return students;
 		}
-		
+
 		public void setStudents(Set<User> students) {
 			this.students = students;
 		}
-		
+
 		public boolean isLinks() {
 			return links;
 		}
-		
+
 		public void setLinks(boolean links) {
 			this.links = links;
 		}
 	}
-	
-	@Inject private ActiveStudentList studentList;
-	
+
+	@Inject
+	private ActiveStudentList studentList;
+
 	/**
 	 * Shows the ajax request
+	 * 
 	 * @param sourceData
 	 * @param links
 	 * @return
 	 */
 	public String show(Object sourceData, boolean links) {
 		if (sourceData instanceof RequiredBlock) {
-			RequiredBlock rb = (RequiredBlock)sourceData;
+			RequiredBlock rb = (RequiredBlock) sourceData;
 			studentList.getStudents().clear();
 			for (Timetable t : rb.getTimetableChoices()) {
 				studentList.getStudents().addAll(t.getStudents());
@@ -91,7 +95,7 @@ public class StudentList {
 			return null;
 		}
 		if (sourceData instanceof Timetable) {
-			Timetable t = (Timetable)sourceData;
+			Timetable t = (Timetable) sourceData;
 			studentList.getStudents().clear();
 			studentList.getStudents().addAll(t.getStudents());
 			studentList.setDisplay(true);

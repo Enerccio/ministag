@@ -14,6 +14,7 @@ import cz.upol.inf.vanusanik.ministag.ui.services.SecurityController.AddEditUser
 
 /**
  * Validates if two passwords entered are identical
+ * 
  * @author enerccio
  *
  */

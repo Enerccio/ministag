@@ -12,6 +12,7 @@ import cz.upol.inf.vanusanik.ministag.model.service.MinistagRepository;
 
 /**
  * Converts between user and text representation (primary key) and back
+ * 
  * @author enerccio
  *
  */

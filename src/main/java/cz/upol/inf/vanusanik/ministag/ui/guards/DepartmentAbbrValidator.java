@@ -15,6 +15,7 @@ import cz.upol.inf.vanusanik.ministag.ui.services.DepartmentController.ActiveDep
 
 /**
  * Validates whether department abbreviation is valid (not empty and unique)
+ * 
  * @author enerccio
  *
  */

@@ -16,8 +16,9 @@ import cz.upol.inf.vanusanik.ministag.model.entities.EndingType;
 import cz.upol.inf.vanusanik.ministag.model.entities.TimetableType;
 
 /**
- * Utility functions. Both instance and out-of-instance variants.
- * Instance variants are used in jsp
+ * Utility functions. Both instance and out-of-instance variants. Instance
+ * variants are used in jsp
+ * 
  * @author enerccio
  *
  */
@@ -27,6 +28,7 @@ public class Utils {
 
 	/**
 	 * Returns short name for {@link EndingType}
+	 * 
 	 * @param e
 	 * @return
 	 */
@@ -44,6 +46,7 @@ public class Utils {
 
 	/**
 	 * Returns the longer name for {@link EndingType}
+	 * 
 	 * @param e
 	 * @return
 	 */
@@ -61,6 +64,7 @@ public class Utils {
 
 	/**
 	 * Returns type of timetable for course
+	 * 
 	 * @param t
 	 * @return
 	 */
@@ -81,6 +85,7 @@ public class Utils {
 
 	/**
 	 * Returns text form for day ID
+	 * 
 	 * @param day
 	 * @return
 	 */
@@ -90,14 +95,16 @@ public class Utils {
 
 	/**
 	 * Returns all days in order
+	 * 
 	 * @return
 	 */
 	public List<Integer> getAllDays() {
 		return Arrays.asList(new Integer[] { 0, 1, 2, 3, 4 });
 	}
-	
+
 	/**
 	 * Returns hour from date as String
+	 * 
 	 * @param date
 	 * @return
 	 */
@@ -106,9 +113,10 @@ public class Utils {
 		c.setTime(date);
 		return "" + c.get(Calendar.HOUR_OF_DAY);
 	}
-	
+
 	/**
 	 * Returns minute from date as String
+	 * 
 	 * @param date
 	 * @return
 	 */
@@ -161,8 +169,8 @@ public class Utils {
 	}
 
 	/**
-	 * Appends ?faces-redirect=true or &amp;faces-redirect=true to redirect, based
-	 * on the uri
+	 * Appends ?faces-redirect=true or &amp;faces-redirect=true to redirect,
+	 * based on the uri
 	 * 
 	 * @param url
 	 * @return
@@ -175,6 +183,7 @@ public class Utils {
 
 	/**
 	 * Handles the redirect request (with message)
+	 * 
 	 * @param message
 	 * @param uri
 	 * @return
@@ -185,6 +194,7 @@ public class Utils {
 
 	/**
 	 * Returns calendar data for specific hour and minute
+	 * 
 	 * @param h
 	 * @param m
 	 * @return
@@ -197,6 +207,7 @@ public class Utils {
 
 	/**
 	 * Forms basic uri for schedule request
+	 * 
 	 * @param w
 	 * @param h
 	 * @param encType
@@ -208,6 +219,7 @@ public class Utils {
 
 	/**
 	 * Transforms day to string representation
+	 * 
 	 * @param day
 	 * @return
 	 */

@@ -7,6 +7,7 @@ import cz.upol.inf.vanusanik.ministag.ui.tools.Utils;
 
 /**
  * Handles redirect request
+ * 
  * @author enerccio
  *
  */

@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 
 /**
  * MessageBox ajax component
+ * 
  * @author enerccio
  *
  */

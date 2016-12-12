@@ -26,6 +26,7 @@ import cz.upol.inf.vanusanik.ministag.ui.tools.Utils;
 
 /**
  * GarantController
+ * 
  * @author enerccio
  *
  */
@@ -48,6 +49,7 @@ public class GarantController {
 
 	/**
 	 * Holds currenly chosen department for session
+	 * 
 	 * @author enerccio
 	 *
 	 */
@@ -69,6 +71,7 @@ public class GarantController {
 
 	/**
 	 * Holds currently chosen course for session
+	 * 
 	 * @author enerccio
 	 *
 	 */
@@ -90,6 +93,7 @@ public class GarantController {
 
 	/**
 	 * Holds currently chosen block for session
+	 * 
 	 * @author enerccio
 	 *
 	 */
@@ -111,6 +115,7 @@ public class GarantController {
 
 	/**
 	 * Handles showing department list
+	 * 
 	 * @author enerccio
 	 *
 	 */
@@ -129,6 +134,7 @@ public class GarantController {
 
 	/**
 	 * Handles editing the course
+	 * 
 	 * @author enerccio
 	 *
 	 */
@@ -260,6 +266,7 @@ public class GarantController {
 
 	/**
 	 * Handles editing block
+	 * 
 	 * @author enerccio
 	 *
 	 */
@@ -342,6 +349,7 @@ public class GarantController {
 
 		/**
 		 * Adds single timetable entry. This is not saved until submit.
+		 * 
 		 * @return
 		 */
 		public String add() {

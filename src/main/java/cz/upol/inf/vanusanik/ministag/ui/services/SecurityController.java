@@ -56,6 +56,7 @@ public class SecurityController {
 	@Named("currentSession")
 	/**
 	 * Holds currently logged in user
+	 * 
 	 * @author enerccio
 	 *
 	 */

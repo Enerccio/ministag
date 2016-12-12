@@ -9,6 +9,7 @@ import javax.faces.validator.ValidatorException;
 
 /**
  * Checks that value is not empty
+ * 
  * @author enerccio
  *
  */

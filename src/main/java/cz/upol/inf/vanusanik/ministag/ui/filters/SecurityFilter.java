@@ -20,9 +20,9 @@ import cz.upol.inf.vanusanik.ministag.model.entities.User;
 import cz.upol.inf.vanusanik.ministag.ui.services.SecurityController.ActiveSession;
 
 /**
- * Handles the security of the application.
- * Checks whether user is logged in for each section of website and if not,
- * redirects to the login. If incorrect user is logged in, redirects to index.xhtml.
+ * Handles the security of the application. Checks whether user is logged in for
+ * each section of website and if not, redirects to the login. If incorrect user
+ * is logged in, redirects to index.xhtml.
  * 
  * @author enerccio
  *
@@ -52,10 +52,10 @@ public class SecurityFilter implements Filter {
 		pathGar.add("/gmyCourses.xhtml");
 		pathGar.add("/gmyCourse.xhtml");
 		pathGar.add("/gBlocks.xhtml");
-		
+
 		pathStu.add("/preregister.xhtml");
 		pathStu.add("/schedule.xhtml");
-		
+
 		pathTea.add("/schedule.xhtml");
 
 		allPaths.addAll(pathAdm);
@@ -123,24 +123,25 @@ public class SecurityFilter implements Filter {
 
 	/**
 	 * Redirects to the login.xhtml?backurl=[requested page]
+	 * 
 	 * @param httpRequest
 	 * @param httpResponse
-	 * @param page 
+	 * @param page
 	 * @throws IOException
 	 */
 	private void redirectLogin(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String page)
 			throws IOException {
 		httpResponse.sendRedirect(httpRequest.getContextPath() + "/login.xhtml?backurl=" + page);
 	}
-	
+
 	/**
 	 * Redirects to the index.xhtml
+	 * 
 	 * @param httpRequest
 	 * @param httpResponse
 	 * @throws IOException
 	 */
-	private void redirectMain(HttpServletRequest httpRequest, HttpServletResponse httpResponse)
-			throws IOException {
+	private void redirectMain(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws IOException {
 		httpResponse.sendRedirect(httpRequest.getContextPath() + "/index.xhtml");
 	}
 

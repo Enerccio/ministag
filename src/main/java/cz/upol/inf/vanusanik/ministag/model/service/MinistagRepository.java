@@ -19,6 +19,7 @@ import cz.upol.inf.vanusanik.ministag.model.entities.User;
 
 /**
  * Handles all entity persistency functions
+ * 
  * @author enerccio
  *
  */
@@ -36,6 +37,7 @@ public class MinistagRepository {
 
 	/**
 	 * Finds an object by class and primary key value
+	 * 
 	 * @param key
 	 * @param clazz
 	 * @return
@@ -52,6 +54,7 @@ public class MinistagRepository {
 
 	/**
 	 * Saves object to persistency
+	 * 
 	 * @param entity
 	 * @return
 	 */
@@ -76,6 +79,7 @@ public class MinistagRepository {
 
 	/**
 	 * Deletes object from persistency
+	 * 
 	 * @param entity
 	 */
 	public <T extends BasicEntity> void remove(final T entity) {
@@ -96,6 +100,7 @@ public class MinistagRepository {
 
 	/**
 	 * Returns AppSettings singleton from database
+	 * 
 	 * @return
 	 */
 	public AppSettings getAppSettings() {
@@ -113,7 +118,7 @@ public class MinistagRepository {
 							c.set(2016, 8, 19, 0, 0);
 							as.setStartOfYear(c);
 							as.setNumWeeks(13);
-							return save(as);							
+							return save(as);
 						}
 					}
 				}
@@ -125,6 +130,7 @@ public class MinistagRepository {
 
 	/**
 	 * Handles code in transaction
+	 * 
 	 * @param inTransaction
 	 * @return
 	 */
@@ -135,6 +141,7 @@ public class MinistagRepository {
 
 	/**
 	 * Returns all users in list
+	 * 
 	 * @return
 	 */
 	public List<User> getUsers() {
@@ -149,6 +156,7 @@ public class MinistagRepository {
 
 	/**
 	 * Returns all departments in list
+	 * 
 	 * @return
 	 */
 	public List<Department> getDepartments() {
@@ -165,6 +173,7 @@ public class MinistagRepository {
 
 	/**
 	 * Returns list of users of specified role
+	 * 
 	 * @param role
 	 * @return
 	 */
@@ -182,6 +191,7 @@ public class MinistagRepository {
 
 	/**
 	 * Returns list of departments user is garant of
+	 * 
 	 * @param garant
 	 * @return
 	 */
@@ -199,8 +209,11 @@ public class MinistagRepository {
 
 	/**
 	 * Checks whether course abbreviation is unique
-	 * @param dabbr department abbreviation
-	 * @param cabbr course abbreviation
+	 * 
+	 * @param dabbr
+	 *            department abbreviation
+	 * @param cabbr
+	 *            course abbreviation
 	 * @return
 	 */
 	public boolean uniqueCourseName(final String dabbr, final String cabbr) {
@@ -219,6 +232,7 @@ public class MinistagRepository {
 
 	/**
 	 * Returns all timetable entries in a list for specified teacher
+	 * 
 	 * @param u
 	 * @return
 	 */
@@ -233,9 +247,10 @@ public class MinistagRepository {
 
 		});
 	}
-	
+
 	/**
 	 * Returns all timetable entries in a list for specified student
+	 * 
 	 * @param u
 	 * @return
 	 */
@@ -253,6 +268,7 @@ public class MinistagRepository {
 
 	/**
 	 * Returns list of courses for specified teacher
+	 * 
 	 * @param u
 	 * @return
 	 */
@@ -267,9 +283,10 @@ public class MinistagRepository {
 
 		});
 	}
-	
+
 	/**
 	 * Returns list of courses for specified student
+	 * 
 	 * @param u
 	 * @return
 	 */
@@ -278,8 +295,10 @@ public class MinistagRepository {
 
 			@Override
 			Object doInTransaction() throws Exception {
-				return em.createQuery("SELECT distinct c FROM Course c JOIN c.blocks b JOIN b.timetableChoices tc JOIN tc.students s "
-						+ "WHERE s = ?1", Course.class).setParameter(1, u).getResultList();
+				return em.createQuery(
+						"SELECT distinct c FROM Course c JOIN c.blocks b JOIN b.timetableChoices tc JOIN tc.students s "
+								+ "WHERE s = ?1",
+						Course.class).setParameter(1, u).getResultList();
 			}
 
 		});
@@ -287,6 +306,7 @@ public class MinistagRepository {
 
 	/**
 	 * Returns list of timetable entries for course
+	 * 
 	 * @param c
 	 * @return
 	 */
@@ -305,6 +325,7 @@ public class MinistagRepository {
 
 	/**
 	 * Returns all courses in a list
+	 * 
 	 * @return
 	 */
 	public List<Course> getAllCourses() {
@@ -312,9 +333,7 @@ public class MinistagRepository {
 
 			@Override
 			Object doInTransaction() throws Exception {
-				return em.createQuery(
-						"SELECT c FROM Course c",
-						Course.class).getResultList();
+				return em.createQuery("SELECT c FROM Course c", Course.class).getResultList();
 			}
 
 		});
@@ -322,9 +341,11 @@ public class MinistagRepository {
 }
 
 /**
- * Transaction helper. 
+ * Transaction helper.
  * 
- * Code executed inside the doInTransaction() method is handled inside the transaction
+ * Code executed inside the doInTransaction() method is handled inside the
+ * transaction
+ * 
  * @author enerccio
  *
  */
@@ -338,6 +359,7 @@ abstract class InTransaction {
 
 	/**
 	 * Manages the transactions
+	 * 
 	 * @return
 	 */
 	Object inTransaction() {
@@ -359,7 +381,9 @@ abstract class InTransaction {
 	}
 
 	/**
-	 * Code executed here is done in transaction, if there is no transaction open already
+	 * Code executed here is done in transaction, if there is no transaction
+	 * open already
+	 * 
 	 * @return
 	 * @throws Exception
 	 */

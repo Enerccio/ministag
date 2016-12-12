@@ -15,6 +15,7 @@ import cz.upol.inf.vanusanik.ministag.ui.services.GarantController.ChosenDepartm
 
 /**
  * Validates whether course name is valid (not empty and unique)
+ * 
  * @author enerccio
  *
  */

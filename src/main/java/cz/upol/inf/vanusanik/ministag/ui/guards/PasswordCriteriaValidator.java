@@ -14,10 +14,7 @@ import cz.upol.inf.vanusanik.ministag.ui.services.SecurityController.AddEditUser
 /**
  * Validates the password entry criteria.
  * 
- * Criteria:
- *  * at least 5 characters
- *  * contains at least one number
- *  * not empty
+ * Criteria: * at least 5 characters * contains at least one number * not empty
  * 
  * @author enerccio
  *

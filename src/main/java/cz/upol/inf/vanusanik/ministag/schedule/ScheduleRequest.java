@@ -11,6 +11,7 @@ import cz.upol.inf.vanusanik.ministag.model.entities.Timetable;
 
 /**
  * Holds the session data for generating schedule image
+ * 
  * @author enerccio
  *
  */

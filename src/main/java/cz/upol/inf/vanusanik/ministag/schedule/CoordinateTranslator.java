@@ -5,6 +5,7 @@ package cz.upol.inf.vanusanik.ministag.schedule;
  * 
  * This helper class transforms between integer coordinate to real coordinated.
  * It supports subspaces push-ins.
+ * 
  * @author enerccio
  *
  */
@@ -12,6 +13,7 @@ public class CoordinateTranslator {
 
 	/**
 	 * Represents inner section of whole 1.0x1.0 space
+	 * 
 	 * @author enerccio
 	 *
 	 */
@@ -34,6 +36,7 @@ public class CoordinateTranslator {
 
 		/**
 		 * Encodes the real coordinate X into integer coordinate
+		 * 
 		 * @param xp
 		 * @return
 		 */
@@ -43,6 +46,7 @@ public class CoordinateTranslator {
 
 		/**
 		 * Transforms integer coordinate X into real coordinate
+		 * 
 		 * @param absoluteX
 		 * @return
 		 */
@@ -56,6 +60,7 @@ public class CoordinateTranslator {
 
 		/**
 		 * Encodes the real coordinate Y into integer coordinate
+		 * 
 		 * @param yp
 		 * @return
 		 */
@@ -65,6 +70,7 @@ public class CoordinateTranslator {
 
 		/**
 		 * Transforms integer coordinate Y into real coordinate
+		 * 
 		 * @param absoluteY
 		 * @return
 		 */
@@ -82,6 +88,7 @@ public class CoordinateTranslator {
 
 	/**
 	 * Creates the coordinate translator with specified integer width/height
+	 * 
 	 * @param w
 	 * @param h
 	 */
@@ -91,6 +98,7 @@ public class CoordinateTranslator {
 
 	/**
 	 * Pushes subspace of specified real coordinates as new space
+	 * 
 	 * @param xpos
 	 * @param ypos
 	 * @param w
@@ -113,6 +121,7 @@ public class CoordinateTranslator {
 
 	/**
 	 * Encodes the real coordinate X into integer coordinate
+	 * 
 	 * @param x
 	 * @return
 	 */
@@ -122,6 +131,7 @@ public class CoordinateTranslator {
 
 	/**
 	 * Encodes the real coordinate Y into integer coordinate
+	 * 
 	 * @param y
 	 * @return
 	 */
@@ -131,6 +141,7 @@ public class CoordinateTranslator {
 
 	/**
 	 * Transforms integer coordinate X into real coordinate
+	 * 
 	 * @param x
 	 * @return
 	 */
@@ -140,6 +151,7 @@ public class CoordinateTranslator {
 
 	/**
 	 * Transforms integer coordinate Y into real coordinate
+	 * 
 	 * @param y
 	 * @return
 	 */
